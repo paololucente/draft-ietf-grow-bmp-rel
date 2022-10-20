@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+        <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+        <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
+]>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc strict="yes" ?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+
+<rfc category="std" docName="draft-lucente-grow-bmp-rel-00"
+     ipr="trust200902" submissionType="IETF"
+     updates="7854">
+
+    <front>
+        <title abbrev="BMP REL">
+	    Logging of routing events in BGP Monitoring Protocol (BMP)
+	</title>
+
+        <author fullname="Paolo Lucente" initials="P" surname="Lucente">
+            <organization>NTT</organization>
+            <address>
+                <postal>
+                    <street>Veemweg 23</street>
+                    <city>Barneveld</city>
+                    <code>3771</code>
+                    <region>MT</region>
+                    <country>NL</country>
+                </postal>
+                <email>paolo@ntt.net</email>
+            </address>
+        </author>
+
+        <date year="2022"/>
+
+        <area>General</area>
+
+        <workgroup>Global Routing Operations</workgroup>
+        <keyword>BMP</keyword>
+        <keyword>BGP</keyword>
+        <keyword>REL</keyword>
+
+        <abstract>
+            <t>
+		The BGP Monitoring Protocol (BMP) does provision for BGP session event
+		logging (Peer Up, Peer Down), state synchronization (Route Monitoring),
+		debugging (Route Mirroring) and Statistics messages, among the others.
+		This document defines a new Route Event Logging (REL) message type for
+		BMP with the aim of covering use-cases with affinity to alerting,
+		reporting and on-change analysis.
+            </t>
+        </abstract>
+    </front>
+
+    <middle>
+        <section title="Introduction" anchor="Introduction">
+            <t>
+		As NLRIs are advertised and distributed, policies are applied and, as a
+		result, actions are performed on them. Currently, in order to infer the
+		outcome of an evaluation process, a comparative analysis needs to be
+		performed between Route Monitoring data for two distinct observation
+		points of interest. It would be instead more useful if a monitored
+		router could export event-driven data with the relevant information.
+            </t>
+            <t>
+		The envisioned use-cases are the most diverse and range from route
+		filtering to reporting the outcome of validation processes taking place
+		on the monitored router, to isolating certain subsets of data to be
+		validated offline, to broader closed-loop operations. 
+            </t>
+            <t>
+		Since no other existing BMP message type does fit the described purpose,
+		this document defines a new Route Event Logging (REL) message type that
+		is suitable to carry event-driven data and is extensible in nature.
+		While the message format is somewhat similar to the Route Monitoring
+		message type, their semantics are different.
+            </t>
+        </section>
+
+        <section title="Terminology">
+            <t>
+		The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+		NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+		"MAY", and "OPTIONAL" in this document are to be interpreted as
+		described in BCP 14 <xref target="RFC2119">RFC 2119</xref>
+		<xref target="RFC8174">RFC 8174</xref> when, and only when, they
+		appear in all capitals, as shown here.
+            </t>
+        </section>
+
+	<section title="Route Event Logging (REL) message">
+            <t>
+		The structure of the Route Event Logging message is the same as
+		the Route Monitoring message as originally defined in
+		<xref target="RFC7854">RFC 7854</xref> and then extended in
+		<xref target="I-D.ietf-grow-bmp-tlv">TLV support for BMP Route
+		Monitoring and Peer Down Messages</xref>: Per-Peer Header,
+		followed by a BGP Update PDU, followed by Informational TLVs.
+		Change being in the semantics: REL does not require an initial
+		flooding of information as dictated by the state synchronization
+		nature of Route Monitoring.
+	    </t>
+	    <t>
+		The following sections will describe each component of the REL
+		message in more detail. 
+	    </t>
+	<section title="Per-Peer Header">
+	    <t>
+		The message does start with a BMP per-peer header as defined in
+		<xref target="RFC7854">RFC 7854</xref>, subsequently extended by
+		<xref target="RFC8671">RFC 8671</xref> and
+		<xref target="RFC9069">RFC 9069</xref> allowing, among the other
+		things, to timestamp an event and set its observation point among
+		those defined in BMP.  
+	    </t>
+	    <t>
+		Because the main purpose of the REL message is to log events at
+		the time of applying an action, the Peer Flags field - even if
+		applied to Adj-Rib-In or Adj-Rib-Out does not have the concept
+		of pre- and post-policy. The flags are hence defined as follows:
+	    </t>
+	    <t>
+	    <figure align="center">
+        <artwork align="center"><![CDATA[
+ 0 1 2 3 4 5 6 7
++-+-+-+-+-+-+-+-+
+|V|A| Reserved  |
++-+-+-+-+-+-+-+-+
+            ]]></artwork>
+	    </figure>
+	    </t>
+	    <t>
+		The V flag and A flag do carry the same meaning as originally defined
+		by <xref target="RFC7854">RFC 7854</xref>. The remaining bits are
+		reserved for future use. They MUST be transmitted as 0 and their
+		values MUST be ignored on receipt. 
+	    </t>
+	</section>
+	<section title="BGP Update PDU">
+	    <t>
+		XXX
+	    </t>
+	</section>
+	<section title="Informational TLVs">
+	    <t>
+		Optional informational trailing TLVs in BMP are formalized by the
+		intersection of <xref target="RFC7854">RFC 7854</xref>,
+		<xref target="I-D.ietf-grow-bmp-tlv">TLV support for BMP Route
+		Monitoring and Peer Down Messages</xref> and
+		<xref target="I-D.ietf-grow-bmp-tlv-ebit">Support for Enterprise-
+		specific TLVs in the BGP Monitoring Protocol</xref>.
+	    </t>
+	    <t>
+		A new registry for REL message TLVs is defined. XXX 
+	    </t>
+	</section>
+	</section>
+
+        <section title="Security Considerations">
+            <t>
+		It is not believed that this document adds any additional security
+		considerations.
+            </t>
+        </section>
+
+        <section title="IANA Considerations">
+            <t>
+		XXX
+	    </t>
+        </section>
+
+    </middle>
+
+    <back>
+
+        <references title="Normative References">
+		&RFC2119;
+		&RFC8174;
+
+		<?rfc include="reference.RFC.7854.xml"?>
+                <?rfc include="reference.RFC.8671.xml"?>
+                <?rfc include="reference.RFC.9069.xml"?>
+		<?rfc include='reference.I-D.ietf-grow-bmp-tlv'?>
+		<?rfc include='reference.I-D.ietf-grow-bmp-tlv-ebit'?>
+        </references>
+
+        <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
+            <t>
+		XXX
+            </t>
+        </section>
+
+    </back>
+</rfc>
