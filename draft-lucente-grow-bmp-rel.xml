@@ -95,15 +95,26 @@
 
 	<section title="Route Event Logging (REL) message">
             <t>
+		In basic terms a REL message does carry Events. Each Event is
+		composed by an Event Subject and an Event Attribute.
+	    </t>
+	    <t>
 		The structure of the Route Event Logging message is the same as
 		the Route Monitoring message as originally defined in
 		<xref target="RFC7854">RFC 7854</xref> and then extended in
 		<xref target="I-D.ietf-grow-bmp-tlv">TLV support for BMP Route
 		Monitoring and Peer Down Messages</xref>: Per-Peer Header,
-		followed by a BGP Update PDU, followed by Informational TLVs.
-		Change being in the semantics: REL does not require an initial
-		flooding of information as dictated by the state synchronization
-		nature of Route Monitoring.
+		followed by a BGP Update PDU to carry Event Subjects, followed
+		by Informational TLVs to carry Event Attributes. Difference is
+		in the semantics: REL does not require an initial flooding of
+		information as dictated by the state synchronization nature
+		of Route Monitoring.
+	    </t>
+	    <t>
+		In the context of BMP REL message, and hence in the reminder of
+		this document, the term Event Subject and NLRI will be used
+		interchangeably. Also the term Event Attribute and Informational
+		TLV will be used interchangeably.
 	    </t>
 	    <t>
 		The following sections will describe each component of the REL
@@ -143,20 +154,43 @@
 	</section>
 	<section title="BGP Update PDU">
 	    <t>
-		XXX
+		The enclosed PDU is artificial, either packed from scratch
+		or repacked starting from an existing BGP Update PDU to only
+		contain the relevant NLRIs affected by an Event (one or
+		multiple). The Event is going to be further described by
+		means of Event Attributes in the subsequent Informational
+		TLVs section of the message.
+	    </t>
+	    <t>
+		The choice of describing one or multiple Event Subjects via
+		a BGP Update PDU is because this does allow on one hand to
+		not invent new encodings for NLRIs, on the other to support
+		all encodings already supported by BGP - with the advantage
+		that no new code, on both the exporting and the receiving
+		sides, have to be produced. 
 	    </t>
 	</section>
 	<section title="Informational TLVs">
 	    <t>
-		Optional informational trailing TLVs in BMP are formalized by the
+		Informational trailing TLVs in BMP are formalized by the
 		intersection of <xref target="RFC7854">RFC 7854</xref>,
 		<xref target="I-D.ietf-grow-bmp-tlv">TLV support for BMP Route
 		Monitoring and Peer Down Messages</xref> and
 		<xref target="I-D.ietf-grow-bmp-tlv-ebit">Support for Enterprise-
-		specific TLVs in the BGP Monitoring Protocol</xref>.
+		specific TLVs in the BGP Monitoring Protocol</xref>. TLVs in
+		a REL message are indexed.
 	    </t>
 	    <t>
-		A new registry for REL message TLVs is defined. XXX 
+		Contrary to other BMP messages where the Informational TLVs
+		section is entirely optional, in order for the REL message
+		to be meaningful, the TLV section carries Event Attributes
+		and hence is mandatory. Event Attributes MUST contain at
+		least one Event Reason referring to each Event Subject (ie.
+		NLRI) enclosed in the BGP Update PDU and MAY contain further
+		optional Attribute TLVs to further characterize the Event.
+	    </t>
+	    <t>
+		A new registry for REL message TLVs is defined. XXX
 	    </t>
 	</section>
 	</section>
