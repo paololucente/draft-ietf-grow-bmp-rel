@@ -3,6 +3,7 @@
         <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
         <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
+	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -183,11 +184,12 @@
 	    </t>
 	    <t>
 		The choice of describing one or multiple Event Subjects via
-		a BGP Update PDU is because this does allow on one hand to
-		not have to invent new encodings for NLRIs on the other to
-		support all types and encodings already supported by BGP -
-		with the advantage that only minimal new code, on both the
-		exporting and the receiving sides, have to be produced. 
+		a BGP Update PDU is because, on one hand, this does allow to
+		not have to invent new encodings for NLRIs, while on the
+		other, to support all types and encodings already supported
+		by BGP. The advantage being that only minimal new code, on
+		both the exporting and the receiving sides, will have to be
+		produced. 
 	    </t>
 	</section>
 	<section title="Informational TLVs">
@@ -208,7 +210,31 @@
 		optional attribute TLVs to further characterize the Event.
 	    </t>
 	    <t>
-		A new registry for REL message TLVs is defined. XXX
+		A new registry called "Route Event Logging TLVs" is defined and
+		is seeded with the following TLVs:
+	    </t>
+	    <t>
+		<list style="symbols">
+		<t>&IANA_REL_CODE_EVENT_REASON; = Event Reason TLV (4 octets).
+		Indicates the IANA-registered reason code describing the type
+		of the event. The following reason codes are defined as part
+		of the "Event Reason TLV" registry:
+
+<figure>
+              <artwork align="center"><![CDATA[
++--------+----------------------+
+| Value  | Path type            |
++-------------------------------+
+| 0x0000 | Unknown              |
+| 0x0001 | Log Action		|
+| 0x0002 | Policy Discard	|
+| 0x0004 | Validation Fail	|
++--------+----------------------+
+
+     Table 1: Event Reason Codes ]]></artwork>
+            </figure>
+		</t>
+		</list>
 	    </t>
 	</section>
 	</section>
@@ -222,7 +248,7 @@
 
         <section title="IANA Considerations">
             <t>
-		XXX
+		TBD
 	    </t>
         </section>
 
@@ -244,7 +270,7 @@
 
         <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
             <t>
-		XXX
+		TBD
             </t>
         </section>
 

@@ -69,7 +69,7 @@ Table of Contents
      3.1.  Per-Peer Header . . . . . . . . . . . . . . . . . . . . .   3
      3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   4
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
    6.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -189,11 +189,11 @@ Internet-Draft                   BMP REL                   November 2022
    Event Attributes by indexed Informational TLVs.
 
    The choice of describing one or multiple Event Subjects via a BGP
-   Update PDU is because this does allow on one hand to not have to
-   invent new encodings for NLRIs on the other to support all types and
-   encodings already supported by BGP - with the advantage that only
-   minimal new code, on both the exporting and the receiving sides, have
-   to be produced.
+   Update PDU is because, on one hand, this does allow to not have to
+   invent new encodings for NLRIs, while on the other, to support all
+   types and encodings already supported by BGP.  The advantage being
+   that only minimal new code, on both the exporting and the receiving
+   sides, will have to be produced.
 
 3.3.  Informational TLVs
 
@@ -209,13 +209,13 @@ Internet-Draft                   BMP REL                   November 2022
    NLRI) carried by the BGP Update PDU and MAY contain further optional
    attribute TLVs to further characterize the Event.
 
-   A new registry for REL message TLVs is defined.  XXX
+   A new registry called "Route Event Logging TLVs" is defined and is
+   seeded with the following TLVs:
 
-4.  Security Considerations
-
-   It is not believed that this document adds any additional security
-   considerations.
-
+   o  TBD2 = Event Reason TLV (4 octets).  Indicates the IANA-registered
+      reason code describing the type of the event.  The following
+      reason codes are defined as part of the "Event Reason TLV"
+      registry:
 
 
 
@@ -226,9 +226,25 @@ Lucente                   Expires May 13, 2023                  [Page 4]
 Internet-Draft                   BMP REL                   November 2022
 
 
+                     +--------+----------------------+
+                     | Value  | Path type            |
+                     +-------------------------------+
+                     | 0x0000 | Unknown              |
+                     | 0x0001 | Log Action           |
+                     | 0x0002 | Policy Discard       |
+                     | 0x0004 | Validation Fail      |
+                     +--------+----------------------+
+
+                          Table 1: Event Reason Codes
+
+4.  Security Considerations
+
+   It is not believed that this document adds any additional security
+   considerations.
+
 5.  IANA Considerations
 
-   XXX
+   TBD
 
 6.  Normative References
 
@@ -256,6 +272,16 @@ Internet-Draft                   BMP REL                   November 2022
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
 
+
+
+
+
+
+Lucente                   Expires May 13, 2023                  [Page 5]
+
+Internet-Draft                   BMP REL                   November 2022
+
+
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
@@ -275,16 +301,9 @@ Internet-Draft                   BMP REL                   November 2022
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
-
-
-Lucente                   Expires May 13, 2023                  [Page 5]
-
-Internet-Draft                   BMP REL                   November 2022
-
-
 Acknowledgements
 
-   XXX
+   TBD
 
 Author's Address
 
@@ -295,25 +314,6 @@ Author's Address
    NL
 
    Email: paolo@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
