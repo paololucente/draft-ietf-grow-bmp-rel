@@ -4,9 +4,9 @@
 
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                       NTT
-Updates: 7854 (if approved)                             October 24, 2022
+Updates: 7854 (if approved)                             November 9, 2022
 Intended status: Standards Track
-Expires: April 27, 2023
+Expires: May 13, 2023
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 27, 2023.
+   This Internet-Draft will expire on May 13, 2023.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Lucente                  Expires April 27, 2023                 [Page 1]
+Lucente                   Expires May 13, 2023                  [Page 1]
 
-Internet-Draft                   BMP REL                    October 2022
+Internet-Draft                   BMP REL                   November 2022
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -70,10 +70,10 @@ Table of Contents
      3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   4
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
-   6.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   5
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   6.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   6
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -85,16 +85,19 @@ Table of Contents
    monitored router could export event-driven data with the relevant
    information.
 
-   The envisioned use-cases are the most diverse and range from route
-   filtering to reporting the outcome of validation processes taking
-   place on the monitored router, to isolating certain subsets of data
-   to be validated offline, to broader closed-loop operations.
+   The envisioned use-cases are the most diverse and range from logging
+   route filtering to reporting the outcome of validation processes
+   taking place on the monitored router, to isolating certain subsets of
+   data to be validated offline, to broader closed-loop operations.
 
    Since no other existing BMP message type does fit the described
    purpose, this document defines a new Route Event Logging (REL)
    message type that is suitable to carry event-driven data and is
-   extensible in nature.  While the message format is somewhat similar
-   to the Route Monitoring message type, their semantics are different.
+   extensible in nature.  While the message format is similar to the
+   Route Mirroring message type defined in RFC 7854 [RFC7854] and to the
+   Route Monitoring message type as defined in TLV support for BMP Route
+   Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv], the
+   semantics are different.
 
 2.  Terminology
 
@@ -106,27 +109,38 @@ Table of Contents
 
 
 
-
-
-
-Lucente                  Expires April 27, 2023                 [Page 2]
+Lucente                   Expires May 13, 2023                  [Page 2]
 
-Internet-Draft                   BMP REL                    October 2022
+Internet-Draft                   BMP REL                   November 2022
 
 
 3.  Route Event Logging (REL) message
 
    In basic terms a REL message does carry Events.  Each Event is
-   composed by an Event Subject and an Event Attribute.
+   logically composed by one Event Subject and one or more Event
+   Attributes.
 
    The structure of the Route Event Logging message is the same as the
-   Route Monitoring message as originally defined in RFC 7854 [RFC7854]
-   and then extended in TLV support for BMP Route Monitoring and Peer
-   Down Messages [I-D.ietf-grow-bmp-tlv]: Per-Peer Header, followed by a
-   BGP Update PDU to carry Event Subjects, followed by Informational
-   TLVs to carry Event Attributes.  Difference is in the semantics: REL
-   does not require an initial flooding of information as dictated by
-   the state synchronization nature of Route Monitoring.
+   Route Monitoring message defined in TLV support for BMP Route
+   Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv] where the
+   Per-Peer Header is followed by indexed TLVs.
+
+   One or more Event Subjects are packed as part of a BGP Update PDU.
+   The BGP Update PDU Section 4.3 of [RFC4271] is encoded itself as part
+   of a BGP Message TLV with code point TBD1 and index set to zero.
+   Each Event Subject is represented by an NLRI carried in the PDU.
+
+   The BGP Message TLV may be preceeded and followed by indexed
+   Informational TLVs that carry Event Attributes, where attributes are
+   bound to subjects referring to their index in the PDU or via a Group
+   TLV as described in TLV support for BMP Route Monitoring and Peer
+   Down Messages [I-D.ietf-grow-bmp-tlv].
+
+   Speaking comparatively to other existing message types, REL does not
+   require an initial flooding of information as per the state
+   synchronization nature of Route Monitoring and does not aim to
+   provide a non-state-compressed full-fidelity view of all messages
+   received as per the debugging nature of Route Mirroring.
 
    In the context of BMP REL message, and hence in the reminder of this
    document, the term Event Subject and NLRI will be used
@@ -141,12 +155,20 @@ Internet-Draft                   BMP REL                    October 2022
    The message does start with a BMP per-peer header as defined in RFC
    7854 [RFC7854], subsequently extended by RFC 8671 [RFC8671] and RFC
    9069 [RFC9069] allowing, among the other things, to timestamp an
-   event and set its observation point among those defined in BMP.
+   Event and set its observation point among those defined in BMP.
 
    Because the main purpose of the REL message is to log events at the
    time of applying an action, the Peer Flags field - even if applied to
    Adj-Rib-In or Adj-Rib-Out does not have the concept of pre- and post-
    policy.  The flags are hence defined as follows:
+
+
+
+
+Lucente                   Expires May 13, 2023                  [Page 3]
+
+Internet-Draft                   BMP REL                   November 2022
+
 
                               0 1 2 3 4 5 6 7
                              +-+-+-+-+-+-+-+-+
@@ -158,47 +180,34 @@ Internet-Draft                   BMP REL                    October 2022
    use.  They MUST be transmitted as 0 and their values MUST be ignored
    on receipt.
 
-
-
-
-
-
-
-
-Lucente                  Expires April 27, 2023                 [Page 3]
-
-Internet-Draft                   BMP REL                    October 2022
-
-
 3.2.  BGP Update PDU
 
-   The enclosed PDU is artificial, either packed from scratch or
-   repacked starting from an existing BGP Update PDU to only contain the
-   relevant NLRIs affected by an Event (one or multiple).  The Event is
-   going to be further described by means of Event Attributes in the
-   subsequent Informational TLVs section of the message.
+   The PDU enclosed as part of a BGP Message TLV is artificial, either
+   packed from scratch or repacked starting from an existing BGP Update
+   PDU to only contain the relevant NLRIs affected by an Event (one or
+   multiple).  The Event is going to be further described by means of
+   Event Attributes by indexed Informational TLVs.
 
    The choice of describing one or multiple Event Subjects via a BGP
-   Update PDU is because this does allow on one hand to not invent new
-   encodings for NLRIs, on the other to support all encodings already
-   supported by BGP - with the advantage that no new code, on both the
-   exporting and the receiving sides, have to be produced.
+   Update PDU is because this does allow on one hand to not have to
+   invent new encodings for NLRIs on the other to support all types and
+   encodings already supported by BGP - with the advantage that only
+   minimal new code, on both the exporting and the receiving sides, have
+   to be produced.
 
 3.3.  Informational TLVs
 
-   Informational trailing TLVs in BMP are formalized by the intersection
-   of RFC 7854 [RFC7854], TLV support for BMP Route Monitoring and Peer
-   Down Messages [I-D.ietf-grow-bmp-tlv] and Support for Enterprise-
-   specific TLVs in the BGP Monitoring Protocol
-   [I-D.ietf-grow-bmp-tlv-ebit].  TLVs in a REL message are indexed.
+   Informational TLVs in BMP are formalized by the intersection of RFC
+   7854 [RFC7854], TLV support for BMP Route Monitoring and Peer Down
+   Messages [I-D.ietf-grow-bmp-tlv] and Support for Enterprise- specific
+   TLVs in the BGP Monitoring Protocol [I-D.ietf-grow-bmp-tlv-ebit].
+   TLVs in a REL message are indexed.
 
-   Contrary to other BMP messages where the Informational TLVs section
-   is entirely optional, in order for the REL message to be meaningful,
-   the TLV section carries Event Attributes and hence is mandatory.
-   Event Attributes MUST contain at least one Event Reason referring to
-   each Event Subject (ie.  NLRI) enclosed in the BGP Update PDU and MAY
-   contain further optional Attribute TLVs to further characterize the
-   Event.
+   Contrary to other BMP messages where all Informational TLVs are
+   entirely optional, in order for a REL message to be meaningful, it
+   MUST contain at least one Event Reason TLV per Event Subject (ie.
+   NLRI) carried by the BGP Update PDU and MAY contain further optional
+   attribute TLVs to further characterize the Event.
 
    A new registry for REL message TLVs is defined.  XXX
 
@@ -207,43 +216,45 @@ Internet-Draft                   BMP REL                    October 2022
    It is not believed that this document adds any additional security
    considerations.
 
+
+
+
+
+
+Lucente                   Expires May 13, 2023                  [Page 4]
+
+Internet-Draft                   BMP REL                   November 2022
+
+
 5.  IANA Considerations
 
    XXX
 
 6.  Normative References
 
-
-
-
-
-
-
-
-
-Lucente                  Expires April 27, 2023                 [Page 4]
-
-Internet-Draft                   BMP REL                    October 2022
-
-
    [I-D.ietf-grow-bmp-tlv]
               Lucente, P. and Y. Gu, "TLV support for BMP Route
               Monitoring and Peer Down Messages", draft-ietf-grow-bmp-
-              tlv-08 (work in progress), October 2022,
+              tlv-09 (work in progress), October 2022,
               <https://www.ietf.org/archive/id/draft-ietf-grow-bmp-tlv-
-              08.txt>.
+              09.txt>.
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
               TLVs in the BGP Monitoring Protocol", draft-ietf-grow-bmp-
-              tlv-ebit-00 (work in progress), July 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-grow-bmp-tlv-
-              ebit-00.txt>.
+              tlv-ebit-01 (work in progress), November 2022,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ietf-grow-bmp-tlv-ebit/>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
+              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
+              DOI 10.17487/RFC4271, January 2006,
+              <https://www.rfc-editor.org/info/rfc4271>.
 
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
@@ -264,23 +275,18 @@ Internet-Draft                   BMP REL                    October 2022
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
+
+
+Lucente                   Expires May 13, 2023                  [Page 5]
+
+Internet-Draft                   BMP REL                   November 2022
+
+
 Acknowledgements
 
    XXX
 
 Author's Address
-
-
-
-
-
-
-
-
-Lucente                  Expires April 27, 2023                 [Page 5]
-
-Internet-Draft                   BMP REL                    October 2022
-
 
    Paolo Lucente
    NTT
@@ -327,10 +333,4 @@ Internet-Draft                   BMP REL                    October 2022
 
 
 
-
-
-
-
-
-
-Lucente                  Expires April 27, 2023                 [Page 6]
+Lucente                   Expires May 13, 2023                  [Page 6]
