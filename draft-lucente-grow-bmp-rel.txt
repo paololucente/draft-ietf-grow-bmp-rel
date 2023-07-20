@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                             12 May 2023
-Expires: 13 November 2023
+Intended status: Standards Track                            19 July 2023
+Expires: 20 January 2024
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 November 2023.
+   This Internet-Draft will expire on 20 January 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Lucente & Cardona       Expires 13 November 2023                [Page 1]
+Lucente & Cardona        Expires 20 January 2024                [Page 1]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -87,14 +87,15 @@ Table of Contents
    a result, actions are performed on them.  Currently, in order to
    infer the outcome of an evaluation process, a comparative analysis
    needs to be performed between Route Monitoring data for two distinct
-   observation points of interest.  It would be instead more useful if a
-   monitored router could export event-driven data with the relevant
-   information.
+   observation points of interest, for example Adj-Rib-In pre-policy and
+   post-policy.  It would be instead more useful if a monitored router
+   could export event-driven data with the relevant information.
 
    The envisioned use-cases are the most diverse and range from logging
    route filtering to reporting the outcome of validation processes
    taking place on the monitored router, to isolating certain subsets of
-   data to be validated offline, to broader closed-loop operations.
+   data to be validated offline, to report malformed BGP packets, to
+   broader closed-loop operations.
 
    Since no other existing BMP message type does fit the described
    purpose, this document defines a new Route Event Logging (REL)
@@ -108,10 +109,9 @@ Table of Contents
 
 
 
-
-Lucente & Cardona       Expires 13 November 2023                [Page 2]
+Lucente & Cardona        Expires 20 January 2024                [Page 2]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
 2.  Terminology
@@ -131,18 +131,21 @@ Internet-Draft                   BMP REL                        May 2023
    The structure of the Route Event Logging message is the same as the
    Route Monitoring message defined in TLV support for BMP Route
    Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv] where the
-   Per-Peer Header is followed by indexed TLVs.
+   Per-Peer Header is followed by a BGP Message TLV, one indexed
+   Informational TLV and further optional indexed Informational TLVs.
+   An example of such structure is available in Section 4.2.1.1 of
+   [I-D.ietf-grow-bmp-tlv].
 
    One or more Event Subjects are packed as part of a BGP Update PDU.
    The BGP Update PDU Section 4.3 of [RFC4271] is encoded itself as part
    of a BGP Message TLV with code point TBD1 and index set to zero.
    Each Event Subject is represented by an NLRI carried in the PDU.
 
-   The BGP Message TLV may be preceeded and followed by indexed
+   The BGP Message TLV may be preceeded and/or followed by indexed
    Informational TLVs that carry Event Attributes, where attributes are
-   bound to subjects referring to their index in the PDU or via a Group
-   TLV as described in TLV support for BMP Route Monitoring and Peer
-   Down Messages [I-D.ietf-grow-bmp-tlv].
+   bound to subjects referring to their positional index within the PDU
+   or via a Group TLV as described in Section 4.2.1 of
+   [I-D.ietf-grow-bmp-tlv]
 
    Speaking comparatively to other existing message types, REL does not
    require an initial flooding of information as per the state
@@ -162,12 +165,9 @@ Internet-Draft                   BMP REL                        May 2023
 
 
 
-
-
-
-Lucente & Cardona       Expires 13 November 2023                [Page 3]
+Lucente & Cardona        Expires 20 January 2024                [Page 3]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
 3.1.  Per-Peer Header
@@ -221,9 +221,9 @@ Internet-Draft                   BMP REL                        May 2023
 
 
 
-Lucente & Cardona       Expires 13 November 2023                [Page 4]
+Lucente & Cardona        Expires 20 January 2024                [Page 4]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
    Contrary to other BMP messages where all Informational TLVs are
@@ -247,6 +247,7 @@ Internet-Draft                   BMP REL                        May 2023
                       | 0x0001 | Log Action           |
                       | 0x0002 | Policy Discard       |
                       | 0x0004 | Validation Fail      |
+                      | 0x0008 | Malformed Packet     |
                       +--------+----------------------+
 
                            Table 1: Event Reason Codes
@@ -276,10 +277,9 @@ Internet-Draft                   BMP REL                        May 2023
 
 
 
-
-Lucente & Cardona       Expires 13 November 2023                [Page 5]
+Lucente & Cardona        Expires 20 January 2024                [Page 5]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
    [I-D.ietf-grow-bmp-tlv-ebit]
@@ -333,9 +333,9 @@ Authors' Addresses
 
 
 
-Lucente & Cardona       Expires 13 November 2023                [Page 6]
+Lucente & Cardona        Expires 20 January 2024                [Page 6]
 
-Internet-Draft                   BMP REL                        May 2023
+Internet-Draft                   BMP REL                       July 2023
 
 
    Camilo Cardona
@@ -389,4 +389,4 @@ Internet-Draft                   BMP REL                        May 2023
 
 
 
-Lucente & Cardona       Expires 13 November 2023                [Page 7]
+Lucente & Cardona        Expires 20 January 2024                [Page 7]

@@ -82,14 +82,16 @@
 		result, actions are performed on them. Currently, in order to infer the
 		outcome of an evaluation process, a comparative analysis needs to be
 		performed between Route Monitoring data for two distinct observation
-		points of interest. It would be instead more useful if a monitored
-		router could export event-driven data with the relevant information.
+		points of interest, for example Adj-Rib-In pre-policy and post-policy.
+		It would be instead more useful if a monitored router could export
+		event-driven data with the relevant information.
             </t>
             <t>
 		The envisioned use-cases are the most diverse and range from logging
 		route filtering to reporting the outcome of validation processes taking
 		place on the monitored router, to isolating certain subsets of data
-		to be validated offline, to broader closed-loop operations. 
+		to be validated offline, to report malformed BGP packets, to broader
+		closed-loop operations. 
             </t>
             <t>
 		Since no other existing BMP message type does fit the described purpose,
@@ -124,7 +126,10 @@
 		The structure of the Route Event Logging message is the same as
 		the Route Monitoring message defined in <xref target="I-D.ietf-grow-bmp-tlv">
 		TLV support for BMP Route Monitoring and Peer Down Messages</xref>
-		where the Per-Peer Header is followed by indexed TLVs.
+		where the Per-Peer Header is followed by a BGP Message TLV, one
+		indexed Informational TLV and further optional indexed Informational
+		TLVs. An example of such structure is available in
+		<xref target="I-D.ietf-grow-bmp-tlv">Section 4.2.1.1 of</xref>.
 	    </t>
 	    <t>
 		One or more Event Subjects are packed as part of a BGP Update PDU.
@@ -134,11 +139,11 @@
 		NLRI carried in the PDU.
 	    </t>
 	    <t>
-		The BGP Message TLV may be preceeded and followed by indexed
+		The BGP Message TLV may be preceeded and/or followed by indexed
 		Informational TLVs that carry Event Attributes, where attributes
-		are bound to subjects referring to their index in the PDU or via
-		a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
-                TLV support for BMP Route Monitoring and Peer Down Messages</xref>.
+		are bound to subjects referring to their positional index within
+		the PDU or via a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
+                Section 4.2.1 of</xref>
 	    </t>
 	    <t>
 		Speaking comparatively to other existing message types, REL does
@@ -245,6 +250,7 @@
 | 0x0001 | Log Action		|
 | 0x0002 | Policy Discard	|
 | 0x0004 | Validation Fail	|
+| 0x0008 | Malformed Packet     |
 +--------+----------------------+
 
      Table 1: Event Reason Codes ]]></artwork>
