@@ -241,7 +241,7 @@ Internet-Draft                   BMP REL                    October 2023
       registry:
 
                       +--------+----------------------+
-                      | Value  | Path type            |
+                      | Value  | Reason               |
                       +-------------------------------+
                       | 0x0000 | Unknown              |
                       | 0x0001 | Log Action           |
@@ -320,9 +320,23 @@ Internet-Draft                   BMP REL                    October 2023
 
 Acknowledgements
 
-   TBD
+   The authors would like to thank Jeff Haas and Luuk Hendriks for their
+   valuable input.  The authors would also like to thank Mike Booth for
+   his review.
 
 Authors' Addresses
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 21 April 2024                 [Page 6]
+
+Internet-Draft                   BMP REL                    October 2023
+
 
    Paolo Lucente
    NTT
@@ -332,26 +346,12 @@ Authors' Addresses
    Email: paolo@ntt.net
 
 
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 6]
-
-Internet-Draft                   BMP REL                    October 2023
-
-
    Camilo Cardona
    NTT
    164-168, Carrer de Numancia
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
-
-
-
-
-
-
-
 
 
 

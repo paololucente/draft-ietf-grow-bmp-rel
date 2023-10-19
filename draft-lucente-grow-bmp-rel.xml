@@ -244,7 +244,7 @@
 <figure>
               <artwork align="center"><![CDATA[
 +--------+----------------------+
-| Value  | Path type            |
+| Value  | Reason		|
 +-------------------------------+
 | 0x0000 | Unknown              |
 | 0x0001 | Log Action		|
@@ -293,7 +293,9 @@
 
     <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
             <t>
-		TBD
+		The authors would like to thank Jeff Haas and Luuk Hendriks for
+		their valuable input. The authors would also like to thank Mike
+		Booth for his review.
             </t>
     </section>
 
