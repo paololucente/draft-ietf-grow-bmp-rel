@@ -5,12 +5,12 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                            19 July 2023
-Expires: 20 January 2024
+Intended status: Standards Track                         19 October 2023
+Expires: 21 April 2024
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
-                     draft-lucente-grow-bmp-rel-02
+                     draft-lucente-grow-bmp-rel-03
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 January 2024.
+   This Internet-Draft will expire on 21 April 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 1]
+Lucente & Cardona         Expires 21 April 2024                 [Page 1]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 2]
+Lucente & Cardona         Expires 21 April 2024                 [Page 2]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
 2.  Terminology
@@ -165,9 +165,9 @@ Internet-Draft                   BMP REL                       July 2023
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 3]
+Lucente & Cardona         Expires 21 April 2024                 [Page 3]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
 3.1.  Per-Peer Header
@@ -221,9 +221,9 @@ Internet-Draft                   BMP REL                       July 2023
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 4]
+Lucente & Cardona         Expires 21 April 2024                 [Page 4]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
    Contrary to other BMP messages where all Informational TLVs are
@@ -277,17 +277,17 @@ Internet-Draft                   BMP REL                       July 2023
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 5]
+Lucente & Cardona         Expires 21 April 2024                 [Page 5]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
               TLVs in the BGP Monitoring Protocol", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-02, 13 March
+              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-03, 24 July
               2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              grow-bmp-tlv-ebit-02>.
+              grow-bmp-tlv-ebit-03>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -333,9 +333,9 @@ Authors' Addresses
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 6]
+Lucente & Cardona         Expires 21 April 2024                 [Page 6]
 
-Internet-Draft                   BMP REL                       July 2023
+Internet-Draft                   BMP REL                    October 2023
 
 
    Camilo Cardona
@@ -389,4 +389,4 @@ Internet-Draft                   BMP REL                       July 2023
 
 
 
-Lucente & Cardona        Expires 20 January 2024                [Page 7]
+Lucente & Cardona         Expires 21 April 2024                 [Page 7]
