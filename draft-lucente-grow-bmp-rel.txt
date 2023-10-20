@@ -77,9 +77,10 @@ Table of Contents
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
        3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
        3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   7
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
@@ -98,7 +99,6 @@ Table of Contents
    taking place on the monitored router, to isolating certain subsets of
    data to be validated offline, to report malformed BGP packets, to
    broader closed-loop operations.
-
 
 
 
@@ -268,10 +268,10 @@ Internet-Draft                   BMP REL                    October 2023
    caused the discard.  The string size MUST be within the range of 1 to
    255 bytes.
 
-4.  Security Considerations
 
-   It is not believed that this document adds any additional security
-   considerations.
+
+
+
 
 
 
@@ -282,11 +282,38 @@ Lucente & Cardona         Expires 22 April 2024                 [Page 5]
 Internet-Draft                   BMP REL                    October 2023
 
 
-5.  IANA Considerations
+4.  Operational Considerations
+
+   Route Event Logging messages are event-driven in nature so the
+   general recommendation is to use them to report on specific
+   conditions of interest in order, for example, to facilitate data
+   mining or avoid differential analysis.  When the objective is to
+   annotate every received or announced NLRI then the recommendation is
+   to use Route Monitoring messages with BMP Path Marking
+   [I-D.ietf-grow-bmp-path-marking-tlv].  As an example consider RPKI
+   validation status: when the objective is to report on any validations
+   tatus (ie. valid, invalid and unknown), BMP Path Marking should be
+   used; when the objective is instead to report only invalids then
+   Route Event Logging with Validation Fail Event Reason should be used.
+
+5.  Security Considerations
+
+   It is not believed that this document adds any additional security
+   considerations.
+
+6.  IANA Considerations
 
    TBD
 
-6.  References
+7.  References
+
+   [I-D.ietf-grow-bmp-path-marking-tlv]
+              Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
+              Graf, "BMP Extension for Path Status TLV", Work in
+              Progress, Internet-Draft, draft-ietf-grow-bmp-path-
+              marking-tlv-00, 13 September 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
+              bmp-path-marking-tlv-00>.
 
    [I-D.ietf-grow-bmp-tlv]
               Lucente, P. and Y. Gu, "TLV support for BMP Route
@@ -301,6 +328,15 @@ Internet-Draft                   BMP REL                    October 2023
               Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-03, 24 July
               2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
               grow-bmp-tlv-ebit-03>.
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 6]
+
+Internet-Draft                   BMP REL                    October 2023
+
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -331,13 +367,6 @@ Internet-Draft                   BMP REL                    October 2023
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
-
-
-Lucente & Cardona         Expires 22 April 2024                 [Page 6]
-
-Internet-Draft                   BMP REL                    October 2023
-
-
 Acknowledgements
 
    The authors would like to thank Jeff Haas and Luuk Hendriks for their
@@ -352,6 +381,17 @@ Authors' Addresses
    3771 Barneveld
    Netherlands
    Email: paolo@ntt.net
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 7]
+
+Internet-Draft                   BMP REL                    October 2023
 
 
    Camilo Cardona
@@ -389,4 +429,20 @@ Authors' Addresses
 
 
 
-Lucente & Cardona         Expires 22 April 2024                 [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 8]

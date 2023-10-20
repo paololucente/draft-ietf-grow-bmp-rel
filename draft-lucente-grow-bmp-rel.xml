@@ -4,6 +4,7 @@
         <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
+        <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
 
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
@@ -269,6 +270,23 @@
 	</section>
 	</section>
 
+        <section title="Operational Considerations">
+	    <t>
+		Route Event Logging messages are event-driven in nature so the general
+		recommendation is to use them to report on specific conditions of
+		interest in order, for example, to facilitate data mining or avoid
+		differential analysis. When the objective is to annotate every
+		received or announced NLRI then the recommendation is to use Route
+		Monitoring messages with <xref target="I-D.ietf-grow-bmp-path-marking-tlv">
+		BMP Path Marking</xref>.
+		As an example consider RPKI validation status: when the objective is
+		to report on any validations tatus (ie. valid, invalid and unknown),
+		BMP Path Marking should be used; when the objective is instead to
+		report only invalids then Route Event Logging with Validation Fail
+		Event Reason should be used.
+	    </t>
+	</section>
+
         <section title="Security Considerations">
             <t>
 		It is not believed that this document adds any additional security
@@ -297,6 +315,7 @@
 
 		&I-D.ietf-grow-bmp-tlv;
 		&I-D.ietf-grow-bmp-tlv-ebit;
+		&I-D.ietf-grow-bmp-path-marking-tlv;
     </references>
 
     <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
