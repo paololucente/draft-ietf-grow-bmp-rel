@@ -7,6 +7,7 @@
 
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
+	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD3">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -232,14 +233,14 @@
 	    </t>
 	    <t>
 		A new registry called "Route Event Logging TLVs" is defined and
-		is seeded with the following TLVs:
+		is seeded with the TLVs detailed in the following sections.
 	    </t>
-	    <t>
-		<list style="symbols">
-		<t>&IANA_REL_CODE_EVENT_REASON; = Event Reason TLV (4 octets).
-		Indicates the IANA-registered reason code describing the type
-		of the event. The following reason codes are defined as part
-		of the "Event Reason TLV" registry:
+	    <section title="Event Reason TLV">
+		<t>
+		    &IANA_REL_CODE_EVENT_REASON; = Event Reason TLV (4 octets).
+		    Indicates the IANA-registered reason code describing the type
+		    of the event. The following reason codes are defined as part
+		    of the "Event Reason TLV" registry:
 
 <figure>
               <artwork align="center"><![CDATA[
@@ -254,10 +255,17 @@
 +--------+----------------------+
 
      Table 1: Event Reason Codes ]]></artwork>
-            </figure>
+</figure>
 		</t>
-		</list>
-	    </t>
+	    </section>
+	    <section title="Policy Discard TLV">
+		<t>
+		    &IANA_REL_CODE_POLICY_DISCARD; = Policy Discard TLV. The value
+		    contains a UTF-8 string whose value MUST be equal to the value of
+		    the routing policy name that caused the discard. The string size
+		    MUST be within the range of 1 to 255 bytes.
+		</t>
+	    </section>
 	</section>
 	</section>
 

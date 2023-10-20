@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                         19 October 2023
-Expires: 21 April 2024
+Intended status: Standards Track                         20 October 2023
+Expires: 22 April 2024
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 April 2024.
+   This Internet-Draft will expire on 22 April 2024.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona         Expires 21 April 2024                 [Page 1]
+Lucente & Cardona         Expires 22 April 2024                 [Page 1]
 
 Internet-Draft                   BMP REL                    October 2023
 
@@ -74,12 +74,14 @@ Table of Contents
    3.  Route Event Logging (REL) message . . . . . . . . . . . . . .   3
      3.1.  Per-Peer Header . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
-     3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   4
+     3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
+       3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
+       3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -97,6 +99,21 @@ Table of Contents
    data to be validated offline, to report malformed BGP packets, to
    broader closed-loop operations.
 
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 2]
+
+Internet-Draft                   BMP REL                    October 2023
+
+
    Since no other existing BMP message type does fit the described
    purpose, this document defines a new Route Event Logging (REL)
    message type that is suitable to carry event-driven data and is
@@ -105,14 +122,6 @@ Table of Contents
    Route Monitoring message type as defined in TLV support for BMP Route
    Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv], the
    semantics are different.
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 2]
-
-Internet-Draft                   BMP REL                    October 2023
-
 
 2.  Terminology
 
@@ -153,6 +162,14 @@ Internet-Draft                   BMP REL                    October 2023
    provide a non-state-compressed full-fidelity view of all messages
    received as per the debugging nature of Route Mirroring.
 
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 3]
+
+Internet-Draft                   BMP REL                    October 2023
+
+
    In the context of BMP REL message, and hence in the reminder of this
    document, the term Event Subject and NLRI will be used
    interchangeably.  Also the term Event Attribute and Informational TLV
@@ -160,15 +177,6 @@ Internet-Draft                   BMP REL                    October 2023
 
    The following sections will describe each component of the REL
    message in more detail.
-
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 3]
-
-Internet-Draft                   BMP REL                    October 2023
-
 
 3.1.  Per-Peer Header
 
@@ -207,6 +215,17 @@ Internet-Draft                   BMP REL                    October 2023
    that only minimal new code, on both the exporting and the receiving
    sides, will have to be produced.
 
+
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 4]
+
+Internet-Draft                   BMP REL                    October 2023
+
+
 3.3.  Informational TLVs
 
    Informational TLVs in BMP are formalized by the intersection of RFC
@@ -215,17 +234,6 @@ Internet-Draft                   BMP REL                    October 2023
    TLVs in the BGP Monitoring Protocol [I-D.ietf-grow-bmp-tlv-ebit].
    TLVs in a REL message are indexed.
 
-
-
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 4]
-
-Internet-Draft                   BMP REL                    October 2023
-
-
    Contrary to other BMP messages where all Informational TLVs are
    entirely optional, in order for a REL message to be meaningful, it
    MUST contain at least one Event Reason TLV per Event Subject (ie.
@@ -233,29 +241,46 @@ Internet-Draft                   BMP REL                    October 2023
    attribute TLVs to further characterize the Event.
 
    A new registry called "Route Event Logging TLVs" is defined and is
-   seeded with the following TLVs:
+   seeded with the TLVs detailed in the following sections.
 
-   *  TBD2 = Event Reason TLV (4 octets).  Indicates the IANA-registered
-      reason code describing the type of the event.  The following
-      reason codes are defined as part of the "Event Reason TLV"
-      registry:
+3.3.1.  Event Reason TLV
 
-                      +--------+----------------------+
-                      | Value  | Reason               |
-                      +-------------------------------+
-                      | 0x0000 | Unknown              |
-                      | 0x0001 | Log Action           |
-                      | 0x0002 | Policy Discard       |
-                      | 0x0004 | Validation Fail      |
-                      | 0x0008 | Malformed Packet     |
-                      +--------+----------------------+
+   TBD2 = Event Reason TLV (4 octets).  Indicates the IANA-registered
+   reason code describing the type of the event.  The following reason
+   codes are defined as part of the "Event Reason TLV" registry:
 
-                           Table 1: Event Reason Codes
+                     +--------+----------------------+
+                     | Value  | Reason               |
+                     +-------------------------------+
+                     | 0x0000 | Unknown              |
+                     | 0x0001 | Log Action           |
+                     | 0x0002 | Policy Discard       |
+                     | 0x0004 | Validation Fail      |
+                     | 0x0008 | Malformed Packet     |
+                     +--------+----------------------+
+
+                          Table 1: Event Reason Codes
+
+3.3.2.  Policy Discard TLV
+
+   TBD3 = Policy Discard TLV.  The value contains a UTF-8 string whose
+   value MUST be equal to the value of the routing policy name that
+   caused the discard.  The string size MUST be within the range of 1 to
+   255 bytes.
 
 4.  Security Considerations
 
    It is not believed that this document adds any additional security
    considerations.
+
+
+
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 5]
+
+Internet-Draft                   BMP REL                    October 2023
+
 
 5.  IANA Considerations
 
@@ -269,18 +294,6 @@ Internet-Draft                   BMP REL                    October 2023
               Internet-Draft, draft-ietf-grow-bmp-tlv-12, 27 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-tlv-12>.
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 5]
-
-Internet-Draft                   BMP REL                    October 2023
-
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
@@ -318,6 +331,13 @@ Internet-Draft                   BMP REL                    October 2023
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
+
+
+Lucente & Cardona         Expires 22 April 2024                 [Page 6]
+
+Internet-Draft                   BMP REL                    October 2023
+
+
 Acknowledgements
 
    The authors would like to thank Jeff Haas and Luuk Hendriks for their
@@ -325,18 +345,6 @@ Acknowledgements
    his review.
 
 Authors' Addresses
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 6]
-
-Internet-Draft                   BMP REL                    October 2023
-
 
    Paolo Lucente
    NTT
@@ -381,12 +389,4 @@ Internet-Draft                   BMP REL                    October 2023
 
 
 
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 21 April 2024                 [Page 7]
+Lucente & Cardona         Expires 22 April 2024                 [Page 7]
