@@ -1,7 +1,7 @@
 Logging of routing events in BGP Monitoring Protocol (BMP)
 ===========================================================
 
-> ### draft-lucente-grow-bmp-rel
+> ### draft-ietf-grow-bmp-rel
 
 - - -
 
@@ -16,7 +16,7 @@ Generating text from xml
 > You'll do this each time you want to generate a text version
 
 ```
-$ xml2rfc draft-lucente-grow-bmp-rel.xml --text
-Parsing file draft-lucente-grow-bmp-rel.xml
-Created file draft-lucente-grow-bmp-rel.txt
+$ xml2rfc draft-ietf-grow-bmp-rel.xml --text
+Parsing file draft-ietf-grow-bmp-rel.xml
+Created file draft-ietf-grow-bmp-rel.txt
 ```
