@@ -202,11 +202,12 @@ Internet-Draft                   BMP REL                      March 2024
 
 3.2.  BGP Update PDU
 
-   The PDU enclosed as part of a BGP Message TLV is artificial, either
-   packed from scratch or repacked starting from an existing BGP Update
-   PDU to only contain the relevant NLRIs affected by an Event (one or
-   multiple).  The Event is going to be further described by means of
-   Event Attributes by indexed Informational TLVs.
+   The PDU enclosed as part of a BGP Message TLV can be either a
+   verbatim copy or artificial, either packed from scratch or repacked
+   starting from an existing BGP Update PDU to only contain the relevant
+   NLRIs affected by an Event (one or multiple).  The Event is going to
+   be further described by means of Event Attributes by indexed
+   Informational TLVs.
 
    The choice of describing one or multiple Event Subjects via a BGP
    Update PDU is because, on one hand, this does allow to not have to
@@ -214,7 +215,6 @@ Internet-Draft                   BMP REL                      March 2024
    types and encodings already supported by BGP.  The advantage being
    that only minimal new code, on both the exporting and the receiving
    sides, will have to be produced.
-
 
 
 
@@ -236,9 +236,8 @@ Internet-Draft                   BMP REL                      March 2024
 
    Contrary to other BMP messages where all Informational TLVs are
    entirely optional, in order for a REL message to be meaningful, it
-   MUST contain at least one Event Reason TLV per Event Subject (ie.
-   NLRI) carried by the BGP Update PDU and MAY contain further optional
-   attribute TLVs to further characterize the Event.
+   MUST contain at least one Event Reason TLV and MAY contain other
+   optional attribute TLVs to further characterize the Event.
 
    A new registry called "Route Event Logging TLVs" is defined and is
    seeded with the TLVs detailed in the following sections.
@@ -277,6 +276,7 @@ Internet-Draft                   BMP REL                      March 2024
 
 
 
+
 Lucente & Cardona       Expires 18 September 2024               [Page 5]
 
 Internet-Draft                   BMP REL                      March 2024
@@ -295,6 +295,14 @@ Internet-Draft                   BMP REL                      March 2024
    tatus (ie. valid, invalid and unknown), BMP Path Marking should be
    used; when the objective is instead to report only invalids then
    Route Event Logging with Validation Fail Event Reason should be used.
+
+   There exist a definite overlap between Route Event Logging when used
+   to report Malformed Packet and the use-cases for Route Mirroring
+   where Errored PDUs may be sampled for reporting.  For an
+   implementation that wants to implement broader event-driven
+   notifications and does not want to offer exact mirroring of monitored
+   BGP sessions without state compression it may be adviceable to prefer
+   implementing Route Event Logging message type over Route Mirroring.
 
 5.  Security Considerations
 
@@ -322,14 +330,6 @@ Internet-Draft                   BMP REL                      March 2024
               2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
               grow-bmp-tlv-13>.
 
-   [I-D.ietf-grow-bmp-tlv-ebit]
-              Lucente, P. and Y. Gu, "Support for Enterprise-specific
-              TLVs in the BGP Monitoring Protocol", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-04, 23
-              October 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-grow-bmp-tlv-ebit-04>.
-
-
 
 
 
@@ -337,6 +337,13 @@ Lucente & Cardona       Expires 18 September 2024               [Page 6]
 
 Internet-Draft                   BMP REL                      March 2024
 
+
+   [I-D.ietf-grow-bmp-tlv-ebit]
+              Lucente, P. and Y. Gu, "Support for Enterprise-specific
+              TLVs in the BGP Monitoring Protocol", Work in Progress,
+              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-04, 23
+              October 2023, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-grow-bmp-tlv-ebit-04>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -375,13 +382,6 @@ Acknowledgements
 
 Authors' Addresses
 
-   Paolo Lucente
-   NTT
-   Veemweg 23
-   3771 Barneveld
-   Netherlands
-   Email: paolo@ntt.net
-
 
 
 
@@ -394,20 +394,20 @@ Lucente & Cardona       Expires 18 September 2024               [Page 7]
 Internet-Draft                   BMP REL                      March 2024
 
 
+   Paolo Lucente
+   NTT
+   Veemweg 23
+   3771 Barneveld
+   Netherlands
+   Email: paolo@ntt.net
+
+
    Camilo Cardona
    NTT
    164-168, Carrer de Numancia
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
-
-
-
-
-
-
-
 
 
 

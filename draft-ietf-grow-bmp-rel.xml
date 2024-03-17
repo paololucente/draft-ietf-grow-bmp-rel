@@ -198,12 +198,12 @@
 	</section>
 	<section title="BGP Update PDU">
 	    <t>
-		The PDU enclosed as part of a BGP Message TLV is artificial,
-		either packed from scratch or repacked starting from an
-		existing BGP Update PDU to only contain the relevant NLRIs
-		affected by an Event (one or multiple). The Event is going
-		to be further described by means of Event Attributes by
-		indexed Informational TLVs. 
+		The PDU enclosed as part of a BGP Message TLV can be either
+		a verbatim copy or artificial, either packed from scratch or
+		repacked starting from an existing BGP Update PDU to only
+		contain the relevant NLRIs affected by an Event (one or
+		multiple). The Event is going to be further described by
+		means of Event Attributes by indexed Informational TLVs.
 	    </t>
 	    <t>
 		The choice of describing one or multiple Event Subjects via
@@ -228,9 +228,8 @@
 	    <t>
 		Contrary to other BMP messages where all Informational TLVs are
 		entirely optional, in order for a REL message to be meaningful,
-		it MUST contain at least one Event Reason TLV per Event Subject
-		(ie. NLRI) carried by the BGP Update PDU and MAY contain further
-		optional attribute TLVs to further characterize the Event.
+		it MUST contain at least one Event Reason TLV and MAY contain
+		other optional attribute TLVs to further characterize the Event.
 	    </t>
 	    <t>
 		A new registry called "Route Event Logging TLVs" is defined and
@@ -286,6 +285,15 @@
 		BMP Path Marking should be used; when the objective is instead to
 		report only invalids then Route Event Logging with Validation Fail
 		Event Reason should be used.
+	    </t>
+	    <t>
+		There exist a definite overlap between Route Event Logging when used
+		to report Malformed Packet and the use-cases for Route Mirroring where
+		Errored PDUs may be sampled for reporting. For an implementation that
+		wants to implement broader event-driven notifications and does not
+		want to offer exact mirroring of monitored BGP sessions without state
+		compression it may be adviceable to prefer implementing Route Event
+		Logging message type over Route Mirroring.
 	    </t>
 	</section>
 
