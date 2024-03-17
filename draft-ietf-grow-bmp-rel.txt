@@ -264,10 +264,10 @@ Internet-Draft                   BMP REL                      March 2024
 3.3.2.  Policy Discard TLV
 
    TBD3 = Policy Discard TLV.  The value contains a UTF-8 string whose
-   value MUST be equal to the value of the routing policy name that
-   caused the discard.  The string size MUST be within the range of 1 to
-   255 bytes.
-
+   value can be organized freely by an implementation.  For example, it
+   may contain the routing policy name that caused the discard; or it
+   may list a sequence of policies and policy nodes traversed; or, more
+   simply, it could be a meaningful return code.
 
 
 

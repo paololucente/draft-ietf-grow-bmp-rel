@@ -262,9 +262,11 @@
 	    <section title="Policy Discard TLV">
 		<t>
 		    &IANA_REL_CODE_POLICY_DISCARD; = Policy Discard TLV. The value
-		    contains a UTF-8 string whose value MUST be equal to the value of
-		    the routing policy name that caused the discard. The string size
-		    MUST be within the range of 1 to 255 bytes.
+		    contains a UTF-8 string whose value can be organized freely by an
+		    implementation. For example, it may contain the routing policy
+		    name that caused the discard; or it may list a sequence of
+		    policies and policy nodes traversed; or, more simply, it could
+		    be a meaningful return code.
 		</t>
 	    </section>
 	</section>
