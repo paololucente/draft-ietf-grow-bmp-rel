@@ -74,15 +74,17 @@ Table of Contents
    3.  Route Event Logging (REL) message . . . . . . . . . . . . . .   3
      3.1.  Per-Peer Header . . . . . . . . . . . . . . . . . . . . .   4
      3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
-     3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
+     3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   4
        3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
        3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
+     3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   6
    4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   8
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -100,12 +102,10 @@ Table of Contents
    data to be validated offline, to report malformed BGP packets, to
    broader closed-loop operations.
 
-
-
-
-
-
-
+   Since no other existing BMP message type does fit the described
+   purpose, this document defines a new Route Event Logging (REL)
+   message type that is suitable to carry event-driven data and is
+   extensible in nature.  While the message format is similar to the
 
 
 
@@ -114,10 +114,6 @@ Lucente & Cardona       Expires 18 September 2024               [Page 2]
 Internet-Draft                   BMP REL                      March 2024
 
 
-   Since no other existing BMP message type does fit the described
-   purpose, this document defines a new Route Event Logging (REL)
-   message type that is suitable to carry event-driven data and is
-   extensible in nature.  While the message format is similar to the
    Route Mirroring message type defined in RFC 7854 [RFC7854] and to the
    Route Monitoring message type as defined in TLV support for BMP Route
    Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv], the
@@ -162,6 +158,10 @@ Internet-Draft                   BMP REL                      March 2024
    provide a non-state-compressed full-fidelity view of all messages
    received as per the debugging nature of Route Mirroring.
 
+   In the context of BMP REL message, and hence in the reminder of this
+   document, the term Event Subject and NLRI will be used
+   interchangeably.  Also the term Event Attribute and Informational TLV
+   will be used interchangeably.
 
 
 
@@ -169,11 +169,6 @@ Lucente & Cardona       Expires 18 September 2024               [Page 3]
 
 Internet-Draft                   BMP REL                      March 2024
 
-
-   In the context of BMP REL message, and hence in the reminder of this
-   document, the term Event Subject and NLRI will be used
-   interchangeably.  Also the term Event Attribute and Informational TLV
-   will be used interchangeably.
 
    The following sections will describe each component of the REL
    message in more detail.
@@ -216,16 +211,6 @@ Internet-Draft                   BMP REL                      March 2024
    that only minimal new code, on both the exporting and the receiving
    sides, will have to be produced.
 
-
-
-
-
-
-Lucente & Cardona       Expires 18 September 2024               [Page 4]
-
-Internet-Draft                   BMP REL                      March 2024
-
-
 3.3.  Informational TLVs
 
    Informational TLVs in BMP are formalized by the intersection of RFC
@@ -233,6 +218,13 @@ Internet-Draft                   BMP REL                      March 2024
    Messages [I-D.ietf-grow-bmp-tlv] and Support for Enterprise- specific
    TLVs in the BGP Monitoring Protocol [I-D.ietf-grow-bmp-tlv-ebit].
    TLVs in a REL message are indexed.
+
+
+
+Lucente & Cardona       Expires 18 September 2024               [Page 4]
+
+Internet-Draft                   BMP REL                      March 2024
+
 
    Contrary to other BMP messages where all Informational TLVs are
    entirely optional, in order for a REL message to be meaningful, it
@@ -268,6 +260,14 @@ Internet-Draft                   BMP REL                      March 2024
    may list a sequence of policies and policy nodes traversed; or, more
    simply, it could be a meaningful return code.
 
+3.4.  Group TLV
+
+   The Group TLV is to form N:M relationships among NLRIs in the BGP
+   Update PDU and TLVs of the same Route Event Logging message.  This
+   TLV has code point TBD4 and follows the definition of Group TLV in
+   TLV support for BMP Route Monitoring and Peer Down Messages
+   [I-D.ietf-grow-bmp-tlv].
+
 
 
 
@@ -281,6 +281,17 @@ Lucente & Cardona       Expires 18 September 2024               [Page 5]
 
 Internet-Draft                   BMP REL                      March 2024
 
+
+3.5.  Stateless Parsing TLV
+
+   The Stateless Parsing TLV is to allow parsing of the BGP Update PDU
+   independently from a Peer Up message previously received for the same
+   BGP session.  This TLV can be especially relevant to Route Event
+   Logging where the BGP Update PDU is artificial.  The TLV has code
+   point TBD5 , it follows the definition of Stateless Parsing TLV in
+   TLV support for BMP Route Monitoring and Peer Down Messages
+   [I-D.ietf-grow-bmp-tlv] and uses code point definitions in the
+   Stateless Parsing Registry.
 
 4.  Operational Considerations
 
@@ -319,6 +330,14 @@ Internet-Draft                   BMP REL                      March 2024
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
               Graf, "BMP Extension for Path Status TLV", Work in
               Progress, Internet-Draft, draft-ietf-grow-bmp-path-
+
+
+
+Lucente & Cardona       Expires 18 September 2024               [Page 6]
+
+Internet-Draft                   BMP REL                      March 2024
+
+
               marking-tlv-00, 13 September 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-path-marking-tlv-00>.
@@ -329,14 +348,6 @@ Internet-Draft                   BMP REL                      March 2024
               Internet-Draft, draft-ietf-grow-bmp-tlv-13, 23 October
               2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
               grow-bmp-tlv-13>.
-
-
-
-
-Lucente & Cardona       Expires 18 September 2024               [Page 6]
-
-Internet-Draft                   BMP REL                      March 2024
-
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
@@ -374,17 +385,6 @@ Internet-Draft                   BMP REL                      March 2024
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
-Acknowledgements
-
-   The authors would like to thank Jeff Haas and Luuk Hendriks for their
-   valuable input.  The authors would also like to thank Mike Booth for
-   his review.
-
-Authors' Addresses
-
-
-
-
 
 
 
@@ -393,6 +393,14 @@ Lucente & Cardona       Expires 18 September 2024               [Page 7]
 
 Internet-Draft                   BMP REL                      March 2024
 
+
+Acknowledgements
+
+   The authors would like to thank Jeff Haas and Luuk Hendriks for their
+   valuable input.  The authors would also like to thank Mike Booth for
+   his review.
+
+Authors' Addresses
 
    Paolo Lucente
    NTT
@@ -408,14 +416,6 @@ Internet-Draft                   BMP REL                      March 2024
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
-
-
-
-
-
-
-
 
 
 

@@ -9,6 +9,8 @@
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
 	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD3">
+	<!ENTITY IANA_REL_CODE_GROUP "TBD4">
+	<!ENTITY IANA_REL_CODE_SP "TBD5">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -268,6 +270,27 @@
 		    be a meaningful return code.
 		</t>
 	    </section>
+	</section>
+        <section title="Group TLV">
+            <t>
+		The Group TLV is to form N:M relationships among NLRIs in the BGP
+		Update PDU and TLVs of the same Route Event Logging message. This
+		TLV has code point &IANA_REL_CODE_GROUP; and follows the definition
+		of Group TLV in <xref target="I-D.ietf-grow-bmp-tlv">TLV support
+		for BMP Route Monitoring and Peer Down Messages</xref>. 
+            </t>
+	</section>
+        <section title="Stateless Parsing TLV">
+            <t>
+		The Stateless Parsing TLV is to allow parsing of the BGP Update
+		PDU independently from a Peer Up message previously received for
+		the same BGP session. This TLV can be especially relevant to Route
+		Event Logging where the BGP Update PDU is artificial. The TLV has
+		code point &IANA_REL_CODE_SP; , it follows the definition of
+		Stateless Parsing TLV in <xref target="I-D.ietf-grow-bmp-tlv">TLV
+		support for BMP Route Monitoring and Peer Down Messages</xref>
+		and uses code point definitions in the Stateless Parsing Registry. 
+            </t>
 	</section>
 	</section>
 
