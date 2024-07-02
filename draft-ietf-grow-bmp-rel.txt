@@ -77,12 +77,12 @@ Table of Contents
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   4
        3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
        3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
-     3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   6
    4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .   8
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
@@ -240,17 +240,25 @@ Internet-Draft                   BMP REL                       July 2024
    reason code describing the type of the event.  The following reason
    codes are defined as part of the "Event Reason TLV" registry:
 
-                     +--------+----------------------+
-                     | Value  | Reason               |
-                     +-------------------------------+
-                     | 0x0000 | Unknown              |
-                     | 0x0001 | Log Action           |
-                     | 0x0002 | Policy Discard       |
-                     | 0x0004 | Validation Fail      |
-                     | 0x0008 | Malformed Packet     |
-                     +--------+----------------------+
+         +--------+----------------------------------------------+
+         | Value  | Reason                                       |
+         +-------------------------------------------------------+
+         | 0x0000 | Unknown                                      |
+         | 0x0001 | Log Action                                   |
+         | 0x0002 | Policy Discard                               |
+         | 0x0004 | Validation Fail                              |
+         | 0x0008 | Malformed Packet                             |
+         | 0x0010 | Crossed warning bound, path not dropped      |
+         | 0x0020 | Crossed upper bound, path dropped            |
+         +--------+----------------------------------------------+
 
-                          Table 1: Event Reason Codes
+              Table 1: Event Reason Codes
+
+   Crossed warning bound and crossed upper bound events refer to the
+   received route thresholds that can be configured according to
+   Section 6.7 of [RFC4271].  Also the stats counters part of these
+   events is being addressed by the Definition For New BMP Statistics
+   Type [I-D.ietf-grow-bmp-bgp-rib-stats] document.
 
 3.3.2.  Policy Discard TLV
 
@@ -259,14 +267,6 @@ Internet-Draft                   BMP REL                       July 2024
    may contain the routing policy name that caused the discard; or it
    may list a sequence of policies and policy nodes traversed; or, more
    simply, it could be a meaningful return code.
-
-3.4.  Group TLV
-
-   The Group TLV is to form N:M relationships among NLRIs in the BGP
-   Update PDU and TLVs of the same Route Event Logging message.  This
-   TLV has code point TBD4 and follows the definition of Group TLV in
-   TLV support for BMP Route Monitoring and Peer Down Messages
-   [I-D.ietf-grow-bmp-tlv].
 
 
 
@@ -281,6 +281,14 @@ Lucente & Cardona        Expires 3 January 2025                 [Page 5]
 
 Internet-Draft                   BMP REL                       July 2024
 
+
+3.4.  Group TLV
+
+   The Group TLV is to form N:M relationships among NLRIs in the BGP
+   Update PDU and TLVs of the same Route Event Logging message.  This
+   TLV has code point TBD4 and follows the definition of Group TLV in
+   TLV support for BMP Route Monitoring and Peer Down Messages
+   [I-D.ietf-grow-bmp-tlv].
 
 3.5.  Stateless Parsing TLV
 
@@ -320,16 +328,8 @@ Internet-Draft                   BMP REL                       July 2024
    It is not believed that this document adds any additional security
    considerations.
 
-6.  IANA Considerations
 
-   TBD
 
-7.  References
-
-   [I-D.ietf-grow-bmp-path-marking-tlv]
-              Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
-              Graf, "BMP Extension for Path Status TLV", Work in
-              Progress, Internet-Draft, draft-ietf-grow-bmp-path-
 
 
 
@@ -338,6 +338,23 @@ Lucente & Cardona        Expires 3 January 2025                 [Page 6]
 Internet-Draft                   BMP REL                       July 2024
 
 
+6.  IANA Considerations
+
+   TBD
+
+7.  References
+
+   [I-D.ietf-grow-bmp-bgp-rib-stats]
+              Srivastava, M., Liu, Y., Lin, C., and J. Li, "Definition
+              For New BMP Statistics Type", Work in Progress, Internet-
+              Draft, draft-ietf-grow-bmp-bgp-rib-stats-03, 8 May 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
+              bmp-bgp-rib-stats-03>.
+
+   [I-D.ietf-grow-bmp-path-marking-tlv]
+              Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
+              Graf, "BMP Extension for Path Status TLV", Work in
+              Progress, Internet-Draft, draft-ietf-grow-bmp-path-
               marking-tlv-01, 18 March 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-path-marking-tlv-01>.
@@ -366,6 +383,17 @@ Internet-Draft                   BMP REL                       July 2024
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
 
+
+
+
+
+
+
+Lucente & Cardona        Expires 3 January 2025                 [Page 7]
+
+Internet-Draft                   BMP REL                       July 2024
+
+
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
@@ -385,20 +413,11 @@ Internet-Draft                   BMP REL                       July 2024
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
-
-
-
-
-Lucente & Cardona        Expires 3 January 2025                 [Page 7]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
 Acknowledgements
 
    The authors would like to thank Jeff Haas, Luuk Hendriks, Ruediger
-   Volk and Ahmed Elhassany for their valuable input.  The authors would
-   also like to thank Mike Booth for his review.
+   Volk, Ahmed Elhassany and Thomas Graf for their valuable input.  The
+   authors would also like to thank Mike Booth for his review.
 
 Authors' Addresses
 
@@ -416,25 +435,6 @@ Authors' Addresses
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

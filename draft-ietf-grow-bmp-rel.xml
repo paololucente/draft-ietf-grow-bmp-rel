@@ -5,6 +5,7 @@
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
         <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
+        <!ENTITY I-D.ietf-grow-bmp-bgp-rib-stats SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-bgp-rib-stats.xml">
 
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
@@ -246,18 +247,28 @@
 
 <figure>
               <artwork align="center"><![CDATA[
-+--------+----------------------+
-| Value  | Reason		|
-+-------------------------------+
-| 0x0000 | Unknown              |
-| 0x0001 | Log Action		|
-| 0x0002 | Policy Discard	|
-| 0x0004 | Validation Fail	|
-| 0x0008 | Malformed Packet     |
-+--------+----------------------+
++--------+----------------------------------------------+
+| Value  | Reason					|
++-------------------------------------------------------+
+| 0x0000 | Unknown              			|
+| 0x0001 | Log Action					|
+| 0x0002 | Policy Discard				|
+| 0x0004 | Validation Fail				|
+| 0x0008 | Malformed Packet     			|
+| 0x0010 | Crossed warning bound, path not dropped	|
+| 0x0020 | Crossed upper bound, path dropped		|
++--------+----------------------------------------------+
 
      Table 1: Event Reason Codes ]]></artwork>
 </figure>
+		</t>
+		<t>
+		  Crossed warning bound and crossed upper bound events refer to
+		  the received route thresholds that can be configured according
+		  to <xref target="RFC4271">Section 6.7 of</xref>. Also the stats
+		  counters part of these events is being addressed by the <xref
+		  target="I-D.ietf-grow-bmp-bgp-rib-stats">Definition For New BMP
+		  Statistics Type</xref> document.
 		</t>
 	    </section>
 	    <section title="Policy Discard TLV">
@@ -349,13 +360,15 @@
 		&I-D.ietf-grow-bmp-tlv;
 		&I-D.ietf-grow-bmp-tlv-ebit;
 		&I-D.ietf-grow-bmp-path-marking-tlv;
+		&I-D.ietf-grow-bmp-bgp-rib-stats;
     </references>
 
     <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
             <t>
 		The authors would like to thank Jeff Haas, Luuk Hendriks,
-		Ruediger Volk and Ahmed Elhassany for their valuable input.
-		The authors would also like to thank Mike Booth for his review.
+		Ruediger Volk, Ahmed Elhassany and Thomas Graf for their valuable
+		input. The authors would also like to thank Mike Booth for his
+		review.
             </t>
     </section>
 
