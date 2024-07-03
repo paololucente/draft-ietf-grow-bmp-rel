@@ -14,6 +14,8 @@
 	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD3">
 	<!ENTITY IANA_REL_CODE_GROUP "TBD4">
 	<!ENTITY IANA_REL_CODE_SP "TBD5">
+	<!ENTITY IANA_REL_CODE_WARNING_BOUND "TBD6">
+	<!ENTITY IANA_REL_CODE_UPPER_BOUND "TBD7">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -249,17 +251,17 @@
 
 <figure>
               <artwork align="center"><![CDATA[
-+--------+----------------------------------------------+
-| Value  | Reason					|
-+-------------------------------------------------------+
-| 0x0000 | Unknown              			|
-| 0x0001 | Log Action					|
-| 0x0002 | Policy Discard				|
-| 0x0004 | Validation Fail				|
-| 0x0008 | Malformed Packet     			|
-| 0x0010 | Crossed warning bound, path not dropped	|
-| 0x0020 | Crossed upper bound, path dropped		|
-+--------+----------------------------------------------+
++--------+------------------------------+
+| Value  | Reason			|
++---------------------------------------+
+| 0x0000 | Unknown			|
+| 0x0001 | Log Action			|
+| 0x0002 | Policy Discard		|
+| 0x0004 | Validation Fail		|
+| 0x0008 | Malformed Packet		|
+| 0x0010 | Crossed Warning Bound	|
+| 0x0020 | Crossed Upper Bound		|
++--------+------------------------------+
 
      Table 1: Event Reason Codes ]]></artwork>
 </figure>
@@ -288,6 +290,20 @@
 		    Protocol (BGP-4)</xref> it is RECOMMENDED to organize the string
 		    as a comma-separated string with the policy definition name being
 		    followed by the statement name.
+		</t>
+	    </section>
+	    <section title="Crossed Warning Bound TLV">
+		<t>
+		    &IANA_REL_CODE_WARNING_BOUND; = Crossed Warning Bound TLV. The
+		    length is to be set to 4 bytes and the value to the threshold
+		    number of the event.
+		</t>
+	    </section>
+	    <section title="Crossed Upper Bound TLV">
+		<t>
+		    &IANA_REL_CODE_UPPER_BOUND; = Crossed Upper Bound TLV. The length
+		    is to be set to 4 bytes and the value to the threshold number of
+		    the event.
 		</t>
 	    </section>
 	</section>
