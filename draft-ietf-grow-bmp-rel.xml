@@ -2,10 +2,12 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
         <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
         <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
+        <!ENTITY RFC9067 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.9067.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
         <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-bgp-rib-stats SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-bgp-rib-stats.xml">
+        <!ENTITY I-D.ietf-idr-bgp-model SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-idr-bgp-model.xml">
 
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
@@ -280,6 +282,13 @@
 		    policies and policy nodes traversed; or, more simply, it could
 		    be a meaningful return code.
 		</t>
+		<t>
+		    On the escort of <xref target="RFC9067">Section 4 of</xref> and
+		    <xref target="I-D.ietf-idr-bgp-model">YANG Model for Border Gateway
+		    Protocol (BGP-4)</xref> it is RECOMMENDED to organize the string
+		    as a comma-separated string with the policy definition name being
+		    followed by the statement name.
+		</t>
 	    </section>
 	</section>
         <section title="Group TLV">
@@ -355,12 +364,14 @@
 		<?rfc include="reference.RFC.4271.xml"?>
 		<?rfc include="reference.RFC.7854.xml"?>
                 <?rfc include="reference.RFC.8671.xml"?>
+                <?rfc include="reference.RFC.9067.xml"?>
                 <?rfc include="reference.RFC.9069.xml"?>
 
 		&I-D.ietf-grow-bmp-tlv;
 		&I-D.ietf-grow-bmp-tlv-ebit;
 		&I-D.ietf-grow-bmp-path-marking-tlv;
 		&I-D.ietf-grow-bmp-bgp-rib-stats;
+		&I-D.ietf-idr-bgp-model;
     </references>
 
     <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">

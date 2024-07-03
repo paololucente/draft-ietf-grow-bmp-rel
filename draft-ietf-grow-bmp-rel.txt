@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                             2 July 2024
-Expires: 3 January 2025
+Intended status: Standards Track                             3 July 2024
+Expires: 4 January 2025
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2025.
+   This Internet-Draft will expire on 4 January 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 1]
+Lucente & Cardona        Expires 4 January 2025                 [Page 1]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 2]
+Lucente & Cardona        Expires 4 January 2025                 [Page 2]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 3]
+Lucente & Cardona        Expires 4 January 2025                 [Page 3]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 4]
+Lucente & Cardona        Expires 4 January 2025                 [Page 4]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -268,16 +268,16 @@ Internet-Draft                   BMP REL                       July 2024
    may list a sequence of policies and policy nodes traversed; or, more
    simply, it could be a meaningful return code.
 
+   On the escort of Section 4 of [RFC9067] and YANG Model for Border
+   Gateway Protocol (BGP-4) [I-D.ietf-idr-bgp-model] it is RECOMMENDED
+   to organize the string as a comma-separated string with the policy
+   definition name being followed by the statement name.
 
 
 
 
 
-
-
-
-
-Lucente & Cardona        Expires 3 January 2025                 [Page 5]
+Lucente & Cardona        Expires 4 January 2025                 [Page 5]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 6]
+Lucente & Cardona        Expires 4 January 2025                 [Page 6]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -373,26 +373,31 @@ Internet-Draft                   BMP REL                       July 2024
               2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
               grow-bmp-tlv-ebit-05>.
 
+   [I-D.ietf-idr-bgp-model]
+              Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
+              Model for Border Gateway Protocol (BGP-4)", Work in
+              Progress, Internet-Draft, draft-ietf-idr-bgp-model-17, 5
+              July 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-idr-bgp-model-17>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+Lucente & Cardona        Expires 4 January 2025                 [Page 7]
+
+Internet-Draft                   BMP REL                       July 2024
+
+
    [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 3 January 2025                 [Page 7]
-
-Internet-Draft                   BMP REL                       July 2024
-
 
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
@@ -407,6 +412,10 @@ Internet-Draft                   BMP REL                       July 2024
               Zhuang, "Support for Adj-RIB-Out in the BGP Monitoring
               Protocol (BMP)", RFC 8671, DOI 10.17487/RFC8671, November
               2019, <https://www.rfc-editor.org/info/rfc8671>.
+
+   [RFC9067]  Qu, Y., Tantsura, J., Lindem, A., and X. Liu, "A YANG Data
+              Model for Routing Policy", RFC 9067, DOI 10.17487/RFC9067,
+              October 2021, <https://www.rfc-editor.org/info/rfc9067>.
 
    [RFC9069]  Evens, T., Bayraktar, S., Bhardwaj, M., and P. Lucente,
               "Support for Local RIB in the BGP Monitoring Protocol
@@ -429,6 +438,18 @@ Authors' Addresses
    Email: paolo@ntt.net
 
 
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 4 January 2025                 [Page 8]
+
+Internet-Draft                   BMP REL                       July 2024
+
+
    Camilo Cardona
    NTT
    164-168, Carrer de Numancia
@@ -445,4 +466,39 @@ Authors' Addresses
 
 
 
-Lucente & Cardona        Expires 3 January 2025                 [Page 8]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 4 January 2025                 [Page 9]
