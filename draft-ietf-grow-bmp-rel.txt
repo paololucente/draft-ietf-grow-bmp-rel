@@ -453,8 +453,9 @@ Internet-Draft                   BMP REL                       July 2024
 Acknowledgements
 
    The authors would like to thank Jeff Haas, Luuk Hendriks, Ruediger
-   Volk, Ahmed Elhassany and Thomas Graf for their valuable input.  The
-   authors would also like to thank Mike Booth for his review.
+   Volk, Ahmed Elhassany, Thomas Graf and Ben Maddison for their
+   valuable input.  The authors would also like to thank Mike Booth for
+   his review.
 
 Authors' Addresses
 
@@ -472,7 +473,6 @@ Authors' Addresses
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
 
 
 
