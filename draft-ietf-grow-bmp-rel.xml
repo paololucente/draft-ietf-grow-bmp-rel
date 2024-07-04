@@ -3,6 +3,7 @@
         <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
         <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
         <!ENTITY RFC9067 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.9067.xml">
+        <!ENTITY RFC7606 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7606.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
         <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
@@ -16,6 +17,9 @@
 	<!ENTITY IANA_REL_CODE_SP "TBD5">
 	<!ENTITY IANA_REL_CODE_WARNING_BOUND "TBD6">
 	<!ENTITY IANA_REL_CODE_UPPER_BOUND "TBD7">
+	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD8">
+
+	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD9">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -284,6 +288,24 @@
 		    followed by the statement name.
 		</t>
 	    </section>
+	    <section title="Malformed Packet TLV">
+		<t>
+		    &IANA_REL_CODE_MALFORMED_PACKET; = Malformed Packet TLV. The
+		    length is to be set to 2 bytes and the value represents a code
+		    giving more information about the specific malforming. Following
+		    are the defined code points:
+		</t>
+		<t>
+		<list style="symbols">
+			<t>
+			Code = &IANA_REL_CODE_MP_ERRORED_PDU;: Errored PDU. The BGP
+			message was found to have some error that made it unusable,
+			causing it to be treated-as-withdraw <xref target="RFC7606">
+			RFC7606</xref>.
+			</t>
+		</list>
+		</t>
+	    </section>
 	    <section title="Crossed Warning Bound TLV">
 		<t>
 		    &IANA_REL_CODE_WARNING_BOUND; = Crossed Warning Bound TLV. The
@@ -382,6 +404,7 @@
 		&RFC8174;
 
 		<?rfc include="reference.RFC.4271.xml"?>
+		<?rfc include="reference.RFC.7606.xml"?>
 		<?rfc include="reference.RFC.7854.xml"?>
                 <?rfc include="reference.RFC.8671.xml"?>
                 <?rfc include="reference.RFC.9067.xml"?>

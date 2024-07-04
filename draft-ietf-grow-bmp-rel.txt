@@ -77,8 +77,9 @@ Table of Contents
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
        3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
        3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
-       3.3.3.  Crossed Warning Bound TLV . . . . . . . . . . . . . .   6
-       3.3.4.  Crossed Upper Bound TLV . . . . . . . . . . . . . . .   6
+       3.3.3.  Malformed Packet TLV  . . . . . . . . . . . . . . . .   6
+       3.3.4.  Crossed Warning Bound TLV . . . . . . . . . . . . . .   6
+       3.3.5.  Crossed Upper Bound TLV . . . . . . . . . . . . . . .   6
      3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   6
    4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
@@ -103,7 +104,6 @@ Table of Contents
    taking place on the monitored router, to isolating certain subsets of
    data to be validated offline, to report malformed BGP packets, to
    broader closed-loop operations.
-
 
 
 
@@ -282,12 +282,22 @@ Lucente & Cardona        Expires 5 January 2025                 [Page 5]
 Internet-Draft                   BMP REL                       July 2024
 
 
-3.3.3.  Crossed Warning Bound TLV
+3.3.3.  Malformed Packet TLV
+
+   TBD8 = Malformed Packet TLV.  The length is to be set to 2 bytes and
+   the value represents a code giving more information about the
+   specific malforming.  Following are the defined code points:
+
+   *  Code = TBD9: Errored PDU.  The BGP message was found to have some
+      error that made it unusable, causing it to be treated-as-withdraw
+      RFC7606 [RFC7606].
+
+3.3.4.  Crossed Warning Bound TLV
 
    TBD6 = Crossed Warning Bound TLV.  The length is to be set to 4 bytes
    and the value to the threshold number of the event.
 
-3.3.4.  Crossed Upper Bound TLV
+3.3.5.  Crossed Upper Bound TLV
 
    TBD7 = Crossed Upper Bound TLV.  The length is to be set to 4 bytes
    and the value to the threshold number of the event.
@@ -320,6 +330,14 @@ Internet-Draft                   BMP REL                       July 2024
    annotate every received or announced NLRI then the recommendation is
    to use Route Monitoring messages with BMP Path Marking
    [I-D.ietf-grow-bmp-path-marking-tlv].  As an example consider RPKI
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 6]
+
+Internet-Draft                   BMP REL                       July 2024
+
+
    validation status: when the objective is to report on any validations
    tatus (ie. valid, invalid and unknown), BMP Path Marking should be
    used; when the objective is instead to report only invalids then
@@ -330,14 +348,6 @@ Internet-Draft                   BMP REL                       July 2024
    where Errored PDUs may be sampled for reporting.  From implementors
    perspective, if one wants to implement broader event-driven
    notifications and does not want to offer exact mirroring of monitored
-
-
-
-Lucente & Cardona        Expires 5 January 2025                 [Page 6]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
    BGP sessions without state compression it may be adviceable to prefer
    implementing Route Event Logging message type over Route Mirroring.
    From a collector perspective, similarly, one may want to activate
@@ -377,22 +387,19 @@ Internet-Draft                   BMP REL                       July 2024
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-path-marking-tlv-01>.
 
-   [I-D.ietf-grow-bmp-tlv]
-              Lucente, P. and Y. Gu, "BMP v4: TLV support for BMP Route
-              Monitoring and Peer Down Messages", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-14, 18 March 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-tlv-14>.
-
-
-
-
 
 
 Lucente & Cardona        Expires 5 January 2025                 [Page 7]
 
 Internet-Draft                   BMP REL                       July 2024
 
+
+   [I-D.ietf-grow-bmp-tlv]
+              Lucente, P. and Y. Gu, "BMP v4: TLV support for BMP Route
+              Monitoring and Peer Down Messages", Work in Progress,
+              Internet-Draft, draft-ietf-grow-bmp-tlv-14, 18 March 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
+              bmp-tlv-14>.
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
@@ -418,6 +425,11 @@ Internet-Draft                   BMP REL                       July 2024
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
 
+   [RFC7606]  Chen, E., Ed., Scudder, J., Ed., Mohapatra, P., and K.
+              Patel, "Revised Error Handling for BGP UPDATE Messages",
+              RFC 7606, DOI 10.17487/RFC7606, August 2015,
+              <https://www.rfc-editor.org/info/rfc7606>.
+
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
@@ -426,6 +438,17 @@ Internet-Draft                   BMP REL                       July 2024
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 8]
+
+Internet-Draft                   BMP REL                       July 2024
+
 
    [RFC8671]  Evens, T., Bayraktar, S., Lucente, P., Mi, P., and S.
               Zhuang, "Support for Adj-RIB-Out in the BGP Monitoring
@@ -440,15 +463,6 @@ Internet-Draft                   BMP REL                       July 2024
               "Support for Local RIB in the BGP Monitoring Protocol
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
-
-
-
-
-
-Lucente & Cardona        Expires 5 January 2025                 [Page 8]
-
-Internet-Draft                   BMP REL                       July 2024
-
 
 Acknowledgements
 
@@ -473,20 +487,6 @@ Authors' Addresses
    08029 Barcelona
    Spain
    Email: camilo@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
