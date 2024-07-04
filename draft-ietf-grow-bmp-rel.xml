@@ -266,14 +266,6 @@
      Table 1: Event Reason Codes ]]></artwork>
 </figure>
 		</t>
-		<t>
-		  Crossed warning bound and crossed upper bound events refer to
-		  the received route thresholds that can be configured according
-		  to <xref target="RFC4271">Section 6.7 of</xref>. Also the stats
-		  counters part of these events is being addressed by the <xref
-		  target="I-D.ietf-grow-bmp-bgp-rib-stats">Definition For New BMP
-		  Statistics Type</xref> document.
-		</t>
 	    </section>
 	    <section title="Policy Discard TLV">
 		<t>
@@ -348,11 +340,23 @@
 	    <t>
 		There exist a definite overlap between Route Event Logging when used
 		to report Malformed Packet and the use-cases for Route Mirroring where
-		Errored PDUs may be sampled for reporting. For an implementation that
-		wants to implement broader event-driven notifications and does not
+		Errored PDUs may be sampled for reporting. From implementors perspective,
+		if one wants to implement broader event-driven notifications and does not
 		want to offer exact mirroring of monitored BGP sessions without state
 		compression it may be adviceable to prefer implementing Route Event
-		Logging message type over Route Mirroring.
+		Logging message type over Route Mirroring. From a collector perspective,
+		similarly, one may want to activate distinct BMP feeds for event logging
+		and route collection and, also in this case, reporting malformed packets
+		via Route Event Logging message type may be preferrable over Route
+		Mirroring.
+	    </t>
+	    <t>
+		Crossed warning bound and crossed upper bound events refer to
+		the received route thresholds that can be configured according
+		to <xref target="RFC4271">Section 6.7 of</xref>. Also the stats
+		counters part of these events is being addressed by the <xref
+		target="I-D.ietf-grow-bmp-bgp-rib-stats">Definition For New BMP
+		Statistics Type</xref> document.
 	    </t>
 	</section>
 

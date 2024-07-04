@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                             3 July 2024
-Expires: 4 January 2025
+Intended status: Standards Track                             4 July 2024
+Expires: 5 January 2025
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2025.
+   This Internet-Draft will expire on 5 January 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 4 January 2025                 [Page 1]
+Lucente & Cardona        Expires 5 January 2025                 [Page 1]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -76,12 +76,12 @@ Table of Contents
      3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
      3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
        3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
-       3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   6
+       3.3.2.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   5
        3.3.3.  Crossed Warning Bound TLV . . . . . . . . . . . . . .   6
        3.3.4.  Crossed Upper Bound TLV . . . . . . . . . . . . . . .   6
      3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   6
-   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
+   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 4 January 2025                 [Page 2]
+Lucente & Cardona        Expires 5 January 2025                 [Page 2]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 4 January 2025                 [Page 3]
+Lucente & Cardona        Expires 5 January 2025                 [Page 3]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 4 January 2025                 [Page 4]
+Lucente & Cardona        Expires 5 January 2025                 [Page 4]
 
 Internet-Draft                   BMP REL                       July 2024
 
@@ -262,26 +262,6 @@ Internet-Draft                   BMP REL                       July 2024
 
                       Table 1: Event Reason Codes
 
-   Crossed warning bound and crossed upper bound events refer to the
-   received route thresholds that can be configured according to
-   Section 6.7 of [RFC4271].  Also the stats counters part of these
-   events is being addressed by the Definition For New BMP Statistics
-   Type [I-D.ietf-grow-bmp-bgp-rib-stats] document.
-
-
-
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 4 January 2025                 [Page 5]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
 3.3.2.  Policy Discard TLV
 
    TBD3 = Policy Discard TLV.  The value contains a UTF-8 string whose
@@ -294,6 +274,13 @@ Internet-Draft                   BMP REL                       July 2024
    Gateway Protocol (BGP-4) [I-D.ietf-idr-bgp-model] it is RECOMMENDED
    to organize the string as a comma-separated string with the policy
    definition name being followed by the statement name.
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 5]
+
+Internet-Draft                   BMP REL                       July 2024
+
 
 3.3.3.  Crossed Warning Bound TLV
 
@@ -324,20 +311,6 @@ Internet-Draft                   BMP REL                       July 2024
    [I-D.ietf-grow-bmp-tlv] and uses code point definitions in the
    Stateless Parsing Registry.
 
-
-
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 4 January 2025                 [Page 6]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
 4.  Operational Considerations
 
    Route Event Logging messages are event-driven in nature so the
@@ -354,11 +327,29 @@ Internet-Draft                   BMP REL                       July 2024
 
    There exist a definite overlap between Route Event Logging when used
    to report Malformed Packet and the use-cases for Route Mirroring
-   where Errored PDUs may be sampled for reporting.  For an
-   implementation that wants to implement broader event-driven
+   where Errored PDUs may be sampled for reporting.  From implementors
+   perspective, if one wants to implement broader event-driven
    notifications and does not want to offer exact mirroring of monitored
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 6]
+
+Internet-Draft                   BMP REL                       July 2024
+
+
    BGP sessions without state compression it may be adviceable to prefer
    implementing Route Event Logging message type over Route Mirroring.
+   From a collector perspective, similarly, one may want to activate
+   distinct BMP feeds for event logging and route collection and, also
+   in this case, reporting malformed packets via Route Event Logging
+   message type may be preferrable over Route Mirroring.
+
+   Crossed warning bound and crossed upper bound events refer to the
+   received route thresholds that can be configured according to
+   Section 6.7 of [RFC4271].  Also the stats counters part of these
+   events is being addressed by the Definition For New BMP Statistics
+   Type [I-D.ietf-grow-bmp-bgp-rib-stats] document.
 
 5.  Security Considerations
 
@@ -386,20 +377,22 @@ Internet-Draft                   BMP REL                       July 2024
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-path-marking-tlv-01>.
 
-
-
-
-Lucente & Cardona        Expires 4 January 2025                 [Page 7]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
    [I-D.ietf-grow-bmp-tlv]
               Lucente, P. and Y. Gu, "BMP v4: TLV support for BMP Route
               Monitoring and Peer Down Messages", Work in Progress,
               Internet-Draft, draft-ietf-grow-bmp-tlv-14, 18 March 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-tlv-14>.
+
+
+
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 7]
+
+Internet-Draft                   BMP REL                       July 2024
+
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
@@ -443,17 +436,19 @@ Internet-Draft                   BMP REL                       July 2024
               Model for Routing Policy", RFC 9067, DOI 10.17487/RFC9067,
               October 2021, <https://www.rfc-editor.org/info/rfc9067>.
 
-
-
-Lucente & Cardona        Expires 4 January 2025                 [Page 8]
-
-Internet-Draft                   BMP REL                       July 2024
-
-
    [RFC9069]  Evens, T., Bayraktar, S., Bhardwaj, M., and P. Lucente,
               "Support for Local RIB in the BGP Monitoring Protocol
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
+
+
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 8]
+
+Internet-Draft                   BMP REL                       July 2024
+
 
 Acknowledgements
 
@@ -501,4 +496,9 @@ Authors' Addresses
 
 
 
-Lucente & Cardona        Expires 4 January 2025                 [Page 9]
+
+
+
+
+
+Lucente & Cardona        Expires 5 January 2025                 [Page 9]
