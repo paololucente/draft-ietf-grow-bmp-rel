@@ -5,12 +5,12 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                             4 July 2024
-Expires: 5 January 2025
+Intended status: Standards Track                        25 February 2025
+Expires: 29 August 2025
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
-                       draft-ietf-grow-bmp-rel-02
+                       draft-ietf-grow-bmp-rel-03
 
 Abstract
 
@@ -36,11 +36,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2025.
+   This Internet-Draft will expire on 29 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 1]
+Lucente & Cardona        Expires 29 August 2025                 [Page 1]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 2]
+Lucente & Cardona        Expires 29 August 2025                 [Page 2]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
    Since no other existing BMP message type does fit the described
@@ -165,9 +165,9 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 3]
+Lucente & Cardona        Expires 29 August 2025                 [Page 3]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
    In the context of BMP REL message, and hence in the reminder of this
@@ -221,9 +221,9 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 4]
+Lucente & Cardona        Expires 29 August 2025                 [Page 4]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
 3.3.  Informational TLVs
@@ -277,9 +277,9 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 5]
+Lucente & Cardona        Expires 29 August 2025                 [Page 5]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
 3.3.3.  Malformed Packet TLV
@@ -333,9 +333,9 @@ Internet-Draft                   BMP REL                       July 2024
 
 
 
-Lucente & Cardona        Expires 5 January 2025                 [Page 6]
+Lucente & Cardona        Expires 29 August 2025                 [Page 6]
 
-Internet-Draft                   BMP REL                       July 2024
+Internet-Draft                   BMP REL                   February 2025
 
 
    validation status: when the objective is to report on any validations
@@ -374,46 +374,55 @@ Internet-Draft                   BMP REL                       July 2024
 
    [I-D.ietf-grow-bmp-bgp-rib-stats]
               Srivastava, M., Liu, Y., Lin, C., and J. Li, "Definition
-              For New BMP Statistics Type", Work in Progress, Internet-
-              Draft, draft-ietf-grow-bmp-bgp-rib-stats-03, 8 May 2024,
+              For New BGP Monitoring Protocol (BMP) Statistics Types",
+              Work in Progress, Internet-Draft, draft-ietf-grow-bmp-bgp-
+              rib-stats-07, 21 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-bgp-rib-stats-03>.
+              bmp-bgp-rib-stats-07>.
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 29 August 2025                 [Page 7]
+
+Internet-Draft                   BMP REL                   February 2025
+
 
    [I-D.ietf-grow-bmp-path-marking-tlv]
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
               Graf, "BMP Extension for Path Status TLV", Work in
               Progress, Internet-Draft, draft-ietf-grow-bmp-path-
-              marking-tlv-01, 18 March 2024,
+              marking-tlv-02, 16 September 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-path-marking-tlv-01>.
-
-
-
-Lucente & Cardona        Expires 5 January 2025                 [Page 7]
-
-Internet-Draft                   BMP REL                       July 2024
-
+              bmp-path-marking-tlv-02>.
 
    [I-D.ietf-grow-bmp-tlv]
-              Lucente, P. and Y. Gu, "BMP v4: TLV support for BMP Route
-              Monitoring and Peer Down Messages", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-14, 18 March 2024,
+              Lucente, P. and Y. Gu, "BMP v4: TLV Support for BGP
+              Monitoring Prtoocol (BMP) Route Monitoring and Peer Down
+              Messages", Work in Progress, Internet-Draft, draft-ietf-
+              grow-bmp-tlv-16, 24 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-tlv-14>.
+              bmp-tlv-16>.
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
               TLVs in the BGP Monitoring Protocol", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-05, 18 March
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              grow-bmp-tlv-ebit-05>.
+              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-06, 17
+              January 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-grow-bmp-tlv-ebit-06>.
 
    [I-D.ietf-idr-bgp-model]
               Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
               Model for Border Gateway Protocol (BGP-4)", Work in
-              Progress, Internet-Draft, draft-ietf-idr-bgp-model-17, 5
-              July 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-idr-bgp-model-17>.
+              Progress, Internet-Draft, draft-ietf-idr-bgp-model-18, 21
+              October 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-idr-bgp-model-18>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -430,6 +439,17 @@ Internet-Draft                   BMP REL                       July 2024
               RFC 7606, DOI 10.17487/RFC7606, August 2015,
               <https://www.rfc-editor.org/info/rfc7606>.
 
+
+
+
+
+
+
+Lucente & Cardona        Expires 29 August 2025                 [Page 8]
+
+Internet-Draft                   BMP REL                   February 2025
+
+
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
@@ -438,17 +458,6 @@ Internet-Draft                   BMP REL                       July 2024
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 5 January 2025                 [Page 8]
-
-Internet-Draft                   BMP REL                       July 2024
-
 
    [RFC8671]  Evens, T., Bayraktar, S., Lucente, P., Mi, P., and S.
               Zhuang, "Support for Adj-RIB-Out in the BGP Monitoring
@@ -492,13 +501,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 5 January 2025                 [Page 9]
+Lucente & Cardona        Expires 29 August 2025                 [Page 9]
