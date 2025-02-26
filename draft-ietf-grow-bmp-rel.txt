@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                        25 February 2025
-Expires: 29 August 2025
+Intended status: Standards Track                        26 February 2025
+Expires: 30 August 2025
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2025.
+   This Internet-Draft will expire on 30 August 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 1]
+Lucente & Cardona        Expires 30 August 2025                 [Page 1]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -82,7 +82,7 @@ Table of Contents
        3.3.5.  Crossed Upper Bound TLV . . . . . . . . . . . . . . .   6
      3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   6
      3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   6
-   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   6
+   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 2]
+Lucente & Cardona        Expires 30 August 2025                 [Page 2]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 3]
+Lucente & Cardona        Expires 30 August 2025                 [Page 3]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 4]
+Lucente & Cardona        Expires 30 August 2025                 [Page 4]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -264,23 +264,29 @@ Internet-Draft                   BMP REL                   February 2025
 
 3.3.2.  Policy Discard TLV
 
-   TBD3 = Policy Discard TLV.  The value contains a UTF-8 string whose
-   value can be organized freely by an implementation.  For example, it
-   may contain the routing policy name that caused the discard; or it
-   may list a sequence of policies and policy nodes traversed; or, more
-   simply, it could be a meaningful return code.
+   TBD3 = Policy Discard TLV.  The first byte indicates how the rest of
+   the value field is organized:
 
-   On the escort of Section 4 of [RFC9067] and YANG Model for Border
-   Gateway Protocol (BGP-4) [I-D.ietf-idr-bgp-model] it is RECOMMENDED
-   to organize the string as a comma-separated string with the policy
-   definition name being followed by the statement name.
+   *  TBD9 = String.  The value contains a UTF-8 string whose value can
+      be organized freely by an implementation.  For example, it may
+      contain the routing policy name that caused the discard; or it may
+      list a sequence of policies and policy nodes traversed; or, more
+      simply, it could be a meaningful return code.
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 5]
+
+
+Lucente & Cardona        Expires 30 August 2025                 [Page 5]
 
 Internet-Draft                   BMP REL                   February 2025
 
+
+   *  TBD10 = Structured.  On the escort of Section 4 of [RFC9067] and
+      YANG Model for Border Gateway Protocol (BGP-4)
+      [I-D.ietf-idr-bgp-model] the value is organized as two consecutive
+      null-terminated strings, the first indicating the policy name, the
+      second the statement name within the policy.
 
 3.3.3.  Malformed Packet TLV
 
@@ -288,7 +294,7 @@ Internet-Draft                   BMP REL                   February 2025
    the value represents a code giving more information about the
    specific malforming.  Following are the defined code points:
 
-   *  Code = TBD9: Errored PDU.  The BGP message was found to have some
+   *  Code = TBD11: Errored PDU.  The BGP message was found to have some
       error that made it unusable, causing it to be treated-as-withdraw
       RFC7606 [RFC7606].
 
@@ -321,6 +327,17 @@ Internet-Draft                   BMP REL                   February 2025
    [I-D.ietf-grow-bmp-tlv] and uses code point definitions in the
    Stateless Parsing Registry.
 
+
+
+
+
+
+
+Lucente & Cardona        Expires 30 August 2025                 [Page 6]
+
+Internet-Draft                   BMP REL                   February 2025
+
+
 4.  Operational Considerations
 
    Route Event Logging messages are event-driven in nature so the
@@ -330,14 +347,6 @@ Internet-Draft                   BMP REL                   February 2025
    annotate every received or announced NLRI then the recommendation is
    to use Route Monitoring messages with BMP Path Marking
    [I-D.ietf-grow-bmp-path-marking-tlv].  As an example consider RPKI
-
-
-
-Lucente & Cardona        Expires 29 August 2025                 [Page 6]
-
-Internet-Draft                   BMP REL                   February 2025
-
-
    validation status: when the objective is to report on any validations
    tatus (ie. valid, invalid and unknown), BMP Path Marking should be
    used; when the objective is instead to report only invalids then
@@ -372,6 +381,19 @@ Internet-Draft                   BMP REL                   February 2025
 
 7.  References
 
+
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 30 August 2025                 [Page 7]
+
+Internet-Draft                   BMP REL                   February 2025
+
+
    [I-D.ietf-grow-bmp-bgp-rib-stats]
               Srivastava, M., Liu, Y., Lin, C., and J. Li, "Definition
               For New BGP Monitoring Protocol (BMP) Statistics Types",
@@ -379,20 +401,6 @@ Internet-Draft                   BMP REL                   February 2025
               rib-stats-07, 21 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-bgp-rib-stats-07>.
-
-
-
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 29 August 2025                 [Page 7]
-
-Internet-Draft                   BMP REL                   February 2025
-
 
    [I-D.ietf-grow-bmp-path-marking-tlv]
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
@@ -434,21 +442,18 @@ Internet-Draft                   BMP REL                   February 2025
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
 
+
+
+
+Lucente & Cardona        Expires 30 August 2025                 [Page 8]
+
+Internet-Draft                   BMP REL                   February 2025
+
+
    [RFC7606]  Chen, E., Ed., Scudder, J., Ed., Mohapatra, P., and K.
               Patel, "Revised Error Handling for BGP UPDATE Messages",
               RFC 7606, DOI 10.17487/RFC7606, August 2015,
               <https://www.rfc-editor.org/info/rfc7606>.
-
-
-
-
-
-
-
-Lucente & Cardona        Expires 29 August 2025                 [Page 8]
-
-Internet-Draft                   BMP REL                   February 2025
-
 
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
@@ -490,6 +495,17 @@ Authors' Addresses
    Email: paolo@ntt.net
 
 
+
+
+
+
+
+
+Lucente & Cardona        Expires 30 August 2025                 [Page 9]
+
+Internet-Draft                   BMP REL                   February 2025
+
+
    Camilo Cardona
    NTT
    164-168, Carrer de Numancia
@@ -501,4 +517,44 @@ Authors' Addresses
 
 
 
-Lucente & Cardona        Expires 29 August 2025                 [Page 9]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona        Expires 30 August 2025                [Page 10]
