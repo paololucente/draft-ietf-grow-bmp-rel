@@ -110,13 +110,11 @@
 		closed-loop operations. 
             </t>
             <t>
-		Since no other existing BMP message type does fit the described purpose,
-		this document defines a new Route Event Logging (REL) message type that
+		This document defines a new Route Event Logging (REL) message type that
 		is suitable to carry event-driven data and is extensible in nature.
 		While the message format is similar to the Route Mirroring message
 		type defined in <xref target="RFC7854">RFC 7854</xref> and to the Route
-		Monitoring message type as defined in <xref target="I-D.ietf-grow-bmp-tlv">
-		TLV support for BMP Route Monitoring and Peer Down Messages</xref>,
+		Monitoring message type as defined in <xref target="I-D.ietf-grow-bmp-tlv"/>,
 		the semantics are different.
             </t>
         </section>
@@ -139,27 +137,31 @@
 		Attributes.
 	    </t>
 	    <t>
-		The structure of the Route Event Logging message is the same as
-		the Route Monitoring message defined in <xref target="I-D.ietf-grow-bmp-tlv">
-		TLV support for BMP Route Monitoring and Peer Down Messages</xref>
-		where the Per-Peer Header is followed by a BGP Message TLV, one
-		indexed Informational TLV and further optional indexed Informational
-		TLVs. An example of such structure is available in
-		<xref target="I-D.ietf-grow-bmp-tlv">Section 4.2.1.1 of</xref>.
+		The structure of the Route Event Logging message is similar to
+		the Route Monitoring message defined in <xref target="I-D.ietf-grow-bmp-tlv"/>,
+		as such all TLVs enclosed in the message are indexed.
 	    </t>
 	    <t>
-		One or more Event Subjects are packed as part of a BGP Update PDU.
+		The message is composed of the Per-Peer Header, one mandatory BGP
+		Message TLV, one mandatory Informational TLV indicating the reason
+		of the event and any further optional Informational TLVs to better
+		characterize the nature of the event. An example of the indexed TLV
+		structure is available in <xref target="I-D.ietf-grow-bmp-tlv">
+		Appendix A of</xref>.
+	    </t>
+	    <t>
+		One or more Event Subjects are packed as part of the BGP Update PDU.
 		The BGP Update PDU <xref target="RFC4271">Section 4.3 of</xref> is
-		encoded itself as part of a BGP Message TLV with code point &IANA_REL_CODE_BGP_PDU;
-		and index set to zero. Each Event Subject is represented by an
-		NLRI carried in the PDU.
+		encoded itself as part of the BGP Message TLV with code point
+		&IANA_REL_CODE_BGP_PDU; and index set to zero. Each Event Subject
+		is represented by an NLRI carried in the PDU.
 	    </t>
 	    <t>
 		The BGP Message TLV may be preceeded and/or followed by indexed
 		Informational TLVs that carry Event Attributes, where attributes
 		are bound to subjects referring to their positional index within
 		the PDU or via a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
-                Section 4.2.1 of</xref>
+                Section 5.2.1 of</xref>
 	    </t>
 	    <t>
 		Speaking comparatively to other existing message types, REL does
@@ -233,11 +235,9 @@
 	    <t>
 		Informational TLVs in BMP are formalized by the
 		intersection of <xref target="RFC7854">RFC 7854</xref>,
-		<xref target="I-D.ietf-grow-bmp-tlv">TLV support for BMP Route
-		Monitoring and Peer Down Messages</xref> and
-		<xref target="I-D.ietf-grow-bmp-tlv-ebit">Support for Enterprise-
-		specific TLVs in the BGP Monitoring Protocol</xref>. TLVs in
-		a REL message are indexed.
+		<xref target="I-D.ietf-grow-bmp-tlv"/> and <xref
+		target="I-D.ietf-grow-bmp-tlv-ebit"/>. TLVs in a REL message
+		are indexed.
 	    </t>
 	    <t>
 		Contrary to other BMP messages where all Informational TLVs are
@@ -276,8 +276,9 @@
 	    </section>
 	    <section title="Policy Discard TLV">
 		<t>
-		    &IANA_REL_CODE_POLICY_DISCARD; = Policy Discard TLV. The first
-		    byte indicates how the rest of the value field is organized:
+		    &IANA_REL_CODE_POLICY_DISCARD; = Policy Discard TLV. The length is
+		    variable. The first byte of the value field indicates how the rest
+		    is organized:
 
 		    <list style="symbols">
 		    <t>
@@ -302,9 +303,9 @@
 	    <section title="Malformed Packet TLV">
 		<t>
 		    &IANA_REL_CODE_MALFORMED_PACKET; = Malformed Packet TLV. The
-		    length is to be set to 2 bytes and the value represents a code
-		    giving more information about the specific malforming. Following
-		    are the defined code points:
+		    length is set to 2 bytes and the value represents a code giving
+		    more information about the specific malforming. Following are the
+		    defined code points:
 		</t>
 		<t>
 		<list style="symbols">
@@ -320,15 +321,15 @@
 	    <section title="Crossed Warning Bound TLV">
 		<t>
 		    &IANA_REL_CODE_WARNING_BOUND; = Crossed Warning Bound TLV. The
-		    length is to be set to 4 bytes and the value to the threshold
-		    number of the event.
+		    length is set to 4 bytes and the value to the threshold number of
+		    the event.
 		</t>
 	    </section>
 	    <section title="Crossed Upper Bound TLV">
 		<t>
 		    &IANA_REL_CODE_UPPER_BOUND; = Crossed Upper Bound TLV. The length
-		    is to be set to 4 bytes and the value to the threshold number of
-		    the event.
+		    is set to 4 bytes and the value to the threshold number of the
+		    event.
 		</t>
 	    </section>
 	</section>
@@ -337,8 +338,7 @@
 		The Group TLV is to form N:M relationships among NLRIs in the BGP
 		Update PDU and TLVs of the same Route Event Logging message. This
 		TLV has code point &IANA_REL_CODE_GROUP; and follows the definition
-		of Group TLV in <xref target="I-D.ietf-grow-bmp-tlv">TLV support
-		for BMP Route Monitoring and Peer Down Messages</xref>. 
+		of Group TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>.
             </t>
 	</section>
         <section title="Stateless Parsing TLV">
@@ -348,8 +348,7 @@
 		the same BGP session. This TLV can be especially relevant to Route
 		Event Logging where the BGP Update PDU is artificial. The TLV has
 		code point &IANA_REL_CODE_SP; , it follows the definition of
-		Stateless Parsing TLV in <xref target="I-D.ietf-grow-bmp-tlv">TLV
-		support for BMP Route Monitoring and Peer Down Messages</xref>
+		Stateless Parsing TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>
 		and uses code point definitions in the Stateless Parsing Registry. 
             </t>
 	</section>

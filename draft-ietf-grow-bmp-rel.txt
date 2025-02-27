@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                        26 February 2025
-Expires: 30 August 2025
+Intended status: Standards Track                        27 February 2025
+Expires: 31 August 2025
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 August 2025.
+   This Internet-Draft will expire on 31 August 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 1]
+Lucente & Cardona        Expires 31 August 2025                 [Page 1]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -109,18 +109,16 @@ Table of Contents
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 2]
+Lucente & Cardona        Expires 31 August 2025                 [Page 2]
 
 Internet-Draft                   BMP REL                   February 2025
 
 
-   Since no other existing BMP message type does fit the described
-   purpose, this document defines a new Route Event Logging (REL)
-   message type that is suitable to carry event-driven data and is
-   extensible in nature.  While the message format is similar to the
-   Route Mirroring message type defined in RFC 7854 [RFC7854] and to the
-   Route Monitoring message type as defined in TLV support for BMP Route
-   Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv], the
+   This document defines a new Route Event Logging (REL) message type
+   that is suitable to carry event-driven data and is extensible in
+   nature.  While the message format is similar to the Route Mirroring
+   message type defined in RFC 7854 [RFC7854] and to the Route
+   Monitoring message type as defined in [I-D.ietf-grow-bmp-tlv], the
    semantics are different.
 
 2.  Terminology
@@ -137,23 +135,25 @@ Internet-Draft                   BMP REL                   February 2025
    logically composed by one Event Subject and one or more Event
    Attributes.
 
-   The structure of the Route Event Logging message is the same as the
-   Route Monitoring message defined in TLV support for BMP Route
-   Monitoring and Peer Down Messages [I-D.ietf-grow-bmp-tlv] where the
-   Per-Peer Header is followed by a BGP Message TLV, one indexed
-   Informational TLV and further optional indexed Informational TLVs.
-   An example of such structure is available in Section 4.2.1.1 of
-   [I-D.ietf-grow-bmp-tlv].
+   The structure of the Route Event Logging message is similar to the
+   Route Monitoring message defined in [I-D.ietf-grow-bmp-tlv], as such
+   all TLVs enclosed in the message are indexed.
 
-   One or more Event Subjects are packed as part of a BGP Update PDU.
+   The message is composed of the Per-Peer Header, one mandatory BGP
+   Message TLV, one mandatory Informational TLV indicating the reason of
+   the event and any further optional Informational TLVs to better
+   characterize the nature of the event.  An example of the indexed TLV
+   structure is available in Appendix A of [I-D.ietf-grow-bmp-tlv].
+
+   One or more Event Subjects are packed as part of the BGP Update PDU.
    The BGP Update PDU Section 4.3 of [RFC4271] is encoded itself as part
-   of a BGP Message TLV with code point TBD1 and index set to zero.
+   of the BGP Message TLV with code point TBD1 and index set to zero.
    Each Event Subject is represented by an NLRI carried in the PDU.
 
    The BGP Message TLV may be preceeded and/or followed by indexed
    Informational TLVs that carry Event Attributes, where attributes are
    bound to subjects referring to their positional index within the PDU
-   or via a Group TLV as described in Section 4.2.1 of
+   or via a Group TLV as described in Section 5.2.1 of
    [I-D.ietf-grow-bmp-tlv]
 
    Speaking comparatively to other existing message types, REL does not
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 3]
+Lucente & Cardona        Expires 31 August 2025                 [Page 3]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 4]
+Lucente & Cardona        Expires 31 August 2025                 [Page 4]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -229,10 +229,8 @@ Internet-Draft                   BMP REL                   February 2025
 3.3.  Informational TLVs
 
    Informational TLVs in BMP are formalized by the intersection of RFC
-   7854 [RFC7854], TLV support for BMP Route Monitoring and Peer Down
-   Messages [I-D.ietf-grow-bmp-tlv] and Support for Enterprise- specific
-   TLVs in the BGP Monitoring Protocol [I-D.ietf-grow-bmp-tlv-ebit].
-   TLVs in a REL message are indexed.
+   7854 [RFC7854], [I-D.ietf-grow-bmp-tlv] and
+   [I-D.ietf-grow-bmp-tlv-ebit].  TLVs in a REL message are indexed.
 
    Contrary to other BMP messages where all Informational TLVs are
    entirely optional, in order for a REL message to be meaningful, it
@@ -264,8 +262,8 @@ Internet-Draft                   BMP REL                   February 2025
 
 3.3.2.  Policy Discard TLV
 
-   TBD3 = Policy Discard TLV.  The first byte indicates how the rest of
-   the value field is organized:
+   TBD3 = Policy Discard TLV.  The length is variable.  The first byte
+   of the value field indicates how the rest is organized:
 
    *  TBD9 = String.  The value contains a UTF-8 string whose value can
       be organized freely by an implementation.  For example, it may
@@ -277,7 +275,9 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 5]
+
+
+Lucente & Cardona        Expires 31 August 2025                 [Page 5]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -290,9 +290,9 @@ Internet-Draft                   BMP REL                   February 2025
 
 3.3.3.  Malformed Packet TLV
 
-   TBD8 = Malformed Packet TLV.  The length is to be set to 2 bytes and
-   the value represents a code giving more information about the
-   specific malforming.  Following are the defined code points:
+   TBD8 = Malformed Packet TLV.  The length is set to 2 bytes and the
+   value represents a code giving more information about the specific
+   malforming.  Following are the defined code points:
 
    *  Code = TBD11: Errored PDU.  The BGP message was found to have some
       error that made it unusable, causing it to be treated-as-withdraw
@@ -300,20 +300,19 @@ Internet-Draft                   BMP REL                   February 2025
 
 3.3.4.  Crossed Warning Bound TLV
 
-   TBD6 = Crossed Warning Bound TLV.  The length is to be set to 4 bytes
-   and the value to the threshold number of the event.
+   TBD6 = Crossed Warning Bound TLV.  The length is set to 4 bytes and
+   the value to the threshold number of the event.
 
 3.3.5.  Crossed Upper Bound TLV
 
-   TBD7 = Crossed Upper Bound TLV.  The length is to be set to 4 bytes
-   and the value to the threshold number of the event.
+   TBD7 = Crossed Upper Bound TLV.  The length is set to 4 bytes and the
+   value to the threshold number of the event.
 
 3.4.  Group TLV
 
    The Group TLV is to form N:M relationships among NLRIs in the BGP
    Update PDU and TLVs of the same Route Event Logging message.  This
    TLV has code point TBD4 and follows the definition of Group TLV in
-   TLV support for BMP Route Monitoring and Peer Down Messages
    [I-D.ietf-grow-bmp-tlv].
 
 3.5.  Stateless Parsing TLV
@@ -323,7 +322,6 @@ Internet-Draft                   BMP REL                   February 2025
    BGP session.  This TLV can be especially relevant to Route Event
    Logging where the BGP Update PDU is artificial.  The TLV has code
    point TBD5 , it follows the definition of Stateless Parsing TLV in
-   TLV support for BMP Route Monitoring and Peer Down Messages
    [I-D.ietf-grow-bmp-tlv] and uses code point definitions in the
    Stateless Parsing Registry.
 
@@ -333,7 +331,9 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 6]
+
+
+Lucente & Cardona        Expires 31 August 2025                 [Page 6]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -389,7 +389,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 7]
+Lucente & Cardona        Expires 31 August 2025                 [Page 7]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -445,7 +445,7 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 8]
+Lucente & Cardona        Expires 31 August 2025                 [Page 8]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -501,7 +501,7 @@ Authors' Addresses
 
 
 
-Lucente & Cardona        Expires 30 August 2025                 [Page 9]
+Lucente & Cardona        Expires 31 August 2025                 [Page 9]
 
 Internet-Draft                   BMP REL                   February 2025
 
@@ -557,4 +557,4 @@ Internet-Draft                   BMP REL                   February 2025
 
 
 
-Lucente & Cardona        Expires 30 August 2025                [Page 10]
+Lucente & Cardona        Expires 31 August 2025                [Page 10]
