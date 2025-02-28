@@ -19,13 +19,18 @@
 	<!ENTITY IANA_REL_CODE_SP "TBD7">
 	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD8">
 
-	<!ENTITY IANA_REL_CODE_PD_STRING "TBD9">
-	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD10">
+	<!ENTITY IANA_REL_CODE_LA_CONFIG "TBD9">
+	<!ENTITY IANA_REL_CODE_LA_UNSTABLE "TBD10">
+	<!ENTITY IANA_REL_CODE_LA_CWB "TBD11">
+	<!ENTITY IANA_REL_CODE_LA_CUB "TBD12">
 
-	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "TBD11">
-	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "TBD12">
+	<!ENTITY IANA_REL_CODE_PD_STRING "TBD13">
+	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD14">
 
-	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD13">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "TBD15">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "TBD16">
+
+	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD17">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -278,50 +283,38 @@
 	    <section title="Log Action TLV">
 		<t>
 		    &IANA_REL_CODE_LOG_ACTION; = Log Action TLV. The length is variable.
-		    The first byte defines the nature of the logging, the following code
-		    points are defined:
-<figure>
-              <artwork align="center"><![CDATA[
-+--------+------------------------------+
-| Value  | Log Reason                   |
-+---------------------------------------+
-|  0x00  | Config			|
-|  0x01  | Route unstable / Flapping	|
-|  0x02  | Crossed Warning Bound	|
-|  0x04  | Crossed Upper Bound		|
-+--------+------------------------------+
+		    The first byte defines the nature of the logging, depending on the
+		    code point additional data may follow. the following code points are
+		    defined:
 
-     Table 2: Log Action Reason Codes (Suggestred values) ]]></artwork>
-</figure>
-		    Depending on the code point, additional data may follow as defined
-		    in the following sections.
-		</t>
-		<section title="Config Data">
+		    <list style="symbols">
 			<t>
-			    Data contains a UTF-8 string whose value can be organized
-			    freely by an implementation.
+			    &IANA_REL_CODE_LA_CONFIG; = Config. Prefix is being logged
+			    due to a configuration statement. Data contains a UTF-8
+			    string whose value can be organized freely by an
+			    implementation and is meant to give additional information
+			    about why the log was made.
 			</t>
-	        </section>
-		<section title="Route unstable / Flapping data">
 			<t>
-			    Optional data contains a 2 bytes value representing the
-			    observed timeframe in seconds, followed by a 8 bytes value
-			    indicating the amount of times the event occurred within
-			    the timeframe.
+			    &IANA_REL_CODE_LA_UNSTABLE; = Route unstable. Optional data
+			    contains a 4 bytes value representing the observed timeframe
+			    in seconds, followed by a 4 bytes value indicating the amount
+			    of times the event occurred within the timeframe.
 			</t>
-	        </section>
-		<section title="Crossed Warning Bound Data">
 			<t>
-			    Data contains a 4 bytes value representing the threshold
-			    number of the event.
+			    &IANA_REL_CODE_LA_CWB; = Crossed Warning Bound. Prefix is
+			    over the warning threshold of the maximum number of prefixes
+			    that can be received from a BGP neighbor. Data contains a
+			    4 bytes value representing the threshold number.
 			</t>
-	        </section>
-		<section title="Crossed Upper Bound Data">
 			<t>
-			    Data contains a 4 bytes value representing the threshold
-			    number of the event.
+			    &IANA_REL_CODE_LA_CUB; = Crossed Upper Bound. Prefix is over
+			    the upper threshold of the maximum number of prefixes that
+			    can be received from a BGP neighbor. Data contains a 4 bytes
+			    value representing the threshold number.
 			</t>
-	        </section>
+		    </list>
+	        </t>
 	    </section>
 	    <section title="Policy Discard TLV">
 		<t>
@@ -375,7 +368,7 @@
 	    <section title="Malformed Packet TLV">
 		<t>
 		    &IANA_REL_CODE_MALFORMED_PACKET; = Malformed Packet TLV. The
-		    length is set to 2 bytes and the value represents a code giving
+		    length is set to 1 byte and the value represents a code giving
 		    more information about the specific malforming. Following are the
 		    defined code points:
 		</t>
