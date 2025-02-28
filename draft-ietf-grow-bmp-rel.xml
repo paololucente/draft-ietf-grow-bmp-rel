@@ -12,17 +12,16 @@
 
 	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
-	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD3">
-	<!ENTITY IANA_REL_CODE_GROUP "TBD4">
-	<!ENTITY IANA_REL_CODE_SP "TBD5">
-	<!ENTITY IANA_REL_CODE_WARNING_BOUND "TBD6">
-	<!ENTITY IANA_REL_CODE_UPPER_BOUND "TBD7">
-	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD8">
+	<!ENTITY IANA_REL_CODE_LOG_ACTION "TBD3">
+	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD4">
+	<!ENTITY IANA_REL_CODE_GROUP "TBD5">
+	<!ENTITY IANA_REL_CODE_SP "TBD6">
+	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD7">
 
-	<!ENTITY IANA_REL_CODE_PD_STRING "TBD9">
-	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD10">
+	<!ENTITY IANA_REL_CODE_PD_STRING "TBD8">
+	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD9">
 
-	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD11">
+	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD10">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -266,13 +265,59 @@
 | 0x0002 | Policy Discard		|
 | 0x0004 | Validation Fail		|
 | 0x0008 | Malformed Packet		|
-| 0x0010 | Crossed Warning Bound	|
-| 0x0020 | Crossed Upper Bound		|
 +--------+------------------------------+
 
-     Table 1: Event Reason Codes ]]></artwork>
+     Table 1: Event Reason Codes (Suggested value) ]]></artwork>
 </figure>
 		</t>
+	    </section>
+	    <section title="Log Action TLV">
+		<t>
+		    &IANA_REL_CODE_LOG_ACTION; = Log Action TLV. The length is variable.
+		    The first byte defines the nature of the logging, the following code
+		    points are defined:
+<figure>
+              <artwork align="center"><![CDATA[
++--------+------------------------------+
+| Value  | Log Reason                   |
++---------------------------------------+
+|  0x00  | Config			|
+|  0x01  | Route unstable / Flapping	|
+|  0x02  | Crossed Warning Bound	|
+|  0x04  | Crossed Upper Bound		|
++--------+------------------------------+
+
+     Table 2: Log Action Reason Codes (Suggestred values) ]]></artwork>
+</figure>
+		    Depending on the code point, additional data may follow as defined
+		    in the following sections.
+		</t>
+		<section title="Config Data">
+			<t>
+			    Data contains a UTF-8 string whose value can be organized
+			    freely by an implementation.
+			</t>
+	        </section>
+		<section title="Route unstable / Flapping data">
+			<t>
+			    Optional data contains a 2 bytes value representing the
+			    observed timeframe in seconds, followed by a 8 bytes value
+			    indicating the amount of times the event occurred within
+			    the timeframe.
+			</t>
+	        </section>
+		<section title="Crossed Warning Bound Data">
+			<t>
+			    Data contains a 4 bytes value representing the threshold
+			    number of the event.
+			</t>
+	        </section>
+		<section title="Crossed Upper Bound Data">
+			<t>
+			    Data contains a 4 bytes value representing the threshold
+			    number of the event.
+			</t>
+	        </section>
 	    </section>
 	    <section title="Policy Discard TLV">
 		<t>
@@ -316,20 +361,6 @@
 			RFC7606</xref>.
 			</t>
 		</list>
-		</t>
-	    </section>
-	    <section title="Crossed Warning Bound TLV">
-		<t>
-		    &IANA_REL_CODE_WARNING_BOUND; = Crossed Warning Bound TLV. The
-		    length is set to 4 bytes and the value to the threshold number of
-		    the event.
-		</t>
-	    </section>
-	    <section title="Crossed Upper Bound TLV">
-		<t>
-		    &IANA_REL_CODE_UPPER_BOUND; = Crossed Upper Bound TLV. The length
-		    is set to 4 bytes and the value to the threshold number of the
-		    event.
 		</t>
 	    </section>
 	</section>
