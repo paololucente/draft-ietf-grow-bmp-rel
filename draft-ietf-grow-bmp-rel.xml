@@ -14,14 +14,18 @@
 	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
 	<!ENTITY IANA_REL_CODE_LOG_ACTION "TBD3">
 	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD4">
-	<!ENTITY IANA_REL_CODE_GROUP "TBD5">
-	<!ENTITY IANA_REL_CODE_SP "TBD6">
-	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD7">
+	<!ENTITY IANA_REL_CODE_VALIDATION_FAIL "TBD5">
+	<!ENTITY IANA_REL_CODE_GROUP "TBD6">
+	<!ENTITY IANA_REL_CODE_SP "TBD7">
+	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD8">
 
-	<!ENTITY IANA_REL_CODE_PD_STRING "TBD8">
-	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD9">
+	<!ENTITY IANA_REL_CODE_PD_STRING "TBD9">
+	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD10">
 
-	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD10">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "TBD11">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "TBD12">
+
+	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD13">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -344,6 +348,29 @@
 		     </t>
 		     </list>
 		  </t>
+	    </section>
+	    <section title="Validation Fail TLV">
+		<t>
+		    &IANA_REL_CODE_VALIDATION_FAIL; = Validation Fail TLV. The length
+		    is set to 1 byte and the value represents a code giving more
+		    information about the specific validation fail. Following are the
+		    defined code points: 
+		</t>
+		<t>
+		<list style="symbols">
+			<t>
+			Code = &IANA_REL_CODE_VF_RPKI_INVALID;: RPKI Invalid. The
+			prefix is being marked as RPKI 'invalid' and either has no
+			coverage or it is unknown whether it has coverage by a valid
+			prefix.
+			</t>
+			<t>
+			Code = &IANA_REL_CODE_VF_RPKI_COVERED_INVALID;: RPKI Invalid
+			with covering Valid prefix. The NLRI is being marked as RPKI
+			'invalid' but is covered by a Valid prefix.
+			</t>
+		</list>
+		</t>
 	    </section>
 	    <section title="Malformed Packet TLV">
 		<t>
