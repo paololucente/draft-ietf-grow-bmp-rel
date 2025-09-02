@@ -4,33 +4,41 @@
         <!ENTITY RFC8174 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml">
         <!ENTITY RFC9067 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.9067.xml">
         <!ENTITY RFC7606 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7606.xml">
+        <!ENTITY RFC8126 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
         <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-bgp-rib-stats SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-bgp-rib-stats.xml">
         <!ENTITY I-D.ietf-idr-bgp-model SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-idr-bgp-model.xml">
 
-	<!ENTITY IANA_REL_CODE_BGP_PDU "TBD1">
-	<!ENTITY IANA_REL_CODE_EVENT_REASON "TBD2">
-	<!ENTITY IANA_REL_CODE_LOG_ACTION "TBD3">
-	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "TBD4">
-	<!ENTITY IANA_REL_CODE_VALIDATION_FAIL "TBD5">
-	<!ENTITY IANA_REL_CODE_GROUP "TBD6">
-	<!ENTITY IANA_REL_CODE_SP "TBD7">
-	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "TBD8">
+	<!ENTITY IANA_REL_CODE_RESERVED0 "0">
+	<!ENTITY IANA_REL_CODE_SP "1">
+	<!ENTITY IANA_REL_CODE_GROUP "2">
+	<!ENTITY IANA_REL_CODE_RESERVED3 "3">
+	<!ENTITY IANA_REL_CODE_BGP_PDU "4">
+	<!ENTITY IANA_REL_CODE_EVENT_REASON "5">
+	<!ENTITY IANA_REL_CODE_LOG_ACTION "6">
+	<!ENTITY IANA_REL_CODE_POLICY_DISCARD "7">
+	<!ENTITY IANA_REL_CODE_VALIDATION_FAIL "8">
+	<!ENTITY IANA_REL_CODE_MALFORMED_PACKET "9">
 
-	<!ENTITY IANA_REL_CODE_LA_CONFIG "TBD9">
-	<!ENTITY IANA_REL_CODE_LA_UNSTABLE "TBD10">
-	<!ENTITY IANA_REL_CODE_LA_CWB "TBD11">
-	<!ENTITY IANA_REL_CODE_LA_CUB "TBD12">
+	<!ENTITY IANA_REL_CODE_ER_LOG_ACTION "0x0001">
+	<!ENTITY IANA_REL_CODE_ER_POLICY_DISCARD "0x0002">
+	<!ENTITY IANA_REL_CODE_ER_VALIDATION_FAIL "0x0004">
+	<!ENTITY IANA_REL_CODE_ER_MALFORMED_PACKET "0x0008">
 
-	<!ENTITY IANA_REL_CODE_PD_STRING "TBD13">
-	<!ENTITY IANA_REL_CODE_PD_STRUCT "TBD14">
+	<!ENTITY IANA_REL_CODE_LA_CONFIG "1">
+	<!ENTITY IANA_REL_CODE_LA_UNSTABLE "2">
+	<!ENTITY IANA_REL_CODE_LA_CWB "3">
+	<!ENTITY IANA_REL_CODE_LA_CUB "4">
 
-	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "TBD15">
-	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "TBD16">
+	<!ENTITY IANA_REL_CODE_PD_STRING "1">
+	<!ENTITY IANA_REL_CODE_PD_STRUCT "2">
 
-	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "TBD17">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "1">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "2">
+
+	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "1">
 ]>
 
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -138,7 +146,7 @@
             </t>
         </section>
 
-	<section title="Route Event Logging (REL) message">
+	<section title="Route Event Logging (REL) message" anchor="RELStruct">
             <t>
 		In basic terms a REL message does carry Events. Each Event is
 		logically composed by one Event Subject and one or more Event
@@ -257,30 +265,42 @@
 		A new registry called "Route Event Logging TLVs" is defined and
 		is seeded with the TLVs detailed in the following sections.
 	    </t>
-	    <section title="Event Reason TLV">
+	    <section title="Event Reason TLV" anchor="EventReasonTLV">
 		<t>
 		    &IANA_REL_CODE_EVENT_REASON; = Event Reason TLV (4 octets).
 		    Indicates the IANA-registered reason code describing the type
 		    of the event. The following reason codes are defined as part
 		    of the "Event Reason TLV" registry:
-
-<figure>
-              <artwork align="center"><![CDATA[
-+--------+------------------------------+
-| Value  | Reason			|
-+---------------------------------------+
-| 0x0000 | Unknown			|
-| 0x0001 | Log Action			|
-| 0x0002 | Policy Discard		|
-| 0x0004 | Validation Fail		|
-| 0x0008 | Malformed Packet		|
-+--------+------------------------------+
-
-     Table 1: Event Reason Codes (Suggested value) ]]></artwork>
-</figure>
 		</t>
+		<table anchor="EventReasonTLVCodes">
+		<name>IANA-Registered Event reasons</name>
+		<thead>
+		<tr>
+			<th align="center">Value</th>
+			<th align="left">Event Reason</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td align="center">&IANA_REL_CODE_ER_LOG_ACTION;</td>
+			<td align="left">Log Action</td>
+		</tr>
+		<tr>
+			<td align="center">&IANA_REL_CODE_ER_POLICY_DISCARD;</td>
+			<td align="left">Policy Discard</td>
+		</tr>
+		<tr>
+			<td align="center">&IANA_REL_CODE_ER_VALIDATION_FAIL;</td>
+			<td align="left">Validation Fail</td>
+		</tr>
+		<tr>
+			<td align="center">&IANA_REL_CODE_ER_MALFORMED_PACKET;</td>
+			<td align="left">Malformed Packet</td>
+		</tr>
+		</tbody>
+		</table>
 	    </section>
-	    <section title="Log Action TLV">
+	    <section title="Log Action TLV" anchor="LogActionTLV">
 		<t>
 		    &IANA_REL_CODE_LOG_ACTION; = Log Action TLV. The length is variable.
 		    The first byte defines the nature of the logging, depending on the
@@ -316,7 +336,7 @@
 		    </list>
 	        </t>
 	    </section>
-	    <section title="Policy Discard TLV">
+	    <section title="Policy Discard TLV" anchor="PolicyDiscardTLV">
 		<t>
 		    &IANA_REL_CODE_POLICY_DISCARD; = Policy Discard TLV. The length is
 		    variable. The first byte of the value field indicates how the rest
@@ -342,7 +362,7 @@
 		     </list>
 		  </t>
 	    </section>
-	    <section title="Validation Fail TLV">
+	    <section title="Validation Fail TLV" anchor="ValidationFailTLV">
 		<t>
 		    &IANA_REL_CODE_VALIDATION_FAIL; = Validation Fail TLV. The length
 		    is set to 1 byte and the value represents a code giving more
@@ -365,7 +385,7 @@
 		</list>
 		</t>
 	    </section>
-	    <section title="Malformed Packet TLV">
+	    <section title="Malformed Packet TLV" anchor="MalformedPacketTLV">
 		<t>
 		    &IANA_REL_CODE_MALFORMED_PACKET; = Malformed Packet TLV. The
 		    length is set to 1 byte and the value represents a code giving
@@ -384,7 +404,7 @@
 		</t>
 	    </section>
 	</section>
-        <section title="Group TLV">
+        <section title="Group TLV" anchor="GroupTLV">
             <t>
 		The Group TLV is to form N:M relationships among NLRIs in the BGP
 		Update PDU and TLVs of the same Route Event Logging message. This
@@ -392,7 +412,7 @@
 		of Group TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>.
             </t>
 	</section>
-        <section title="Stateless Parsing TLV">
+        <section title="Stateless Parsing TLV" anchor="SPTLV">
             <t>
 		The Stateless Parsing TLV is to allow parsing of the BGP Update
 		PDU independently from a Peer Up message previously received for
@@ -452,12 +472,191 @@
 
         <section title="IANA Considerations">
             <t>
-		TBD
+		This document requests that IANA creates all the new registries in the
+		following sections under the "BGP Monitoring Protocol (BMP) Parameters"
+		group. The registries will record type code points for TLVs specific to
+		the Route Event Logging (REL) message type, as defined in this document.
 	    </t>
-        </section>
+	    <section>
+	    	<name>BMP Route Event Logging TLVs Registry</name>
+	    	<t>
+		    TLV Type consists of a code point (unsigned 16-bit value) and initial
+		    allocations are as follows:
+		</t>
+		<list style="symbols">
+			<t>
+				Type = &IANA_REL_CODE_RESERVED0;: Reserved for future use.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_SP;: Support for Stateless Parsing TLV. The
+				value is defined in <xref target="I-D.ietf-grow-bmp-tlv">Section
+				5.2.3 of</xref>.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_GROUP;: Support for grouping of TLVs. The
+				value is defined in <xref target="I-D.ietf-grow-bmp-tlv">Section
+				5.2.1 of</xref>.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_RESERVED3;: Reserved for future use.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_BGP_PDU;: Support for BGP Message TLV. The
+				value is defined in <xref target="RELStruct"/> 
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_EVENT_REASON;: Indicates IANA-registered
+				reason code for event. The value is defined in <xref target="EventReasonTLV"/>.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_LOG_ACTION;: Describes specific logging actions.
+				The value is defined in <xref target="LogActionTLV"/>. 
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_POLICY_DISCARD;: Indicates NLRI discarded due
+				to routing policy. The value is defined in <xref target="PolicyDiscardTLV"/>.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_VALIDATION_FAIL;: Marks validation-related failure
+				(e.g., RPKI invalidation). The value is defined in <xref target="ValidationFailTLV"/>.
+			</t>
+			<t>
+				Type = &IANA_REL_CODE_MALFORMED_PACKET;: Reports a malformed BGP
+				message indicating the reason. The value is defined in <xref target="MalformedPacketTLV"/>.
+			</t>
+		</list>
+		<t>
+			Values 0 through 16383 MUST be assigned using the Standards Action policy as
+			defined in <xref target="RFC8126">Section 4.9 of</xref>; values 16384 through
+			32767 MUST be assigned using the First Come First Served policy as defined in
+			<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+			is 65535. Value 65535 is Reserved.
+		</t>
+		</section>
+		<section>
+			<name>Event Reason TLV Registry</name>
+	    		<t>
+				TLV Type consists of a code point (unsigned 8-bit value) and is defined
+				in <xref target="EventReasonTLV"/>. Initial allocations are as follows:
+			</t>
+			<list>
+				<t>
+					Type = &IANA_REL_CODE_ER_LOG_ACTION;: Log Action reason.
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_ER_POLICY_DISCARD;: Policy Discard reason.
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_ER_VALIDATION_FAIL;: Validation Fail reason.
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_ER_MALFORMED_PACKET;: Malformed Packet reason.
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 255 is Reserved.
+			</t>
+		</section>
+		<section>
+			<name>Log Action TLV Registry</name>
+	    		<t>
+				TLV Type consists of a code point (unsigned 8-bit value) and is defined
+				in <xref target="LogActionTLV"/>. Initial allocations are as follows:
+			</t>
+			<list>
+				<t>
+					Type = &IANA_REL_CODE_LA_CONFIG;: Config (prefix logged due to configuration).
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_LA_UNSTABLE;: Route unstable.
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_LA_CWB;: Crossed Warning Bound
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_LA_CUB;: Crossed Upper Bound
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 255 is Reserved.
+			</t>
+		</section>
+      
+		<section>
+			<name>Policy Discard TLV Registry</name>
+	    		<t>
+				TLV Type consists of a code point (unsigned 8-bit value) and is defined
+				in <xref target="PolicyDiscardTLV"/>. Initial allocations are as follows:
+			</t>
+			<list>
+				<t>
+					Type = &IANA_REL_CODE_PD_STRING;: String (UTF-8 policy name/reason)
+				</t> 
+				<t>
+					Type = &IANA_REL_CODE_PD_STRUCT;: Structured (policy and statement, null-terminated)
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 255 is Reserved.
+			</t>
+		</section>
 
+		<section>
+			<name>Validation Fail TLV</name>
+	    		<t>
+				TLV Type consists of a code point (unsigned 8-bit value) and is defined in
+				<xref target="ValidationFailTLV"/>. Initial allocations are as follows:
+			</t>
+			<list>
+				<t>
+					Type = &IANA_REL_CODE_VF_RPKI_INVALID;: RPKI Invalid
+				</t>
+				<t>
+					Type = &IANA_REL_CODE_VF_RPKI_COVERED_INVALID;: RPKI Invalid with Covering Valid Prefix
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 255 is Reserved.
+			</t>
+		</section>
+
+		<section>
+			<name>Malformed Packet TLV Registry</name>
+	    		<t>
+				TLV Type consists of a code point (unsigned 8-bit value) and is defined in
+				<xref target="MalformedPacketTLV"/>. Initial allocations are as follows:
+			</t>
+			<list>
+				<t>
+					Type = &IANA_REL_CODE_MP_ERRORED_PDU;: Errored PDU (treated-as-withdraw per RFC 7606)
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 255 is Reserved.
+			</t>
+		</section>
+	</section>
     </middle>
-
     <back>
 
     <references title="References">
@@ -467,6 +666,7 @@
 		<?rfc include="reference.RFC.4271.xml"?>
 		<?rfc include="reference.RFC.7606.xml"?>
 		<?rfc include="reference.RFC.7854.xml"?>
+                <?rfc include="reference.RFC.8126.xml"?>
                 <?rfc include="reference.RFC.8671.xml"?>
                 <?rfc include="reference.RFC.9067.xml"?>
                 <?rfc include="reference.RFC.9069.xml"?>
