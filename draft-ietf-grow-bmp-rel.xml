@@ -425,6 +425,30 @@
 	</section>
 	</section>
 
+        <section title="Examples and use-cases">
+	    <t>
+		REL can be used to send real-time notifications for specific routing
+		events enabling rapid alerting of issues like policy discards,
+		validation failures, or malformed packets to operators. For example,
+		an operator is notified immediately when a route is discarded due to
+		policy, assisting quick diagnosis and policy refinement.
+	    </t>
+	    <t>
+		By logging every routing event and the corresponding reason code, REL
+		enables thorough audits of route changes and network behavior over
+		time. For example, when a route fails validation, a log entry with
+		the "Validation Fail" reason is stored for compliance checks and
+		future forensics.
+	    </t>
+	    <t>
+		REL events, especially with machine-readable reason codes, can feed
+		analytics engines and automated workflows to correlate events across
+		the network and trigger remediation. For example, analytics dashboards
+		continuously monitor for spikes in "Malformed Packet" events to detect
+		possible protocol attacks or systemic misconfigurations.
+	    </t>
+	</section>
+
         <section title="Operational Considerations">
 	    <t>
 		Route Event Logging messages are event-driven in nature so the general

@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                        2 September 2025
-Expires: 6 March 2026
+Intended status: Standards Track                        3 September 2025
+Expires: 7 March 2026
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 March 2026.
+   This Internet-Draft will expire on 7 March 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona         Expires 6 March 2026                  [Page 1]
+Lucente & Cardona         Expires 7 March 2026                  [Page 1]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -82,16 +82,17 @@ Table of Contents
        3.3.5.  Malformed Packet TLV  . . . . . . . . . . . . . . . .   7
      3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   7
      3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   7
-   4.  Operational Considerations  . . . . . . . . . . . . . . . . .   7
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-     6.1.  BMP Route Event Logging TLVs Registry . . . . . . . . . .   8
-     6.2.  Event Reason TLV Registry . . . . . . . . . . . . . . . .   9
-     6.3.  Log Action TLV Registry . . . . . . . . . . . . . . . . .   9
-     6.4.  Policy Discard TLV Registry . . . . . . . . . . . . . . .  10
-     6.5.  Validation Fail TLV . . . . . . . . . . . . . . . . . . .  10
-     6.6.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  10
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+   4.  Examples and use-cases  . . . . . . . . . . . . . . . . . . .   7
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+     7.1.  BMP Route Event Logging TLVs Registry . . . . . . . . . .   9
+     7.2.  Event Reason TLV Registry . . . . . . . . . . . . . . . .  10
+     7.3.  Log Action TLV Registry . . . . . . . . . . . . . . . . .  10
+     7.4.  Policy Discard TLV Registry . . . . . . . . . . . . . . .  10
+     7.5.  Validation Fail TLV . . . . . . . . . . . . . . . . . . .  11
+     7.6.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  11
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
@@ -108,8 +109,7 @@ Table of Contents
 
 
 
-
-Lucente & Cardona         Expires 6 March 2026                  [Page 2]
+Lucente & Cardona         Expires 7 March 2026                  [Page 2]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 6 March 2026                  [Page 3]
+Lucente & Cardona         Expires 7 March 2026                  [Page 3]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 6 March 2026                  [Page 4]
+Lucente & Cardona         Expires 7 March 2026                  [Page 4]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -277,7 +277,7 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 6 March 2026                  [Page 5]
+Lucente & Cardona         Expires 7 March 2026                  [Page 5]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -333,7 +333,7 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 6 March 2026                  [Page 6]
+Lucente & Cardona         Expires 7 March 2026                  [Page 6]
 
 Internet-Draft                   BMP REL                  September 2025
 
@@ -368,7 +368,40 @@ Internet-Draft                   BMP REL                  September 2025
    [I-D.ietf-grow-bmp-tlv] and uses code point definitions in the
    Stateless Parsing Registry.
 
-4.  Operational Considerations
+4.  Examples and use-cases
+
+   REL can be used to send real-time notifications for specific routing
+   events enabling rapid alerting of issues like policy discards,
+   validation failures, or malformed packets to operators.  For example,
+   an operator is notified immediately when a route is discarded due to
+   policy, assisting quick diagnosis and policy refinement.
+
+   By logging every routing event and the corresponding reason code, REL
+   enables thorough audits of route changes and network behavior over
+   time.  For example, when a route fails validation, a log entry with
+   the "Validation Fail" reason is stored for compliance checks and
+   future forensics.
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 7 March 2026                  [Page 7]
+
+Internet-Draft                   BMP REL                  September 2025
+
+
+   REL events, especially with machine-readable reason codes, can feed
+   analytics engines and automated workflows to correlate events across
+   the network and trigger remediation.  For example, analytics
+   dashboards continuously monitor for spikes in "Malformed Packet"
+   events to detect possible protocol attacks or systemic
+   misconfigurations.
+
+5.  Operational Considerations
 
    Route Event Logging messages are event-driven in nature so the
    general recommendation is to use them to report on specific
@@ -386,14 +419,6 @@ Internet-Draft                   BMP REL                  September 2025
    to report Malformed Packet and the use-cases for Route Mirroring
    where Errored PDUs may be sampled for reporting.  From implementors
    perspective, if one wants to implement broader event-driven
-
-
-
-Lucente & Cardona         Expires 6 March 2026                  [Page 7]
-
-Internet-Draft                   BMP REL                  September 2025
-
-
    notifications and does not want to offer exact mirroring of monitored
    BGP sessions without state compression it may be adviceable to prefer
    implementing Route Event Logging message type over Route Mirroring.
@@ -408,12 +433,24 @@ Internet-Draft                   BMP REL                  September 2025
    events is being addressed by the Definition For New BMP Statistics
    Type [I-D.ietf-grow-bmp-bgp-rib-stats] document.
 
-5.  Security Considerations
+6.  Security Considerations
 
    It is not believed that this document adds any additional security
    considerations.
 
-6.  IANA Considerations
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 7 March 2026                  [Page 8]
+
+Internet-Draft                   BMP REL                  September 2025
+
+
+7.  IANA Considerations
 
    This document requests that IANA creates all the new registries in
    the following sections under the "BGP Monitoring Protocol (BMP)
@@ -421,7 +458,7 @@ Internet-Draft                   BMP REL                  September 2025
    TLVs specific to the Route Event Logging (REL) message type, as
    defined in this document.
 
-6.1.  BMP Route Event Logging TLVs Registry
+7.1.  BMP Route Event Logging TLVs Registry
 
    TLV Type consists of a code point (unsigned 16-bit value) and initial
    allocations are as follows:
@@ -442,14 +479,6 @@ Internet-Draft                   BMP REL                  September 2025
    *  Type = 5: Indicates IANA-registered reason code for event.  The
       value is defined in Section 3.3.1.
 
-
-
-
-Lucente & Cardona         Expires 6 March 2026                  [Page 8]
-
-Internet-Draft                   BMP REL                  September 2025
-
-
    *  Type = 6: Describes specific logging actions.  The value is
       defined in Section 3.3.2.
 
@@ -468,7 +497,16 @@ Internet-Draft                   BMP REL                  September 2025
    defined in Section 4.4 of [RFC8126].  The upper bound of the registry
    is 65535.  Value 65535 is Reserved.
 
-6.2.  Event Reason TLV Registry
+
+
+
+
+Lucente & Cardona         Expires 7 March 2026                  [Page 9]
+
+Internet-Draft                   BMP REL                  September 2025
+
+
+7.2.  Event Reason TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.1.  Initial allocations are as follows:
@@ -487,7 +525,7 @@ Internet-Draft                   BMP REL                  September 2025
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Value 255 is Reserved.
 
-6.3.  Log Action TLV Registry
+7.3.  Log Action TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.2.  Initial allocations are as follows:
@@ -498,14 +536,6 @@ Internet-Draft                   BMP REL                  September 2025
 
       Type = 3: Crossed Warning Bound
 
-
-
-
-Lucente & Cardona         Expires 6 March 2026                  [Page 9]
-
-Internet-Draft                   BMP REL                  September 2025
-
-
       Type = 4: Crossed Upper Bound
 
    Values 0 through 63 MUST be assigned using the Standards Action
@@ -514,7 +544,7 @@ Internet-Draft                   BMP REL                  September 2025
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Value 255 is Reserved.
 
-6.4.  Policy Discard TLV Registry
+7.4.  Policy Discard TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.3.  Initial allocations are as follows:
@@ -523,13 +553,22 @@ Internet-Draft                   BMP REL                  September 2025
 
       Type = 2: Structured (policy and statement, null-terminated)
 
+
+
+
+
+Lucente & Cardona         Expires 7 March 2026                 [Page 10]
+
+Internet-Draft                   BMP REL                  September 2025
+
+
    Values 0 through 63 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Value 255 is Reserved.
 
-6.5.  Validation Fail TLV
+7.5.  Validation Fail TLV
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.4.  Initial allocations are as follows:
@@ -544,23 +583,12 @@ Internet-Draft                   BMP REL                  September 2025
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Value 255 is Reserved.
 
-6.6.  Malformed Packet TLV Registry
+7.6.  Malformed Packet TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.5.  Initial allocations are as follows:
 
       Type = 1: Errored PDU (treated-as-withdraw per RFC 7606)
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 6 March 2026                 [Page 10]
-
-Internet-Draft                   BMP REL                  September 2025
-
 
    Values 0 through 63 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
@@ -568,7 +596,7 @@ Internet-Draft                   BMP REL                  September 2025
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Value 255 is Reserved.
 
-7.  References
+8.  References
 
    [I-D.ietf-grow-bmp-bgp-rib-stats]
               Srivastava, M., Liu, Y., Lin, C., and J. Li, "Definition
@@ -582,6 +610,14 @@ Internet-Draft                   BMP REL                  September 2025
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
               Graf, "BMP Extension for Path Status TLV", Work in
               Progress, Internet-Draft, draft-ietf-grow-bmp-path-
+
+
+
+Lucente & Cardona         Expires 7 March 2026                 [Page 11]
+
+Internet-Draft                   BMP REL                  September 2025
+
+
               marking-tlv-04, 25 August 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-path-marking-tlv-04>.
@@ -608,16 +644,6 @@ Internet-Draft                   BMP REL                  September 2025
               October 2024, <https://datatracker.ietf.org/doc/html/
               draft-ietf-idr-bgp-model-18>.
 
-
-
-
-
-
-Lucente & Cardona         Expires 6 March 2026                 [Page 11]
-
-Internet-Draft                   BMP REL                  September 2025
-
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -637,6 +663,16 @@ Internet-Draft                   BMP REL                  September 2025
               Monitoring Protocol (BMP)", RFC 7854,
               DOI 10.17487/RFC7854, June 2016,
               <https://www.rfc-editor.org/info/rfc7854>.
+
+
+
+
+
+
+Lucente & Cardona         Expires 7 March 2026                 [Page 12]
+
+Internet-Draft                   BMP REL                  September 2025
+
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -660,19 +696,6 @@ Internet-Draft                   BMP REL                  September 2025
               "Support for Local RIB in the BGP Monitoring Protocol
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
-
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 6 March 2026                 [Page 12]
-
-Internet-Draft                   BMP REL                  September 2025
-
 
 Acknowledgements
 
@@ -702,27 +725,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 6 March 2026                 [Page 13]
+Lucente & Cardona         Expires 7 March 2026                 [Page 13]
