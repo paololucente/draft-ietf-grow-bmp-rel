@@ -38,6 +38,9 @@
 	<!ENTITY IANA_REL_CODE_VF_RPKI_INVALID "1">
 	<!ENTITY IANA_REL_CODE_VF_RPKI_COVERED_INVALID "2">
 
+	<!ENTITY IANA_REL_CODE_VF_RPKI_R_ASOM "0x01">
+	<!ENTITY IANA_REL_CODE_VF_RPKI_R_MLV "0x02">
+
 	<!ENTITY IANA_REL_CODE_MP_ERRORED_PDU "1">
 ]>
 
@@ -364,10 +367,11 @@
 	    </section>
 	    <section title="Validation Fail TLV" anchor="ValidationFailTLV">
 		<t>
-		    &IANA_REL_CODE_VALIDATION_FAIL; = Validation Fail TLV. The length
-		    is set to 1 byte and the value represents a code giving more
-		    information about the specific validation fail. Following are the
-		    defined code points: 
+		    &IANA_REL_CODE_VALIDATION_FAIL; = Validation Fail TLV. The value
+		    consists in 1 byte Validation Fail Type, a code giving more
+		    information about the specific validation fail, and can be
+		    followed by optional data. Following are the defined Validation
+		    Fail Type code points:
 		</t>
 		<t>
 		<list style="symbols">
@@ -383,6 +387,22 @@
 			'invalid' but is covered by a Valid prefix.
 			</t>
 		</list>
+		</t>
+		<t>
+			RPKI Validation Fail Types, namely &IANA_REL_CODE_VF_RPKI_INVALID;
+			and &IANA_REL_CODE_VF_RPKI_COVERED_INVALID;, can be followed by an
+			optional 1 byte Reason code as defined below:
+		</t>
+		<t>
+		<list style="symbols">
+			<t>
+			Code = &IANA_REL_CODE_VF_RPKI_R_ASOM;: AS Origin Mismatch.
+			</t>
+			<t>
+			Code = &IANA_REL_CODE_VF_RPKI_R_MLV;: Max Length Violation. 
+			</t>
+		</list>
+			Reason code 0 (zero) is reserved.
 		</t>
 	    </section>
 	    <section title="Malformed Packet TLV" anchor="MalformedPacketTLV">
