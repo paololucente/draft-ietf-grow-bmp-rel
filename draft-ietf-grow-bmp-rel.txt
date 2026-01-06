@@ -5,12 +5,12 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                        3 September 2025
-Expires: 7 March 2026
+Intended status: Standards Track                          6 January 2026
+Expires: 10 July 2026
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
-                       draft-ietf-grow-bmp-rel-04
+                       draft-ietf-grow-bmp-rel-05
 
 Abstract
 
@@ -36,11 +36,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 March 2026.
+   This Internet-Draft will expire on 10 July 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 1]
+Lucente & Cardona         Expires 10 July 2026                  [Page 1]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 2]
+Lucente & Cardona         Expires 10 July 2026                  [Page 2]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    The envisioned use-cases are the most diverse and range from logging
@@ -165,9 +165,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 3]
+Lucente & Cardona         Expires 10 July 2026                  [Page 3]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    Speaking comparatively to other existing message types, REL does not
@@ -221,9 +221,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 4]
+Lucente & Cardona         Expires 10 July 2026                  [Page 4]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    types and encodings already supported by BGP.  The advantage being
@@ -277,9 +277,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 5]
+Lucente & Cardona         Expires 10 July 2026                  [Page 5]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    *  1 = Config.  Prefix is being logged due to a configuration
@@ -333,9 +333,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 6]
+Lucente & Cardona         Expires 10 July 2026                  [Page 6]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    *  Code = 2: RPKI Invalid with covering Valid prefix.  The NLRI is
@@ -389,9 +389,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 7]
+Lucente & Cardona         Expires 10 July 2026                  [Page 7]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    REL events, especially with machine-readable reason codes, can feed
@@ -445,9 +445,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 8]
+Lucente & Cardona         Expires 10 July 2026                  [Page 8]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
 7.  IANA Considerations
@@ -501,9 +501,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                  [Page 9]
+Lucente & Cardona         Expires 10 July 2026                  [Page 9]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
 7.2.  Event Reason TLV Registry
@@ -557,9 +557,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                 [Page 10]
+Lucente & Cardona         Expires 10 July 2026                 [Page 10]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    Values 0 through 63 MUST be assigned using the Standards Action
@@ -599,12 +599,12 @@ Internet-Draft                   BMP REL                  September 2025
 8.  References
 
    [I-D.ietf-grow-bmp-bgp-rib-stats]
-              Srivastava, M., Liu, Y., Lin, C., and J. Li, "Definition
-              For New BGP Monitoring Protocol (BMP) Statistics Types",
-              Work in Progress, Internet-Draft, draft-ietf-grow-bmp-bgp-
-              rib-stats-08, 24 April 2025,
+              Srivastava, M., Liu, Y., Lin, C., and J. Li, "Advanced BGP
+              Monitoring Protocol (BMP) Statistics Types", Work in
+              Progress, Internet-Draft, draft-ietf-grow-bmp-bgp-rib-
+              stats-17, 3 December 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-bgp-rib-stats-08>.
+              bmp-bgp-rib-stats-17>.
 
    [I-D.ietf-grow-bmp-path-marking-tlv]
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
@@ -613,9 +613,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                 [Page 11]
+Lucente & Cardona         Expires 10 July 2026                 [Page 11]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
               marking-tlv-04, 25 August 2025,
@@ -626,9 +626,9 @@ Internet-Draft                   BMP REL                  September 2025
               Lucente, P. and Y. Gu, "BMP v4: TLV Support for BGP
               Monitoring Protocol (BMP) Route Monitoring and Peer Down
               Messages", Work in Progress, Internet-Draft, draft-ietf-
-              grow-bmp-tlv-17, 7 July 2025,
+              grow-bmp-tlv-19, 10 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
-              bmp-tlv-17>.
+              bmp-tlv-19>.
 
    [I-D.ietf-grow-bmp-tlv-ebit]
               Lucente, P. and Y. Gu, "Support for Enterprise-specific
@@ -669,9 +669,9 @@ Internet-Draft                   BMP REL                  September 2025
 
 
 
-Lucente & Cardona         Expires 7 March 2026                 [Page 12]
+Lucente & Cardona         Expires 10 July 2026                 [Page 12]
 
-Internet-Draft                   BMP REL                  September 2025
+Internet-Draft                   BMP REL                    January 2026
 
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
@@ -725,4 +725,4 @@ Authors' Addresses
 
 
 
-Lucente & Cardona         Expires 7 March 2026                 [Page 13]
+Lucente & Cardona         Expires 10 July 2026                 [Page 13]

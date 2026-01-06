@@ -50,7 +50,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 
-<rfc category="std" docName="draft-ietf-grow-bmp-rel-04"
+<rfc category="std" docName="draft-ietf-grow-bmp-rel-05"
      ipr="trust200902" submissionType="IETF"
      updates="7854">
 
@@ -86,7 +86,7 @@
 	    </address>
 	</author>
 
-        <date year="2025"/>
+        <date year="2026"/>
 
         <area>General</area>
 
