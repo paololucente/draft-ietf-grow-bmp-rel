@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                          6 January 2026
-Expires: 10 July 2026
+Intended status: Standards Track                          8 January 2026
+Expires: 12 July 2026
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 July 2026.
+   This Internet-Draft will expire on 12 July 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 1]
+Lucente & Cardona         Expires 12 July 2026                  [Page 1]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -90,11 +90,12 @@ Table of Contents
      7.2.  Event Reason TLV Registry . . . . . . . . . . . . . . . .  10
      7.3.  Log Action TLV Registry . . . . . . . . . . . . . . . . .  10
      7.4.  Policy Discard TLV Registry . . . . . . . . . . . . . . .  10
-     7.5.  Validation Fail TLV . . . . . . . . . . . . . . . . . . .  11
-     7.6.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  11
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
-   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  13
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+     7.5.  Validation Fail TLV Registry  . . . . . . . . . . . . . .  11
+     7.6.  Validation Fail Reason Registry . . . . . . . . . . . . .  11
+     7.7.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  11
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -108,8 +109,7 @@ Table of Contents
 
 
 
-
-Lucente & Cardona         Expires 10 July 2026                  [Page 2]
+Lucente & Cardona         Expires 12 July 2026                  [Page 2]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -165,7 +165,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 3]
+Lucente & Cardona         Expires 12 July 2026                  [Page 3]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -221,7 +221,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 4]
+Lucente & Cardona         Expires 12 July 2026                  [Page 4]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -277,7 +277,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 5]
+Lucente & Cardona         Expires 12 July 2026                  [Page 5]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -333,7 +333,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 6]
+Lucente & Cardona         Expires 12 July 2026                  [Page 6]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -389,7 +389,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 7]
+Lucente & Cardona         Expires 12 July 2026                  [Page 7]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -445,7 +445,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 8]
+Lucente & Cardona         Expires 12 July 2026                  [Page 8]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -501,7 +501,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                  [Page 9]
+Lucente & Cardona         Expires 12 July 2026                  [Page 9]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -529,7 +529,7 @@ Internet-Draft                   BMP REL                    January 2026
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
-   Value 255 is Reserved.
+   Values 0 and 255 are Reserved.
 
 7.3.  Log Action TLV Registry
 
@@ -548,7 +548,7 @@ Internet-Draft                   BMP REL                    January 2026
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
-   Value 255 is Reserved.
+   Values 0 and 255 are Reserved.
 
 7.4.  Policy Discard TLV Registry
 
@@ -557,7 +557,7 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-Lucente & Cardona         Expires 10 July 2026                 [Page 10]
+Lucente & Cardona         Expires 12 July 2026                 [Page 10]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -570,9 +570,9 @@ Internet-Draft                   BMP REL                    January 2026
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
-   Value 255 is Reserved.
+   Values 0 and 255 are Reserved.
 
-7.5.  Validation Fail TLV
+7.5.  Validation Fail TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.4.  Initial allocations are as follows:
@@ -585,20 +585,44 @@ Internet-Draft                   BMP REL                    January 2026
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
-   Value 255 is Reserved.
+   Values 0 and 255 are Reserved.
 
-7.6.  Malformed Packet TLV Registry
+7.6.  Validation Fail Reason Registry
+
+   The registry consists of a unsigned 8-bit code point and is defined
+   in Section 3.3.4.  Initial allocations are as follows:
+
+   *  Code = 0x01: AS Origin Mismatch
+
+   *  Code = 0x02: Max Length Violation
+
+   Values 0 through 63 MUST be assigned using the Standards Action
+   policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
+   MUST be assigned using the First Come First Served policy as defined
+   in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
+   Value 0 is Reserved.
+
+7.7.  Malformed Packet TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
    defined in Section 3.3.5.  Initial allocations are as follows:
 
       Type = 1: Errored PDU (treated-as-withdraw per RFC 7606)
 
+
+
+
+
+Lucente & Cardona         Expires 12 July 2026                 [Page 11]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
    Values 0 through 63 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
-   Value 255 is Reserved.
+   Values 0 and 255 are Reserved.
 
 8.  References
 
@@ -609,14 +633,6 @@ Internet-Draft                   BMP REL                    January 2026
               stats-17, 3 December 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-bgp-rib-stats-17>.
-
-
-
-
-Lucente & Cardona         Expires 10 July 2026                 [Page 11]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    [I-D.ietf-grow-bmp-path-marking-tlv]
               Cardona, C., Lucente, P., Francois, P., Gu, Y., and T.
@@ -648,6 +664,16 @@ Internet-Draft                   BMP REL                    January 2026
               October 2024, <https://datatracker.ietf.org/doc/html/
               draft-ietf-idr-bgp-model-18>.
 
+
+
+
+
+
+Lucente & Cardona         Expires 12 July 2026                 [Page 12]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -662,17 +688,6 @@ Internet-Draft                   BMP REL                    January 2026
               Patel, "Revised Error Handling for BGP UPDATE Messages",
               RFC 7606, DOI 10.17487/RFC7606, August 2015,
               <https://www.rfc-editor.org/info/rfc7606>.
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 10 July 2026                 [Page 12]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
@@ -702,6 +717,19 @@ Internet-Draft                   BMP REL                    January 2026
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 12 July 2026                 [Page 13]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
 Acknowledgements
 
    The authors would like to thank Jeff Haas, Luuk Hendriks, Ruediger
@@ -717,17 +745,6 @@ Authors' Addresses
    3771 Barneveld
    Netherlands
    Email: paolo@ntt.net
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 10 July 2026                 [Page 13]
-
-Internet-Draft                   BMP REL                    January 2026
 
 
    Camilo Cardona
@@ -764,21 +781,4 @@ Internet-Draft                   BMP REL                    January 2026
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 10 July 2026                 [Page 14]
+Lucente & Cardona         Expires 12 July 2026                 [Page 14]

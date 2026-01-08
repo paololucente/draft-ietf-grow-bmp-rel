@@ -602,7 +602,7 @@
 				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
 				127 MUST be assigned using the First Come First Served policy as defined in
 				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
-				is 255. Value 255 is Reserved.
+				is 255. Values 0 and 255 are Reserved.
 			</t>
 		</section>
 		<section>
@@ -630,7 +630,7 @@
 				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
 				127 MUST be assigned using the First Come First Served policy as defined in
 				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
-				is 255. Value 255 is Reserved.
+				is 255. Values 0 and 255 are Reserved.
 			</t>
 		</section>
       
@@ -653,12 +653,12 @@
 				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
 				127 MUST be assigned using the First Come First Served policy as defined in
 				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
-				is 255. Value 255 is Reserved.
+				is 255. Values 0 and 255 are Reserved.
 			</t>
 		</section>
 
 		<section>
-			<name>Validation Fail TLV</name>
+			<name>Validation Fail TLV Registry</name>
 	    		<t>
 				TLV Type consists of a code point (unsigned 8-bit value) and is defined in
 				<xref target="ValidationFailTLV"/>. Initial allocations are as follows:
@@ -676,7 +676,30 @@
 				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
 				127 MUST be assigned using the First Come First Served policy as defined in
 				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
-				is 255. Value 255 is Reserved.
+				is 255. Values 0 and 255 are Reserved.
+			</t>
+		</section>
+
+		<section>
+			<name>Validation Fail Reason Registry</name>
+	    		<t>
+				The registry consists of a unsigned 8-bit code point and is defined in
+				<xref target="ValidationFailTLV"/>. Initial allocations are as follows:
+			</t>
+			<list style="symbols">
+				<t>
+					Code = &IANA_REL_CODE_VF_RPKI_R_ASOM;: AS Origin Mismatch
+				</t>
+				<t>
+					Code = &IANA_REL_CODE_VF_RPKI_R_MLV;: Max Length Violation
+				</t>
+			</list>
+			<t>
+				Values 0 through 63 MUST be assigned using the Standards Action policy as
+				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
+				127 MUST be assigned using the First Come First Served policy as defined in
+				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
+				is 255. Value 0 is Reserved.
 			</t>
 		</section>
 
@@ -696,7 +719,7 @@
 				defined in <xref target="RFC8126">Section 4.9 of</xref>; values 64 through
 				127 MUST be assigned using the First Come First Served policy as defined in
 				<xref target="RFC8126">Section 4.4 of</xref>. The upper bound of the registry
-				is 255. Value 255 is Reserved.
+				is 255. Values 0 and 255 are Reserved.
 			</t>
 		</section>
 	</section>
