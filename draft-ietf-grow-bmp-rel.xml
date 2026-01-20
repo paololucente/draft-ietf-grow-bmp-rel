@@ -6,10 +6,12 @@
         <!ENTITY RFC7606 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7606.xml">
         <!ENTITY RFC8126 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml">
         <!ENTITY I-D.ietf-grow-bmp-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv.xml">
-        <!ENTITY I-D.ietf-grow-bmp-tlv-ebit SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-tlv-ebit.xml">
         <!ENTITY I-D.ietf-grow-bmp-path-marking-tlv SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-path-marking-tlv.xml">
         <!ENTITY I-D.ietf-grow-bmp-bgp-rib-stats SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-grow-bmp-bgp-rib-stats.xml">
         <!ENTITY I-D.ietf-idr-bgp-model SYSTEM "https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-idr-bgp-model.xml">
+
+	<!ENTITY IANA_REL_CODE_ET_ROUTING "1">
+	<!ENTITY IANA_REL_CODE_ET_HEALTH "2">
 
 	<!ENTITY IANA_REL_CODE_RESERVED0 "0">
 	<!ENTITY IANA_REL_CODE_SP "1">
@@ -152,35 +154,16 @@
 	<section title="Route Event Logging (REL) message" anchor="RELStruct">
             <t>
 		In basic terms a REL message does carry Events. Each Event is
-		logically composed by one Event Subject and one or more Event
-		Attributes.
+		logically composed by one Event Type, one or more Event Subjects
+		and one or more Event Attributes.
 	    </t>
 	    <t>
-		The structure of the Route Event Logging message is similar to
-		the Route Monitoring message defined in <xref target="I-D.ietf-grow-bmp-tlv"/>,
-		as such all TLVs enclosed in the message are indexed.
-	    </t>
-	    <t>
-		The message is composed of the Per-Peer Header, one mandatory BGP
-		Message TLV, one mandatory Informational TLV indicating the reason
+		More specifically, the REL message is composed of the BMP Common Header,
+		an Event Type Header, a Per-Peer Header (mandatory or optional
+		depending on the Event Type), one mandatory TLV packing one or more
+		Event Subjects, one mandatory Informational TLV indicating the reason
 		of the event and any further optional Informational TLVs to better
-		characterize the nature of the event. An example of the indexed TLV
-		structure is available in <xref target="I-D.ietf-grow-bmp-tlv">
-		Appendix A of</xref>.
-	    </t>
-	    <t>
-		One or more Event Subjects are packed as part of the BGP Update PDU.
-		The BGP Update PDU <xref target="RFC4271">Section 4.3 of</xref> is
-		encoded itself as part of the BGP Message TLV with code point
-		&IANA_REL_CODE_BGP_PDU; and index set to zero. Each Event Subject
-		is represented by an NLRI carried in the PDU.
-	    </t>
-	    <t>
-		The BGP Message TLV may be preceeded and/or followed by indexed
-		Informational TLVs that carry Event Attributes, where attributes
-		are bound to subjects referring to their positional index within
-		the PDU or via a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
-                Section 5.2.1 of</xref>
+		characterize the nature of the event.
 	    </t>
 	    <t>
 		Speaking comparatively to other existing message types, REL does
@@ -199,14 +182,62 @@
 		The following sections will describe each component of the REL
 		message in more detail. 
 	    </t>
+	<section title="Common Header">
+	    <t>
+		The BMP Common Header is mandatory and defined in <xref target="RFC7854">
+		Section 4.1 of</xref>. The version field is set to 4 meaning the REL
+		message depends on definitions made in <xref target="I-D.ietf-grow-bmp-tlv"/>. 
+	    </t>
+	</section>
+	<section title="Event Type Header">
+	    <t>
+		The Event Type Header is a 1 byte field to determine whether the
+		event is related to routing, a peer or some aspect of the health
+		of the BGP or the BMP protocols on the reporting router. It also
+		influences the structure of the reminder of the REL message. The
+		defined Event Types are: 
+	    </t>
+            <t>
+                <list style="symbols">
+                        <t>
+                        Code = &IANA_REL_CODE_ET_ROUTING;: The event is related to Routing.
+                        </t>
+                        <t>
+                        Code = &IANA_REL_CODE_ET_HEALTH;: The event is related to the health
+			of the BGP or the BMP protocols. 
+                        </t>
+                </list>
+                        Reason code 0 (zero) is reserved.
+            </t>
+	    <section title="Routing Event Type">
+            	<t>
+			The Per-Peer Header will follow. One or more Event Subjects
+			are packed as part of the BGP Update PDU. The BGP Update PDU
+			<xref target="RFC4271">Section 4.3 of</xref> is encoded itself
+			as part of the BGP Message TLV with code point &IANA_REL_CODE_BGP_PDU;
+			and index set to zero. Each Event Subject is represented by an
+			NLRI carried in the PDU. 
+            	</t>
+            	<t>
+			The BGP Message TLV may be preceeded and/or followed by indexed
+			Informational TLVs that carry Event Attributes, where attributes
+			are bound to subjects referring to their positional index within
+			the PDU or via a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
+			Section 5.2.1 of</xref>
+            	</t>
+	    </section>
+	    <section title="Health Event Type">
+            	<t>
+			TBD
+            	</t>
+	    </section>
+	</section>
 	<section title="Per-Peer Header">
 	    <t>
-		The message does start with a BMP per-peer header as defined in
-		<xref target="RFC7854">RFC 7854</xref>, subsequently extended by
-		<xref target="RFC8671">RFC 8671</xref> and
-		<xref target="RFC9069">RFC 9069</xref> allowing, among the other
-		things, to timestamp an Event and set its observation point among
-		those defined in BMP.  
+		The BMP per-peer header as defined in <xref target="RFC7854">Section 4.2 of</xref>,
+		subsequently extended by <xref target="RFC8671">RFC 8671</xref> and <xref
+		target="RFC9069">RFC 9069</xref> allowing, among the other things, to timestamp
+		an Event and set its observation point among those defined in BMP.  
 	    </t>
 	    <t>
 		Because the main purpose of the REL message is to log events at
@@ -253,9 +284,8 @@
 	<section title="Informational TLVs">
 	    <t>
 		Informational TLVs in BMP are formalized by the
-		intersection of <xref target="RFC7854">RFC 7854</xref>,
-		<xref target="I-D.ietf-grow-bmp-tlv"/> and <xref
-		target="I-D.ietf-grow-bmp-tlv-ebit"/>. TLVs in a REL message
+		intersection of <xref target="RFC7854">RFC 7854</xref> and
+		<xref target="I-D.ietf-grow-bmp-tlv"/>. TLVs in a REL message
 		are indexed.
 	    </t>
 	    <t>
@@ -739,7 +769,6 @@
                 <?rfc include="reference.RFC.9069.xml"?>
 
 		&I-D.ietf-grow-bmp-tlv;
-		&I-D.ietf-grow-bmp-tlv-ebit;
 		&I-D.ietf-grow-bmp-path-marking-tlv;
 		&I-D.ietf-grow-bmp-bgp-rib-stats;
 		&I-D.ietf-idr-bgp-model;

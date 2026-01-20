@@ -5,8 +5,8 @@
 Global Routing Operations                                     P. Lucente
 Internet-Draft                                                C. Cardona
 Updates: 7854 (if approved)                                          NTT
-Intended status: Standards Track                          8 January 2026
-Expires: 12 July 2026
+Intended status: Standards Track                         20 January 2026
+Expires: 24 July 2026
 
 
        Logging of routing events in BGP Monitoring Protocol (BMP)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 July 2026.
+   This Internet-Draft will expire on 24 July 2026.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Lucente & Cardona         Expires 12 July 2026                  [Page 1]
+Lucente & Cardona         Expires 24 July 2026                  [Page 1]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -69,33 +69,50 @@ Internet-Draft                   BMP REL                    January 2026
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Route Event Logging (REL) message . . . . . . . . . . . . . .   3
-     3.1.  Per-Peer Header . . . . . . . . . . . . . . . . . . . . .   4
-     3.2.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   4
-     3.3.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
-       3.3.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   5
-       3.3.2.  Log Action TLV  . . . . . . . . . . . . . . . . . . .   5
-       3.3.3.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   6
-       3.3.4.  Validation Fail TLV . . . . . . . . . . . . . . . . .   6
-       3.3.5.  Malformed Packet TLV  . . . . . . . . . . . . . . . .   7
-     3.4.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   7
-     3.5.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   7
-   4.  Examples and use-cases  . . . . . . . . . . . . . . . . . . .   7
-   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   8
+     3.1.  Common Header . . . . . . . . . . . . . . . . . . . . . .   4
+     3.2.  Event Type Header . . . . . . . . . . . . . . . . . . . .   4
+       3.2.1.  Routing Event Type  . . . . . . . . . . . . . . . . .   4
+       3.2.2.  Health Event Type . . . . . . . . . . . . . . . . . .   5
+     3.3.  Per-Peer Header . . . . . . . . . . . . . . . . . . . . .   5
+     3.4.  BGP Update PDU  . . . . . . . . . . . . . . . . . . . . .   5
+     3.5.  Informational TLVs  . . . . . . . . . . . . . . . . . . .   5
+       3.5.1.  Event Reason TLV  . . . . . . . . . . . . . . . . . .   6
+       3.5.2.  Log Action TLV  . . . . . . . . . . . . . . . . . . .   6
+       3.5.3.  Policy Discard TLV  . . . . . . . . . . . . . . . . .   7
+       3.5.4.  Validation Fail TLV . . . . . . . . . . . . . . . . .   7
+       3.5.5.  Malformed Packet TLV  . . . . . . . . . . . . . . . .   8
+     3.6.  Group TLV . . . . . . . . . . . . . . . . . . . . . . . .   8
+     3.7.  Stateless Parsing TLV . . . . . . . . . . . . . . . . . .   8
+   4.  Examples and use-cases  . . . . . . . . . . . . . . . . . . .   8
+   5.  Operational Considerations  . . . . . . . . . . . . . . . . .   9
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-     7.1.  BMP Route Event Logging TLVs Registry . . . . . . . . . .   9
-     7.2.  Event Reason TLV Registry . . . . . . . . . . . . . . . .  10
-     7.3.  Log Action TLV Registry . . . . . . . . . . . . . . . . .  10
-     7.4.  Policy Discard TLV Registry . . . . . . . . . . . . . . .  10
-     7.5.  Validation Fail TLV Registry  . . . . . . . . . . . . . .  11
-     7.6.  Validation Fail Reason Registry . . . . . . . . . . . . .  11
-     7.7.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  11
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
+     7.1.  BMP Route Event Logging TLVs Registry . . . . . . . . . .  10
+     7.2.  Event Reason TLV Registry . . . . . . . . . . . . . . . .  11
+     7.3.  Log Action TLV Registry . . . . . . . . . . . . . . . . .  11
+     7.4.  Policy Discard TLV Registry . . . . . . . . . . . . . . .  11
+     7.5.  Validation Fail TLV Registry  . . . . . . . . . . . . . .  12
+     7.6.  Validation Fail Reason Registry . . . . . . . . . . . . .  12
+     7.7.  Malformed Packet TLV Registry . . . . . . . . . . . . . .  12
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  14
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
+
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 2]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
 1.  Introduction
 
@@ -106,13 +123,6 @@ Table of Contents
    observation points of interest, for example Adj-Rib-In pre-policy and
    post-policy.  It would be instead more useful if a monitored router
    could export event-driven data with the relevant information.
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 2]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    The envisioned use-cases are the most diverse and range from logging
    route filtering to reporting the outcome of validation processes
@@ -138,34 +148,24 @@ Internet-Draft                   BMP REL                    January 2026
 3.  Route Event Logging (REL) message
 
    In basic terms a REL message does carry Events.  Each Event is
-   logically composed by one Event Subject and one or more Event
-   Attributes.
+   logically composed by one Event Type, one or more Event Subjects and
+   one or more Event Attributes.
 
-   The structure of the Route Event Logging message is similar to the
-   Route Monitoring message defined in [I-D.ietf-grow-bmp-tlv], as such
-   all TLVs enclosed in the message are indexed.
-
-   The message is composed of the Per-Peer Header, one mandatory BGP
-   Message TLV, one mandatory Informational TLV indicating the reason of
-   the event and any further optional Informational TLVs to better
-   characterize the nature of the event.  An example of the indexed TLV
-   structure is available in Appendix A of [I-D.ietf-grow-bmp-tlv].
-
-   One or more Event Subjects are packed as part of the BGP Update PDU.
-   The BGP Update PDU Section 4.3 of [RFC4271] is encoded itself as part
-   of the BGP Message TLV with code point 4 and index set to zero.  Each
-   Event Subject is represented by an NLRI carried in the PDU.
-
-   The BGP Message TLV may be preceeded and/or followed by indexed
-   Informational TLVs that carry Event Attributes, where attributes are
-   bound to subjects referring to their positional index within the PDU
-   or via a Group TLV as described in Section 5.2.1 of
-   [I-D.ietf-grow-bmp-tlv]
+   More specifically, the REL message is composed of the BMP Common
+   Header, an Event Type Header, a Per-Peer Header (mandatory or
+   optional depending on the Event Type), one mandatory TLV packing one
+   or more Event Subjects, one mandatory Informational TLV indicating
+   the reason of the event and any further optional Informational TLVs
+   to better characterize the nature of the event.
 
 
 
 
-Lucente & Cardona         Expires 12 July 2026                  [Page 3]
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 3]
 
 Internet-Draft                   BMP REL                    January 2026
 
@@ -184,12 +184,58 @@ Internet-Draft                   BMP REL                    January 2026
    The following sections will describe each component of the REL
    message in more detail.
 
-3.1.  Per-Peer Header
+3.1.  Common Header
 
-   The message does start with a BMP per-peer header as defined in RFC
-   7854 [RFC7854], subsequently extended by RFC 8671 [RFC8671] and RFC
-   9069 [RFC9069] allowing, among the other things, to timestamp an
-   Event and set its observation point among those defined in BMP.
+   The BMP Common Header is mandatory and defined in Section 4.1 of
+   [RFC7854].  The version field is set to 4 meaning the REL message
+   depends on definitions made in [I-D.ietf-grow-bmp-tlv].
+
+3.2.  Event Type Header
+
+   The Event Type Header is a 1 byte field to determine whether the
+   event is related to routing, a peer or some aspect of the health of
+   the BGP or the BMP protocols on the reporting router.  It also
+   influences the structure of the reminder of the REL message.  The
+   defined Event Types are:
+
+   *  Code = 1: The event is related to Routing.
+
+   *  Code = 2: The event is related to the health of the BGP or the BMP
+      protocols.
+
+   Reason code 0 (zero) is reserved.
+
+3.2.1.  Routing Event Type
+
+   The Per-Peer Header will follow.  One or more Event Subjects are
+   packed as part of the BGP Update PDU.  The BGP Update PDU Section 4.3
+   of [RFC4271] is encoded itself as part of the BGP Message TLV with
+   code point 4 and index set to zero.  Each Event Subject is
+   represented by an NLRI carried in the PDU.
+
+   The BGP Message TLV may be preceeded and/or followed by indexed
+   Informational TLVs that carry Event Attributes, where attributes are
+   bound to subjects referring to their positional index within the PDU
+   or via a Group TLV as described in Section 5.2.1 of
+   [I-D.ietf-grow-bmp-tlv]
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 4]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
+3.2.2.  Health Event Type
+
+   TBD
+
+3.3.  Per-Peer Header
+
+   The BMP per-peer header as defined in Section 4.2 of [RFC7854],
+   subsequently extended by RFC 8671 [RFC8671] and RFC 9069 [RFC9069]
+   allowing, among the other things, to timestamp an Event and set its
+   observation point among those defined in BMP.
 
    Because the main purpose of the REL message is to log events at the
    time of applying an action, the Peer Flags field - even if applied to
@@ -206,7 +252,7 @@ Internet-Draft                   BMP REL                    January 2026
    use.  They MUST be transmitted as 0 and their values MUST be ignored
    on receipt.
 
-3.2.  BGP Update PDU
+3.4.  BGP Update PDU
 
    The PDU enclosed as part of a BGP Message TLV can be either a
    verbatim copy or artificial, either packed from scratch or repacked
@@ -218,23 +264,23 @@ Internet-Draft                   BMP REL                    January 2026
    The choice of describing one or multiple Event Subjects via a BGP
    Update PDU is because, on one hand, this does allow to not have to
    invent new encodings for NLRIs, while on the other, to support all
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 4]
-
-Internet-Draft                   BMP REL                    January 2026
-
-
    types and encodings already supported by BGP.  The advantage being
    that only minimal new code, on both the exporting and the receiving
    sides, will have to be produced.
 
-3.3.  Informational TLVs
+3.5.  Informational TLVs
 
    Informational TLVs in BMP are formalized by the intersection of RFC
-   7854 [RFC7854], [I-D.ietf-grow-bmp-tlv] and
-   [I-D.ietf-grow-bmp-tlv-ebit].  TLVs in a REL message are indexed.
+   7854 [RFC7854] and [I-D.ietf-grow-bmp-tlv].  TLVs in a REL message
+   are indexed.
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 5]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
    Contrary to other BMP messages where all Informational TLVs are
    entirely optional, in order for a REL message to be meaningful, it
@@ -244,7 +290,7 @@ Internet-Draft                   BMP REL                    January 2026
    A new registry called "Route Event Logging TLVs" is defined and is
    seeded with the TLVs detailed in the following sections.
 
-3.3.1.  Event Reason TLV
+3.5.1.  Event Reason TLV
 
    5 = Event Reason TLV (4 octets).  Indicates the IANA-registered
    reason code describing the type of the event.  The following reason
@@ -265,22 +311,11 @@ Internet-Draft                   BMP REL                    January 2026
                           Table 1: IANA-Registered
                                Event reasons
 
-3.3.2.  Log Action TLV
+3.5.2.  Log Action TLV
 
    6 = Log Action TLV.  The length is variable.  The first byte defines
    the nature of the logging, depending on the code point additional
    data may follow. the following code points are defined:
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 5]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    *  1 = Config.  Prefix is being logged due to a configuration
       statement.  Data contains a UTF-8 string whose value can be
@@ -292,6 +327,17 @@ Internet-Draft                   BMP REL                    January 2026
       bytes value indicating the amount of times the event occurred
       within the timeframe.
 
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 6]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
    *  3 = Crossed Warning Bound.  Prefix is over the warning threshold
       of the maximum number of prefixes that can be received from a BGP
       neighbor.  Data contains a 4 bytes value representing the
@@ -302,7 +348,7 @@ Internet-Draft                   BMP REL                    January 2026
       neighbor.  Data contains a 4 bytes value representing the
       threshold number.
 
-3.3.3.  Policy Discard TLV
+3.5.3.  Policy Discard TLV
 
    7 = Policy Discard TLV.  The length is variable.  The first byte of
    the value field indicates how the rest is organized:
@@ -319,7 +365,7 @@ Internet-Draft                   BMP REL                    January 2026
       the first indicating the policy name, the second the statement
       name within the policy.
 
-3.3.4.  Validation Fail TLV
+3.5.4.  Validation Fail TLV
 
    8 = Validation Fail TLV.  The value consists in 1 byte Validation
    Fail Type, a code giving more information about the specific
@@ -329,14 +375,6 @@ Internet-Draft                   BMP REL                    January 2026
    *  Code = 1: RPKI Invalid.  The prefix is being marked as RPKI
       'invalid' and either has no coverage or it is unknown whether it
       has coverage by a valid prefix.
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 6]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    *  Code = 2: RPKI Invalid with covering Valid prefix.  The NLRI is
       being marked as RPKI 'invalid' but is covered by a Valid prefix.
@@ -348,9 +386,17 @@ Internet-Draft                   BMP REL                    January 2026
 
    *  Code = 0x02: Max Length Violation.
 
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 7]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
    Reason code 0 (zero) is reserved.
 
-3.3.5.  Malformed Packet TLV
+3.5.5.  Malformed Packet TLV
 
    9 = Malformed Packet TLV.  The length is set to 1 byte and the value
    represents a code giving more information about the specific
@@ -360,14 +406,14 @@ Internet-Draft                   BMP REL                    January 2026
       error that made it unusable, causing it to be treated-as-withdraw
       RFC7606 [RFC7606].
 
-3.4.  Group TLV
+3.6.  Group TLV
 
    The Group TLV is to form N:M relationships among NLRIs in the BGP
    Update PDU and TLVs of the same Route Event Logging message.  This
    TLV has code point 2 and follows the definition of Group TLV in
    [I-D.ietf-grow-bmp-tlv].
 
-3.5.  Stateless Parsing TLV
+3.7.  Stateless Parsing TLV
 
    The Stateless Parsing TLV is to allow parsing of the BGP Update PDU
    independently from a Peer Up message previously received for the same
@@ -385,20 +431,24 @@ Internet-Draft                   BMP REL                    January 2026
    an operator is notified immediately when a route is discarded due to
    policy, assisting quick diagnosis and policy refinement.
 
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 7]
-
-Internet-Draft                   BMP REL                    January 2026
-
-
    By logging every routing event and the corresponding reason code, REL
    enables thorough audits of route changes and network behavior over
    time.  For example, when a route fails validation, a log entry with
    the "Validation Fail" reason is stored for compliance checks and
    future forensics.
+
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 8]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
    REL events, especially with machine-readable reason codes, can feed
    analytics engines and automated workflows to correlate events across
@@ -439,21 +489,22 @@ Internet-Draft                   BMP REL                    January 2026
    events is being addressed by the Definition For New BMP Statistics
    Type [I-D.ietf-grow-bmp-bgp-rib-stats] document.
 
-
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 8]
-
-Internet-Draft                   BMP REL                    January 2026
-
-
 6.  Security Considerations
 
    It is not believed that this document adds any additional security
    considerations.
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                  [Page 9]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
 7.  IANA Considerations
 
@@ -482,29 +533,19 @@ Internet-Draft                   BMP REL                    January 2026
       Section 3
 
    *  Type = 5: Indicates IANA-registered reason code for event.  The
-      value is defined in Section 3.3.1.
+      value is defined in Section 3.5.1.
 
    *  Type = 6: Describes specific logging actions.  The value is
-      defined in Section 3.3.2.
+      defined in Section 3.5.2.
 
    *  Type = 7: Indicates NLRI discarded due to routing policy.  The
-      value is defined in Section 3.3.3.
+      value is defined in Section 3.5.3.
 
    *  Type = 8: Marks validation-related failure (e.g., RPKI
-      invalidation).  The value is defined in Section 3.3.4.
+      invalidation).  The value is defined in Section 3.5.4.
 
    *  Type = 9: Reports a malformed BGP message indicating the reason.
-      The value is defined in Section 3.3.5.
-
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                  [Page 9]
-
-Internet-Draft                   BMP REL                    January 2026
-
+      The value is defined in Section 3.5.5.
 
    Values 0 through 16383 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 16384 through
@@ -512,10 +553,19 @@ Internet-Draft                   BMP REL                    January 2026
    defined in Section 4.4 of [RFC8126].  The upper bound of the registry
    is 65535.  Value 65535 is Reserved.
 
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 10]
+
+Internet-Draft                   BMP REL                    January 2026
+
+
 7.2.  Event Reason TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
-   defined in Section 3.3.1.  Initial allocations are as follows:
+   defined in Section 3.5.1.  Initial allocations are as follows:
 
       Type = 0x0001: Log Action reason.
 
@@ -534,7 +584,7 @@ Internet-Draft                   BMP REL                    January 2026
 7.3.  Log Action TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
-   defined in Section 3.3.2.  Initial allocations are as follows:
+   defined in Section 3.5.2.  Initial allocations are as follows:
 
       Type = 1: Config (prefix logged due to configuration).
 
@@ -553,18 +603,20 @@ Internet-Draft                   BMP REL                    January 2026
 7.4.  Policy Discard TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
-   defined in Section 3.3.3.  Initial allocations are as follows:
-
-
-
-Lucente & Cardona         Expires 12 July 2026                 [Page 10]
-
-Internet-Draft                   BMP REL                    January 2026
-
+   defined in Section 3.5.3.  Initial allocations are as follows:
 
       Type = 1: String (UTF-8 policy name/reason)
 
       Type = 2: Structured (policy and statement, null-terminated)
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 11]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
    Values 0 through 63 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
@@ -575,7 +627,7 @@ Internet-Draft                   BMP REL                    January 2026
 7.5.  Validation Fail TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
-   defined in Section 3.3.4.  Initial allocations are as follows:
+   defined in Section 3.5.4.  Initial allocations are as follows:
 
       Type = 1: RPKI Invalid
 
@@ -590,7 +642,7 @@ Internet-Draft                   BMP REL                    January 2026
 7.6.  Validation Fail Reason Registry
 
    The registry consists of a unsigned 8-bit code point and is defined
-   in Section 3.3.4.  Initial allocations are as follows:
+   in Section 3.5.4.  Initial allocations are as follows:
 
    *  Code = 0x01: AS Origin Mismatch
 
@@ -605,24 +657,22 @@ Internet-Draft                   BMP REL                    January 2026
 7.7.  Malformed Packet TLV Registry
 
    TLV Type consists of a code point (unsigned 8-bit value) and is
-   defined in Section 3.3.5.  Initial allocations are as follows:
+   defined in Section 3.5.5.  Initial allocations are as follows:
 
       Type = 1: Errored PDU (treated-as-withdraw per RFC 7606)
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                 [Page 11]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    Values 0 through 63 MUST be assigned using the Standards Action
    policy as defined in Section 4.9 of [RFC8126]; values 64 through 127
    MUST be assigned using the First Come First Served policy as defined
    in Section 4.4 of [RFC8126].  The upper bound of the registry is 255.
    Values 0 and 255 are Reserved.
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 12]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
 8.  References
 
@@ -650,29 +700,12 @@ Internet-Draft                   BMP REL                    January 2026
               <https://datatracker.ietf.org/doc/html/draft-ietf-grow-
               bmp-tlv-19>.
 
-   [I-D.ietf-grow-bmp-tlv-ebit]
-              Lucente, P. and Y. Gu, "Support for Enterprise-specific
-              TLVs in the BGP Monitoring Protocol", Work in Progress,
-              Internet-Draft, draft-ietf-grow-bmp-tlv-ebit-06, 17
-              January 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-grow-bmp-tlv-ebit-06>.
-
    [I-D.ietf-idr-bgp-model]
               Jethanandani, M., Patel, K., Hares, S., and J. Haas, "YANG
               Model for Border Gateway Protocol (BGP-4)", Work in
               Progress, Internet-Draft, draft-ietf-idr-bgp-model-18, 21
               October 2024, <https://datatracker.ietf.org/doc/html/
               draft-ietf-idr-bgp-model-18>.
-
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                 [Page 12]
-
-Internet-Draft                   BMP REL                    January 2026
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -688,6 +721,14 @@ Internet-Draft                   BMP REL                    January 2026
               Patel, "Revised Error Handling for BGP UPDATE Messages",
               RFC 7606, DOI 10.17487/RFC7606, August 2015,
               <https://www.rfc-editor.org/info/rfc7606>.
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 13]
+
+Internet-Draft                   BMP REL                    January 2026
+
 
    [RFC7854]  Scudder, J., Ed., Fernando, R., and S. Stuart, "BGP
               Monitoring Protocol (BMP)", RFC 7854,
@@ -717,19 +758,6 @@ Internet-Draft                   BMP REL                    January 2026
               (BMP)", RFC 9069, DOI 10.17487/RFC9069, February 2022,
               <https://www.rfc-editor.org/info/rfc9069>.
 
-
-
-
-
-
-
-
-
-Lucente & Cardona         Expires 12 July 2026                 [Page 13]
-
-Internet-Draft                   BMP REL                    January 2026
-
-
 Acknowledgements
 
    The authors would like to thank Jeff Haas, Luuk Hendriks, Ruediger
@@ -745,6 +773,17 @@ Authors' Addresses
    3771 Barneveld
    Netherlands
    Email: paolo@ntt.net
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 14]
+
+Internet-Draft                   BMP REL                    January 2026
 
 
    Camilo Cardona
@@ -781,4 +820,21 @@ Authors' Addresses
 
 
 
-Lucente & Cardona         Expires 12 July 2026                 [Page 14]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lucente & Cardona         Expires 24 July 2026                 [Page 15]
