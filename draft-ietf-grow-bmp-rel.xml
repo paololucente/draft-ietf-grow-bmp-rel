@@ -228,7 +228,29 @@
 	    </section>
 	    <section title="Health Event Type">
             	<t>
-			TBD
+			In typical BMP implementations on routers, BMP operates as a
+			low-priority process to avoid competing with core routing and
+			data plane functions. Consequently, BMP message generation, state
+			maintenance, and transmission may be preempted by higher-priority
+			tasks during periods of high system load.
+		</t>
+		<t>
+			Under certain conditions, BMP can accumulate substantial internal
+			state - particularly Route Monitoring state during synchronization
+			phases - leading to significant physical memory consumption.
+		</t>
+		<t>
+			When memory pressure becomes critical, router implementations may
+			choose to discard BMP oldest internal state as a defensive measure
+			to prevent system instability or crashes, rather than allowing BMP
+			to trigger broader resource exhaustion that could impact core
+			forwarding functions.
+		</t>
+		<t>
+			The Health Event Type enables reporting of such and other conditions
+			through REL messages. A REL Health event with Event Reason "Log
+			Action" and Log Action code "Unstable" (&IANA_REL_CODE_LA_UNSTABLE;)
+			can convey this situation.
             	</t>
 	    </section>
 	</section>
@@ -844,14 +866,36 @@
   ]]></artwork>
 </figure>
             </t>
+	    <t>
+<figure anchor="fig-rel-health-example">
+  <name>Example of BMP REL Health Event</name>
+  <artwork><![CDATA[
++---------------------------------------------------------------+
+| BMP Common Header (Version=4, Msg Type=REL)                   |
++---------------------------------------------------------------+
+| Event Type Header: Health Event (2)                           |
++---------------------------------------------------------------+
+| Per-Peer Header (optional for Health events)                  |
++---------------------------------------------------------------+
+| TLV: Event Reason (Type=5)                                    |
+|   Length=4, Value=0x00000001 (Log Action)                     |
++---------------------------------------------------------------+
+| TLV: Log Action (Type=6)                                      |
+|   Length=13, Value=0x02 ("Unstable") | 0x00000064 (100s)      |
+|                 | 0x00000005 (5 occurrences)                  |
++---------------------------------------------------------------+
+  ]]></artwork>
+</figure>
+            </t>
+
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements" numbered="no">
             <t>
 		The authors would like to thank Jeff Haas, Luuk Hendriks,
-		Ruediger Volk, Ahmed Elhassany, Thomas Graf and Ben Maddison for
-		their valuable input. The authors would also like to thank Mike
-		Booth for his review.
+		Ruediger Volk, Ahmed Elhassany, Thomas Graf, Ben Maddison and
+		Mukul Srivastava for their valuable input. The authors would
+		also like to thank Mike Booth for his review.
             </t>
     </section>
 
