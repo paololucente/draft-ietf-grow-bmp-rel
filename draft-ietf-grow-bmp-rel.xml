@@ -102,11 +102,11 @@
 
         <abstract>
             <t>
-		The BGP Monitoring Protocol (BMP) does provision for BGP session event
+		The BGP Monitoring Protocol (BMP) does provide for BGP session event
 		logging (Peer Up, Peer Down), state synchronization (Route Monitoring),
-		debugging (Route Mirroring) and Statistics messages, among the others.
+		debugging (Route Mirroring) and Statistics messages, among others.
 		This document defines a new Route Event Logging (REL) message type for
-		BMP with the aim of covering use-cases with affinity to alerting,
+		BMP with the aim of covering use cases with affinity to alerting,
 		reporting and on-change analysis.
             </t>
         </abstract>
@@ -120,11 +120,11 @@
 		outcome of an evaluation process, a comparative analysis needs to be
 		performed between Route Monitoring data for two distinct observation
 		points of interest, for example Adj-Rib-In pre-policy and post-policy.
-		It would be instead more useful if a monitored router could export
+		It would instead be more useful if a monitored router could export
 		event-driven data with the relevant information.
             </t>
             <t>
-		The envisioned use-cases are the most diverse and range from logging
+		The envisioned use cases are the most diverse and range from logging
 		route filtering to reporting the outcome of validation processes taking
 		place on the monitored router, to isolating certain subsets of data
 		to be validated offline, to report malformed BGP packets, to broader
@@ -153,7 +153,7 @@
 
 	<section title="Route Event Logging (REL) message" anchor="RELStruct">
             <t>
-		In basic terms a REL message does carry Events. Each Event is
+		In basic terms a REL message carries events. Each event is
 		logically composed by one Event Type, one or more Event Subjects
 		and one or more Event Attributes.
 	    </t>
@@ -173,7 +173,7 @@
 		received as per the debugging nature of Route Mirroring.
 	    </t>
 	    <t>
-		In the context of BMP REL message, and hence in the reminder of
+		In the context of BMP REL message, and hence in the remainder of
 		this document, the term Event Subject and NLRI will be used
 		interchangeably. Also the term Event Attribute and Informational
 		TLV will be used interchangeably.
@@ -194,7 +194,7 @@
 		The Event Type Header is a 1 byte field to determine whether the
 		event is related to routing, a peer or some aspect of the health
 		of the BGP or the BMP protocols on the reporting router. It also
-		influences the structure of the reminder of the REL message. The
+		influences the structure of the remainder of the REL message. The
 		defined Event Types are: 
 	    </t>
             <t>
@@ -207,7 +207,7 @@
 			of the BGP or the BMP protocols. 
                         </t>
                 </list>
-                        Reason code 0 (zero) is reserved.
+                        In this registry reason code 0 (zero) is reserved.
             </t>
 	    <section title="Routing Event Type">
             	<t>
@@ -219,7 +219,7 @@
 			NLRI carried in the PDU. 
             	</t>
             	<t>
-			The BGP Message TLV may be preceeded and/or followed by indexed
+			The BGP Message TLV may be preceded and/or followed by indexed
 			Informational TLVs that carry Event Attributes, where attributes
 			are bound to subjects referring to their positional index within
 			the PDU or via a Group TLV as described in <xref target="I-D.ietf-grow-bmp-tlv">
@@ -258,8 +258,8 @@
 	    <t>
 		The BMP per-peer header as defined in <xref target="RFC7854">Section 4.2 of</xref>,
 		subsequently extended by <xref target="RFC8671">RFC 8671</xref> and <xref
-		target="RFC9069">RFC 9069</xref> allowing, among the other things, to timestamp
-		an Event and set its observation point among those defined in BMP.  
+		target="RFC9069">RFC 9069</xref> allowing, among other things, an event to be
+		timestamped and set its observation point among those defined in BMP.  
 	    </t>
 	    <t>
 		Because the main purpose of the REL message is to log events at
@@ -289,14 +289,14 @@
 		The PDU enclosed as part of a BGP Message TLV can be either
 		a verbatim copy or artificial, either packed from scratch or
 		repacked starting from an existing BGP Update PDU to only
-		contain the relevant NLRIs affected by an Event (one or
-		multiple). The Event is going to be further described by
+		contain the relevant NLRIs affected by an event (one or
+		multiple). The event is going to be further described by
 		means of Event Attributes by indexed Informational TLVs.
 	    </t>
 	    <t>
 		The choice of describing one or multiple Event Subjects via
-		a BGP Update PDU is because, on one hand, this does allow to
-		not have to invent new encodings for NLRIs, while on the
+		a BGP Update PDU is because, on one hand, this avoids 
+		having to invent new encodings for NLRIs, while on the
 		other, to support all types and encodings already supported
 		by BGP. The advantage being that only minimal new code, on
 		both the exporting and the receiving sides, will have to be
@@ -314,7 +314,7 @@
 		Contrary to other BMP messages where all Informational TLVs are
 		entirely optional, in order for a REL message to be meaningful,
 		it MUST contain at least one Event Reason TLV and MAY contain
-		other optional attribute TLVs to further characterize the Event.
+		other optional attribute TLVs to further characterize the event.
 	    </t>
 	    <t>
 		A new registry called "Route Event Logging TLVs" is defined and
@@ -328,7 +328,7 @@
 		    of the "Event Reason TLV" registry:
 		</t>
 		<table anchor="EventReasonTLVCodes">
-		<name>IANA-Registered Event reasons</name>
+		<name>IANA-Registered Event Reasons</name>
 		<thead>
 		<tr>
 			<th align="center">Value</th>
@@ -359,7 +359,7 @@
 		<t>
 		    &IANA_REL_CODE_LOG_ACTION; = Log Action TLV. The length is variable.
 		    The first byte defines the nature of the logging, depending on the
-		    code point additional data may follow. the following code points are
+		    code point additional data may follow. The following code points are
 		    defined:
 
 		    <list style="symbols">
@@ -407,7 +407,7 @@
 			return code.
 		    </t>
 		    <t>
-			&IANA_REL_CODE_PD_STRUCT; = Structured. On the escort of <xref
+			&IANA_REL_CODE_PD_STRUCT; = Structured. In the spirit of <xref
 			target="RFC9067">Section 4 of</xref> and <xref
 			target="I-D.ietf-idr-bgp-model">YANG Model for Border Gateway
 			Protocol (BGP-4)</xref> the value is organized as two
@@ -421,7 +421,7 @@
 		<t>
 		    &IANA_REL_CODE_VALIDATION_FAIL; = Validation Fail TLV. The value
 		    consists in 1 byte Validation Fail Type, a code giving more
-		    information about the specific validation fail, and can be
+		    information about the specific validation failure, and can be
 		    followed by optional data. Following are the defined Validation
 		    Fail Type code points:
 		</t>
@@ -454,15 +454,15 @@
 			Code = &IANA_REL_CODE_VF_RPKI_R_MLV;: Max Length Violation. 
 			</t>
 		</list>
-			Reason code 0 (zero) is reserved.
+			In this registry reason code 0 (zero) is reserved.
 		</t>
 	    </section>
 	    <section title="Malformed Packet TLV" anchor="MalformedPacketTLV">
 		<t>
 		    &IANA_REL_CODE_MALFORMED_PACKET; = Malformed Packet TLV. The
 		    length is set to 1 byte and the value represents a code giving
-		    more information about the specific malforming. Following are the
-		    defined code points:
+		    more information about the specific format error. Following are
+		    the defined code points:
 		</t>
 		<t>
 		<list style="symbols">
@@ -479,9 +479,9 @@
         <section title="Group TLV" anchor="GroupTLV">
             <t>
 		The Group TLV is to form N:M relationships among NLRIs in the BGP
-		Update PDU and TLVs of the same Route Event Logging message. This
-		TLV has code point &IANA_REL_CODE_GROUP; and follows the definition
-		of Group TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>.
+		Update PDU and TLVs of the same REL message. This TLV has code
+		point &IANA_REL_CODE_GROUP; and follows the definition of Group
+		TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>.
             </t>
 	</section>
         <section title="Stateless Parsing TLV" anchor="SPTLV">
@@ -491,13 +491,12 @@
 		the same BGP session. This TLV can be especially relevant to Route
 		Event Logging where the BGP Update PDU is artificial. The TLV has
 		code point &IANA_REL_CODE_SP; , it follows the definition of
-		Stateless Parsing TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>
-		and uses code point definitions in the Stateless Parsing Registry. 
+		Stateless Parsing TLV in <xref target="I-D.ietf-grow-bmp-tlv"/>.
             </t>
 	</section>
 	</section>
 
-        <section title="Examples and use-cases">
+        <section title="Examples and use cases">
 	    <t>
 		REL can be used to send real-time notifications for specific routing
 		events enabling rapid alerting of issues like policy discards,
@@ -523,31 +522,29 @@
 
         <section title="Operational Considerations">
 	    <t>
-		Route Event Logging messages are event-driven in nature so the general
-		recommendation is to use them to report on specific conditions of
-		interest in order, for example, to facilitate data mining or avoid
-		differential analysis. When the objective is to annotate every
-		received or announced NLRI then the recommendation is to use Route
-		Monitoring messages with <xref target="I-D.ietf-grow-bmp-path-marking-tlv">
-		BMP Path Marking</xref>.
+		REL messages are event-driven in nature so the general recommendation
+		is to use them to report on specific conditions of interest in order,
+		for example, to facilitate data mining or avoid differential analysis.
+		When the objective is to annotate every received or announced NLRI then
+		the recommendation is to use Route Monitoring messages with <xref
+		target="I-D.ietf-grow-bmp-path-marking-tlv"> BMP Path Marking</xref>.
 		As an example consider RPKI validation status: when the objective is
-		to report on any validations tatus (ie. valid, invalid and unknown),
+		to report on any validations status (ie. valid, invalid and unknown),
 		BMP Path Marking should be used; when the objective is instead to
-		report only invalids then Route Event Logging with Validation Fail
-		Event Reason should be used.
+		report only invalids then REL with Validation Fail Event Reason should
+		be used.
 	    </t>
 	    <t>
-		There exist a definite overlap between Route Event Logging when used
-		to report Malformed Packet and the use-cases for Route Mirroring where
-		Errored PDUs may be sampled for reporting. From implementors perspective,
-		if one wants to implement broader event-driven notifications and does not
-		want to offer exact mirroring of monitored BGP sessions without state
-		compression it may be adviceable to prefer implementing Route Event
-		Logging message type over Route Mirroring. From a collector perspective,
-		similarly, one may want to activate distinct BMP feeds for event logging
-		and route collection and, also in this case, reporting malformed packets
-		via Route Event Logging message type may be preferrable over Route
-		Mirroring.
+		There exists a definite overlap between REL when used to report Malformed
+		Packet and the use cases for Route Mirroring where Errored PDUs may be
+		sampled for reporting. From implementors perspective, if one wants to
+		implement broader event-driven notifications and does not want to offer
+		exact mirroring of monitored BGP sessions without state compression it
+		may be advisable to prefer implementing REL message type over Route
+		Mirroring. From a collector perspective, similarly, one may want to
+		activate distinct BMP feeds for event logging and route collection and,
+		also in this case, reporting malformed packets via REL message type may
+		be preferable over Route Mirroring.
 	    </t>
 	    <t>
 		Crossed warning bound and crossed upper bound events refer to
@@ -874,8 +871,6 @@
 | BMP Common Header (Version=4, Msg Type=REL)                   |
 +---------------------------------------------------------------+
 | Event Type Header: Health Event (2)                           |
-+---------------------------------------------------------------+
-| Per-Peer Header (optional for Health events)                  |
 +---------------------------------------------------------------+
 | TLV: Event Reason (Type=5)                                    |
 |   Length=4, Value=0x00000001 (Log Action)                     |
